@@ -3,35 +3,465 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rise &amp; Shine — TRACE Schools Staff Wellness</title>
-<meta name="description" content="The TRACE Schools staff wellness letter.">
+<title>Rise &amp; Shine</title>
+<meta name="description" content="Rise & Shine — the TRACE Schools staff wellness letter. A monthly issue built to be used, not just read.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
 <style>
-  body{
-    margin:0;
-    min-height:100vh;
-    display:grid;
-    place-items:center;
-    background:#14203A;
-    color:#FCFAF7;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+/* ============================================================
+   TRACE Schools — Rise & Shine, front door
+   Shares tokens/type with the issues themselves so this reads
+   as the same family, not a generic index page.
+   ============================================================ */
+
+:root{
+  --ground:#FCFAF7;
+  --surface:#FFFFFF;
+  --surface-2:#F7F3ED;
+  --line:#E3DCD1;
+  --line-strong:#CFC5B6;
+  --text:#14203A;
+  --text-muted:#5D6B84;
+  --tide:#0F7E77;
+  --tide-soft:#DCEFEC;
+  --tide-ink:#0A5C57;
+  --sun:#F2A413;
+  --coral:#EE5D4C;
+  --night:#0A1226;
+  --shadow:0 1px 2px rgba(20,32,58,.05), 0 10px 30px -18px rgba(20,32,58,.35);
+  --shadow-lift:0 2px 4px rgba(20,32,58,.06), 0 22px 48px -22px rgba(20,32,58,.45);
+  --focus:#0F7E77;
+  --on-tide:#FFFFFF;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ground:#0B1322;
+    --surface:#14203A;
+    --surface-2:#1B2A48;
+    --line:#26355A;
+    --line-strong:#3A4C78;
+    --text:#E9EEF7;
+    --text-muted:#98A8C4;
+    --tide:#3FBFB2;
+    --tide-soft:#123A38;
+    --tide-ink:#8CE0D5;
+    --sun:#F6B93B;
+    --coral:#FF7A67;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
+    --focus:#3FBFB2;
+    --on-tide:#04211E;
   }
-  main{ text-align:center; padding:2rem; }
-  h1{ font-size:1.6rem; margin:0 0 1rem; }
-  a{
-    display:inline-block;
-    color:#0B1322;
-    background:#F2A413;
-    text-decoration:none;
-    font-weight:600;
-    padding:.7rem 1.4rem;
-    border-radius:8px;
-  }
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--text);
+  font-family:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:600;line-height:1.1;text-wrap:balance;margin:0;}
+p{margin:0;}
+a{color:var(--tide-ink);}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px;}
+img{max-width:100%;display:block;}
+
+.wrap{width:min(1080px,100% - 2.5rem);margin-inline:auto;}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-muted);font-weight:500;
+}
+
+/* =================== HERO =================== */
+.hero{
+  position:relative;overflow:hidden;isolation:isolate;
+  min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:6rem 0 4rem;
+  color:#FFF6EA;
+}
+.hero__photo{
+  position:absolute;inset:0;z-index:-2;
+  background-image:url("assets/hero.jpg");
+  background-size:cover;
+  background-position:50% 62%;
+  will-change:transform;
+}
+.hero__scrim{
+  position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(180deg, rgba(10,18,38,.72) 0%, rgba(10,18,38,.28) 38%, rgba(10,18,38,.2) 58%, rgba(20,10,10,.5) 82%, rgba(15,8,6,.78) 100%);
+}
+.hero__inner{position:relative;display:grid;gap:1.6rem;}
+.hero .eyebrow{color:#FFD9A8;opacity:0;animation:riseIn .9s .1s cubic-bezier(.16,.8,.3,1) both;}
+.masthead{
+  font-size:clamp(3.6rem,14vw,10.5rem);
+  font-weight:700;letter-spacing:-.045em;line-height:.86;
+  font-variation-settings:"SOFT" 40,"WONK" 1;
+  margin:0;
+}
+.masthead span{display:block;overflow:hidden;padding-bottom:.05em;}
+.masthead span > em{
+  font-style:normal;display:block;transform:translateY(110%);
+  animation:riseIn 1.05s cubic-bezier(.16,.85,.25,1) both;
+}
+.masthead span:nth-of-type(1) > em{animation-delay:.05s;}
+.masthead span:nth-of-type(2) > em{animation-delay:.22s;color:#FFD9A8;}
+@keyframes riseIn{
+  from{opacity:0;transform:translateY(110%);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hero__lede{
+  max-width:46ch;color:#FFEBD4;font-size:clamp(1.05rem,1.7vw,1.28rem);
+  opacity:0;animation:fadeUp 1s .5s cubic-bezier(.16,.8,.3,1) both;
+}
+.hero__actions{
+  display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:.4rem;
+  opacity:0;animation:fadeUp 1s .68s cubic-bezier(.16,.8,.3,1) both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+  background:var(--sun);color:#221706;border:1px solid transparent;border-radius:11px;
+  padding:.9rem 1.5rem;font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none;
+  box-shadow:0 12px 30px -12px rgba(242,164,19,.55);
+  transition:filter .18s,transform .15s,box-shadow .18s;
+}
+.btn:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:0 18px 36px -14px rgba(242,164,19,.65);}
+.btn:active{transform:translateY(0);}
+.btn svg{transition:transform .18s;}
+.btn:hover svg{transform:translateX(3px);}
+.btn--ghost{
+  background:transparent;color:#FFF6EA;border-color:rgba(255,246,234,.5);
+  box-shadow:none;font-weight:600;
+}
+.btn--ghost:hover{background:rgba(255,246,234,.1);transform:none;box-shadow:none;}
+
+.hero__cue{
+  position:absolute;left:0;right:0;bottom:1.6rem;z-index:1;
+  display:flex;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#FFD9A8;text-decoration:none;gap:.5rem;align-items:center;
+  opacity:0;animation:fadeUp 1s 1s cubic-bezier(.16,.8,.3,1) both;
+}
+.hero__cue span{display:inline-block;animation:bob 2.4s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
+
+/* =================== SECTIONS =================== */
+.band{padding:clamp(5rem,11vh,7.5rem) 0;border-top:1px solid var(--line);position:relative;}
+.band:first-of-type{border-top:none;}
+.band__head{display:grid;gap:.9rem;margin-bottom:clamp(2.5rem,5.5vw,3.5rem);max-width:56ch;position:relative;z-index:1;}
+.band__head h2{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.03em;font-variation-settings:"SOFT" 30;}
+.band__sub{color:var(--text-muted);font-size:1.05rem;max-width:52ch;}
+
+.ghost{
+  position:absolute;top:-1rem;right:0;z-index:0;
+  font-family:Fraunces,serif;font-weight:700;font-size:clamp(6rem,18vw,15rem);line-height:.8;
+  color:transparent;-webkit-text-stroke:1px var(--line-strong);
+  opacity:.5;pointer-events:none;user-select:none;letter-spacing:-.04em;
+}
+
+/* =================== ISSUE SHOWCASE =================== */
+.issue{
+  position:relative;z-index:1;
+  display:grid;gap:2.2rem;
+  background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--radius) + 4px);
+  box-shadow:var(--shadow-lift);
+  padding:clamp(1.8rem,4vw,3rem);
+  overflow:hidden;
+}
+@media (min-width:840px){.issue{grid-template-columns:1fr 1fr;align-items:center;}}
+.issue__badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--tide-ink);background:var(--tide-soft);padding:.3rem .7rem;border-radius:999px;
+  width:fit-content;font-weight:600;
+}
+.issue__badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--tide);}
+.issue h3{font-size:clamp(1.9rem,4vw,2.6rem);letter-spacing:-.025em;margin:.9rem 0 .6rem;}
+.issue p.desc{color:var(--text-muted);font-size:1.02rem;max-width:48ch;}
+.tick{list-style:none;margin:1.4rem 0 0;padding:0;display:grid;gap:.7rem;}
+.tick li{display:flex;gap:.75rem;align-items:flex-start;font-size:.97rem;}
+.tick b{
+  flex:0 0 auto;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.68rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--tide-ink);
+  background:var(--tide-soft);padding:.18rem .45rem;border-radius:5px;margin-top:.1rem;
+}
+.issue__cta{margin-top:1.8rem;}
+.issue__cta .btn{background:var(--tide);color:var(--on-tide);box-shadow:0 12px 26px -12px rgba(15,126,119,.5);}
+.issue__cta .btn:hover{box-shadow:0 18px 32px -14px rgba(15,126,119,.6);}
+
+.issue__art{
+  position:relative;border-radius:calc(var(--radius) - 2px);overflow:hidden;
+  aspect-ratio:4/3;background:linear-gradient(160deg,#0A1226 0%,#1B2A4E 34%,#5B3F63 58%,#B85C4E 80%,#E08A3C 100%);
+}
+.issue__art::before{
+  content:"";position:absolute;inset:auto 0 -20% 0;height:60%;
+  background:radial-gradient(ellipse 80% 100% at 50% 100%, rgba(242,164,19,.5), rgba(242,164,19,0) 70%);
+}
+.issue__art-type{
+  position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:1.5rem;
+  color:#FFF3E2;
+}
+.issue__art-type b{
+  display:block;font-family:Fraunces,serif;font-weight:700;font-size:clamp(1.6rem,4.2vw,2.4rem);
+  letter-spacing:-.02em;
+}
+.issue__art-type span{
+  display:block;margin-top:.5rem;font-family:"IBM Plex Mono",monospace;font-size:.7rem;
+  letter-spacing:.16em;text-transform:uppercase;color:#FFD9A8;
+}
+
+/* =================== YEAR AHEAD =================== */
+.months{
+  position:relative;z-index:1;
+  list-style:none;margin:0;padding:0;
+  display:grid;gap:.8rem;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+}
+.month{
+  border:1px solid var(--line);border-radius:12px;background:var(--surface);
+  padding:1.1rem 1.2rem;display:grid;gap:.35rem;
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.month:hover{border-color:var(--line-strong);box-shadow:var(--shadow);transform:translateY(-2px);}
+.month__when{
+  font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-muted);display:flex;justify-content:space-between;align-items:center;gap:.5rem;
+}
+.month__status{
+  font-size:.62rem;letter-spacing:.1em;padding:.12rem .45rem;border-radius:999px;
+  background:var(--surface-2);color:var(--text-muted);font-weight:600;white-space:nowrap;
+}
+.month__title{font-family:Fraunces,serif;font-weight:600;font-size:1.18rem;letter-spacing:-.01em;}
+.month__theme{font-size:.86rem;color:var(--text-muted);}
+
+/* =================== WHAT MAKES IT DIFFERENT =================== */
+.grid3{display:grid;gap:1.2rem;position:relative;z-index:1;}
+@media (min-width:760px){.grid3{grid-template-columns:repeat(3,1fr);}}
+.feat{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.6rem;box-shadow:var(--shadow);display:grid;gap:.6rem;align-content:start;
+}
+.feat__icon{
+  width:2.6rem;height:2.6rem;border-radius:10px;display:grid;place-items:center;
+  background:var(--tide-soft);color:var(--tide-ink);
+}
+.feat h3{font-size:1.15rem;letter-spacing:-.01em;margin-top:.3rem;}
+.feat p{color:var(--text-muted);font-size:.94rem;}
+
+/* =================== FOOTER =================== */
+.foot{background:var(--night);color:#E9EEF7;padding:3.5rem 0 2.5rem;margin-top:0;}
+.foot .eyebrow{color:#98A8C4;}
+.foot__brand{font-family:Fraunces,serif;font-size:1.7rem;line-height:1.2;margin:.6rem 0 .8rem;}
+.foot p.note{font-size:.9rem;color:#98A8C4;max-width:46ch;}
+
+/* =================== MOTION =================== */
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .9s cubic-bezier(.16,.8,.3,1),transform .9s cubic-bezier(.16,.8,.3,1);
+}
+.reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1 !important;transform:none !important;}
+  .masthead span > em{transform:none !important;opacity:1 !important;animation:none !important;}
+  .hero .eyebrow,.hero__lede,.hero__actions,.hero__cue{opacity:1 !important;animation:none !important;}
+}
 </style>
 </head>
 <body>
+
+<header class="hero">
+  <div class="hero__photo" id="heroPhoto"></div>
+  <div class="hero__scrim"></div>
+  <div class="wrap hero__inner">
+    <p class="eyebrow">TRACE Schools &middot; Staff Wellness Committee</p>
+    <h1 class="masthead">
+      <span><em>Rise&nbsp;&amp;</em></span>
+      <span><em>Shine</em></span>
+    </h1>
+    <p class="hero__lede">A monthly letter for the people running the building. Built to be used, not just read &mdash; interactive tools, real recipes, no accounts, nothing tracked.</p>
+    <div class="hero__actions">
+      <a class="btn" href="trace-wellness-september/">
+        Read the September issue
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="#ahead">See what's ahead</a>
+    </div>
+  </div>
+  <a class="hero__cue" href="#issue">This month <span>&darr;</span></a>
+</header>
+
 <main>
-  <h1>Rise &amp; Shine &mdash; TRACE Schools Staff Wellness</h1>
-  <a href="trace-wellness-september/">Read the September issue &rarr;</a>
+
+<!-- ============ THIS ISSUE ============ -->
+<section class="band wrap" id="issue">
+  <div class="issue reveal">
+    <div>
+      <span class="issue__badge">Now reading &middot; September 2026</span>
+      <h3>First Bell</h3>
+      <p class="desc">A new year of bells, rosters, and first-day nerves. Before you spend all of it on everyone else, take twenty minutes of it back &mdash; seven short stops, built around a school bell schedule.</p>
+      <ul class="tick">
+        <li><b>P.3</b> Four minutes you already have &mdash; a passing-period breathing reset.</li>
+        <li><b>P.4</b> Thirty miles, thirty days &mdash; a personal walking challenge.</li>
+        <li><b>P.5</b> Sheet-pan honey-chipotle chickpeas &amp; squash, with a printable recipe card.</li>
+        <li><b>P.6</b> Boundaries, burnout, and where to find real help.</li>
+      </ul>
+      <p class="issue__cta">
+        <a class="btn" href="trace-wellness-september/">
+          Open the issue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </p>
+    </div>
+    <div class="issue__art" aria-hidden="true">
+      <div class="issue__art-type">
+        <b>Rise &amp; Shine</b>
+        <span>September &middot; First Bell</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT MAKES IT DIFFERENT ============ -->
+<section class="band wrap">
+  <div class="band__head reveal">
+    <p class="eyebrow">Not another newsletter</p>
+    <h2>Built to be used, not filed away</h2>
+    <p class="band__sub">Every issue is a real interactive page, not a PDF. Nothing here needs an account, and nothing typed into it goes anywhere but your own device.</p>
+  </div>
+  <div class="grid3">
+    <div class="feat reveal">
+      <div class="feat__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M12 14l6.16-3.42a2 2 0 0 0 0-3.5L13.34 3.5a2.67 2.67 0 0 0-2.68 0L5.84 7.08a2 2 0 0 0 0 3.5L12 14z"/><path d="M18 11.5v3.87a2 2 0 0 1-1.11 1.79l-4 2.2a2 2 0 0 1-1.78 0l-4-2.2A2 2 0 0 1 6 15.37V11.5"/></svg>
+      </div>
+      <h3>A different shape every month</h3>
+      <p>September is a bell schedule. Other issues take their own structural concept &mdash; a shelf of envelopes, a quilt you fill in yourself. No two feel the same.</p>
+    </div>
+    <div class="feat reveal">
+      <div class="feat__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <h3>Tools you actually use</h3>
+      <p>A breathing timer, a mile logger, a recipe you can print. Everything saves locally as you go &mdash; open it again next week and it remembers where you left off.</p>
+    </div>
+    <div class="feat reveal">
+      <div class="feat__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V8a5 5 0 0 1 10 0v3"/></svg>
+      </div>
+      <h3>Private by default</h3>
+      <p>No accounts, no analytics, nothing reported to the committee or the district. Whatever you save stays on the device you saved it on.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ YEAR AHEAD ============ -->
+<section class="band wrap" id="ahead">
+  <div class="ghost" aria-hidden="true">09</div>
+  <div class="band__head reveal">
+    <p class="eyebrow">The year ahead</p>
+    <h2>Nine issues, September through May</h2>
+    <p class="band__sub">Each one gets its own concept and centerpiece. September is live &mdash; the rest are in progress, one month at a time.</p>
+  </div>
+  <ul class="months reveal">
+    <li class="month">
+      <p class="month__when">Sep 2026 <span class="month__status" style="background:var(--tide-soft);color:var(--tide-ink);">Live</span></p>
+      <p class="month__title">First Bell</p>
+      <p class="month__theme">Starting the year without burning the tank by week three.</p>
+    </li>
+    <li class="month">
+      <p class="month__when">Oct 2026 <span class="month__status">Drafting</span></p>
+      <p class="month__title">The Long Middle</p>
+      <p class="month__theme">The honeymoon is over and break is nowhere in sight.</p>
+    </li>
+    <li class="month">
+      <p class="month__when">Nov 2026 <span class="month__status">Drafting</span></p>
+      <p class="month__title">Enough</p>
+      <p class="month__theme">Gratitude done well, not gratitude as an obligation.</p>
+    </li>
+    <li class="month">
+      <p class="month__when">Dec 2026 <span class="month__status">Drafting</span></p>
+      <p class="month__title">Low Light</p>
+      <p class="month__theme">Short month, high load, running on fumes into break.</p>
+    </li>
+    <li class="month">
+      <p class="month__when">Jan 2027 <span class="month__status">Planned</span></p>
+      <p class="month__title">Small and Repeatable</p>
+      <p class="month__theme">Resolutions fail. Systems work.</p>
+    </li>
+    <li class="month">
+      <p class="month__when">Feb 2027 <span class="month__status">Planned</span></p>
+      <p class="month__title">Heart</p>
+      <p class="month__theme">The hardest month of the year, met halfway.</p>
+    </li>
+    <li class="month">
+      <p class="month__when">Mar 2027 <span class="month__status">Planned</span></p>
+      <p class="month__title">Waking Up</p>
+      <p class="month__theme">Spring forward, and the page brightens with it.</p>
+    </li>
+    <li class="month">
+      <p class="month__when">Apr 2027 <span class="month__status">Planned</span></p>
+      <p class="month__title">Under Pressure</p>
+      <p class="month__theme">Testing season meets Stress Awareness Month.</p>
+    </li>
+    <li class="month">
+      <p class="month__when">May 2027 <span class="month__status">Planned</span></p>
+      <p class="month__title">Last Bell</p>
+      <p class="month__theme">The emotional close of the year.</p>
+    </li>
+  </ul>
+</section>
+
 </main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p class="eyebrow">TRACE Schools</p>
+    <p class="foot__brand">Bright minds. Healthy Suns.<br>Fully supported.</p>
+    <p class="note">We are on this health journey together. Everything on this site saves only to your own device &mdash; no accounts, no tracking, nothing reported to anyone.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var targets = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduced) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
+    targets.forEach(function(el){ io.observe(el); });
+  } else {
+    targets.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  if (!reduced) {
+    var photo = document.getElementById("heroPhoto");
+    var onScroll = function(){
+      var y = window.scrollY || 0;
+      photo.style.transform = "translateY(" + Math.min(y * 0.22, 140) + "px) scale(1.06)";
+    };
+    document.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+})();
+</script>
+
 </body>
 </html>

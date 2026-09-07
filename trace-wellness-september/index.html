@@ -211,8 +211,12 @@ img{max-width:100%;}
   .grid-5-4{grid-template-columns:5fr 4fr;}
   .grid-3{grid-template-columns:repeat(3,1fr);}
 }
-.stack{display:grid;gap:1rem;}
-.stack-sm{display:grid;gap:.5rem;}
+/* align-content:start matters here. A card in a two-column row stretches to match
+   its taller sibling, and grid's default stretch pours that spare height into the
+   gaps between rows rather than leaving it at the bottom — which opens a ~100px
+   hole under any fixed-height child. */
+.stack{display:grid;gap:1rem;align-content:start;}
+.stack-sm{display:grid;gap:.5rem;align-content:start;}
 h3.card__title{font-size:1.3rem;letter-spacing:-.01em;}
 .small{font-size:.9rem;color:var(--text-muted);}
 .xsmall{font-size:.8rem;color:var(--text-muted);}
@@ -448,7 +452,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
   background-repeat:no-repeat;
   will-change:transform;
 }
-.bleed__q{margin:0;display:grid;gap:1.6rem;}
+.bleed__q{margin-block:0;margin-inline:auto;display:grid;gap:1.6rem;}
 .bleed__q p{
   font-family:Fraunces,serif;font-weight:600;line-height:1.08;letter-spacing:-.035em;
   font-size:clamp(1.9rem,5.4vw,4rem);text-wrap:balance;max-width:20ch;

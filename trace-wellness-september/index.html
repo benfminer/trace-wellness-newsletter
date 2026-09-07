@@ -247,10 +247,14 @@ h3.card__title{font-size:1.3rem;letter-spacing:-.01em;}
 
 .weeks{display:grid;gap:1rem;margin-top:1.5rem;}
 @media (min-width:860px){.weeks{grid-template-columns:repeat(3,1fr);}}
-.week{border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem;background:var(--surface-2);}
+/* flex column + margin-top:auto on .days pins each week's day row to the
+   bottom of its card, so the three rows line up across the reset even
+   though the blurbs run to different line counts. The cards are already
+   equal height from grid stretch on .weeks. */
+.week{border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem;background:var(--surface-2);display:flex;flex-direction:column;}
 .week h4{font-size:1.05rem;margin-bottom:.15rem;}
 .week .eyebrow{margin-bottom:.5rem;display:block;}
-.days{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem;list-style:none;padding:0;}
+.days{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;padding-top:.9rem;list-style:none;padding-left:0;}
 .day{
   width:36px;height:36px;border-radius:9px;border:1px solid var(--line-strong);
   background:var(--surface);cursor:pointer;

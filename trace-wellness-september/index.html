@@ -392,6 +392,12 @@ input[type="number"],input[type="text"]{
   background:var(--surface-2);border:1px solid var(--line);
 }
 .recipe__photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;}
+
+.card__photo{
+  margin:-1.5rem -1.5rem .6rem;border-radius:var(--radius) var(--radius) 0 0;
+  overflow:hidden;background:var(--surface-2);border-bottom:1px solid var(--line);
+}
+.card__photo img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;}
 .scaler{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;}
 input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
 .ing{list-style:none;margin:0;padding:0;display:grid;gap:.15rem;}
@@ -555,6 +561,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
         padding:0 !important;border-radius:0 !important;}
   .recipe__photo{max-width:36mm;border:1px solid #c8c8c8;break-inside:avoid;margin-bottom:.5rem !important;}
   .stack{gap:.4rem !important;}
+  .card__photo{display:none !important;}
 
   /* sized so the whole card lands on a single sheet */
   .ing{font-size:.86rem;}
@@ -938,6 +945,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
   </div>
   <div class="grid grid-2">
     <div class="card stack-sm">
+      <figure class="card__photo"><img src="../assets/events/committee-meeting.jpg" alt="A coffee cup and an open laptop on a table" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">Save the date &middot; part 1</p>
       <h3 class="card__title">Wellness Committee Meeting</h3>
       <p class="small"><strong>Wednesday, September 23, 2:30&ndash;3:30 PM</strong><br>TRACE Main, Lower Level Room 3.</p>
@@ -946,6 +954,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small"><a href="../wellness-committee-rush/">See the flyer and full details</a></p>
     </div>
     <div class="card stack-sm">
+      <figure class="card__photo"><img src="../assets/events/meet-greet.jpg" alt="Shared plates of food on a wooden restaurant table" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">Save the date &middot; part 2</p>
       <h3 class="card__title">Wellness Meet &amp; Greet</h3>
       <p class="small"><strong>Same day, around 4:00 PM</strong><br>Blanco Cocina + Cantina, Fashion Valley<br>7007 Friars Road, #901, San Diego, CA 92108.</p>
@@ -954,6 +963,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small"><a href="https://maps.google.com/?q=Blanco+Cocina+Cantina+7007+Friars+Road+901+San+Diego+CA+92108" target="_blank" rel="noopener noreferrer">Open in Maps</a></p>
     </div>
     <div class="card stack-sm">
+      <figure class="card__photo"><img src="../assets/events/veba-summit.jpg" alt="A group moving through a yoga class in a bright studio" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">Mark your October &middot; part 1</p>
       <h3 class="card__title">VEBA Wellness Summit</h3>
       <p class="small"><strong>Thursday, October 22, 2026</strong><br>VEBA Resource Center, Kearny Mesa<br>5520 Ruffin Road, San Diego, CA 92123.</p>
@@ -961,12 +971,14 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small"><a href="https://calveba.org/classes-events/" target="_blank" rel="noopener noreferrer">CalVEBA classes &amp; events</a></p>
     </div>
     <div class="card stack-sm">
+      <figure class="card__photo"><img src="../assets/events/dental-clinic.jpg" alt="A clean, modern dental exam room" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">Mark your October &middot; part 2</p>
       <h3 class="card__title">Big Smiles Dental Clinic returns</h3>
       <p class="small"><strong>Friday, October 23, 2026</strong><br>TRACE Main.</p>
       <p class="small">The mobile dental clinic is coming back to campus. Registration details and the sign-up link are coming soon from Nurse Stukes &mdash; if you've been putting off a cleaning, this is the year it comes to you.</p>
     </div>
     <div class="card stack-sm">
+      <figure class="card__photo"><img src="../assets/events/wellness-in-action.jpg" alt="Someone framing a photo on their phone outdoors" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">Show us</p>
       <h3 class="card__title">Wellness in action</h3>
       <p class="small">If you catch a moment of wellness happening &mdash; a class stretching between lessons, a staff walk, a garden bed, a shared lunch &mdash; grab a photo or a short video and send it to the committee.</p>
@@ -974,6 +986,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small"><a href="mailto:bminer@sandi.net?subject=Wellness%20in%20Action%20%E2%80%94%20snapshot">Send a snapshot</a></p>
     </div>
     <div class="card stack-sm">
+      <figure class="card__photo"><img src="../assets/events/playlist.jpg" alt="A tonearm resting on a spinning teal vinyl record" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">Tell us</p>
       <h3 class="card__title">Your song, and your October</h3>
       <p class="small"><strong>The Wellness Champion Playlist.</strong> Send us the song that brings you joy, gets you moving, or just makes you smile &mdash; your go-to morning song, your workout anthem, the one that resets you on the drive home. We're building the list out of whatever you send.</p>
@@ -981,6 +994,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small"><a href="mailto:bminer@sandi.net?subject=Rise%20%26%20Shine%20%E2%80%94%20playlist%20%26%20October%20ideas">Send a song or an idea</a> <span class="xsmall">Benjamin Miner &middot; bminer@sandi.net</span></p>
     </div>
   </div>
+  <p class="xsmall" style="margin-top:.9rem;">Photos are public domain, except the yoga class &mdash; <a href="https://www.flickr.com/photos/47022937@N03/4439499511" target="_blank" rel="noopener noreferrer">GoToVan</a>, <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">CC BY 2.0</a>.</p>
 </section>
 
 </main>

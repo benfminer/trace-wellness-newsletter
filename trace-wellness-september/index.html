@@ -335,6 +335,27 @@ input[type="number"],input[type="text"]{
 }
 .bignum{font-family:Fraunces,serif;font-size:clamp(2.4rem,7vw,3.6rem);line-height:1;letter-spacing:-.02em;}
 
+/* =================== AWARDS =================== */
+.award{display:grid;gap:1.3rem;}
+@media (min-width:760px){
+  .award{grid-template-columns:auto 1fr;align-items:start;gap:2rem;}
+}
+.award__ribbon{width:130px;height:auto;display:block;margin:0 auto;}
+.awards{
+  list-style:none;margin:1.1rem 0 .2rem;padding:0;
+  display:grid;gap:.6rem;grid-template-columns:repeat(2,1fr);
+}
+@media (min-width:620px){.awards{grid-template-columns:repeat(4,1fr);}}
+.awards li{
+  display:grid;gap:.55rem;justify-items:center;text-align:center;
+  padding:1rem .7rem;border-radius:12px;
+  background:var(--tide-soft);color:var(--tide-ink);
+  font-size:.85rem;font-weight:600;line-height:1.3;letter-spacing:-.005em;
+}
+.awards img{width:52px;height:52px;display:block;}
+.award__by{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;margin-top:.9rem;}
+.award__by img{width:128px;height:auto;}
+
 /* =================== EVENTS =================== */
 .events{list-style:none;margin:0;padding:0;display:grid;gap:.55rem;}
 .event{border:1px solid var(--line);border-radius:11px;background:var(--surface);overflow:hidden;}
@@ -620,6 +641,23 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small">Suicide Prevention Awareness Month &middot; National Recovery Month &middot; Childhood Cancer Awareness Month &middot; Cholesterol Education Month &middot; World Alzheimer's Month</p>
     </aside>
   </div>
+
+  <div class="card award" id="award" style="margin-top:1.7rem;">
+    <img class="award__ribbon" src="../assets/awards/ahs-ribbon.svg" alt="America's Healthiest Schools award ribbon" width="243" height="228" loading="lazy">
+    <div class="stack-sm">
+      <p class="eyebrow">Making it official</p>
+      <h3 class="card__title">TRACE is one of America's Healthiest Schools</h3>
+      <p class="small" style="max-width:70ch;">The Alliance for a Healthier Generation named TRACE School to its 2026 list of America's Healthiest Schools, and this year we picked up four more areas of recognition. None of these are participation ribbons. Every one was earned by people already doing the work &mdash; the nurses, the food services crew, the counselors, and the folks who show up to a committee meeting on a Wednesday afternoon.</p>
+      <ul class="awards">
+        <li><img src="../assets/awards/shs.svg" alt="" width="350" height="350" loading="lazy"><span>School Health Services</span></li>
+        <li><img src="../assets/awards/lwp.svg" alt="" width="350" height="350" loading="lazy"><span>Local School Wellness Policy</span></li>
+        <li><img src="../assets/awards/nfa.svg" alt="" width="350" height="350" loading="lazy"><span>Nutrition &amp; Food Access</span></li>
+        <li><img src="../assets/awards/seh.svg" alt="" width="350" height="350" loading="lazy"><span>Social-Emotional Health &amp; Learning</span></li>
+      </ul>
+      <p class="small" style="margin-top:.75rem;">Find TRACE School on the <a href="https://www.healthiergeneration.org/campaigns/americas-healthiest-schools" target="_blank" rel="noopener noreferrer">2026 honoree list</a> &mdash; 1,376 schools across 35 states and DC. Keeping us on it next year is a big part of what the committee does, and there's a way you can help in the bulletin below.</p>
+      <p class="award__by"><span class="xsmall">Awarded by</span> <img src="../assets/awards/healthier-generation-logo.svg" alt="Alliance for a Healthier Generation" width="479" height="199" loading="lazy"></p>
+    </div>
+  </div>
 </section>
 
 <!-- ============ THE RESET (21-day tracker) ============ -->
@@ -767,6 +805,14 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
     </div>
   </div>
 
+  <div class="card stack-sm" style="margin-top:1.7rem;">
+    <p class="eyebrow">Coming next month &middot; free to join</p>
+    <h3 class="card__title">Walktober: a step &amp; movement challenge</h3>
+    <p class="small" style="max-width:70ch;">A month-long challenge built on movement, a little friendly competition, and not much else. Free to enter, no fitness level assumed &mdash; steps count, and so does anything else that gets you moving. Think of it as the natural sequel to your thirty September miles.</p>
+    <p class="small"><strong>Registration opens Monday, September 14.</strong><br>The challenge itself runs October 1 through October 31.</p>
+    <p class="xsmall">The registration link goes out when sign-ups open on the 14th &mdash; watch your district email, or grab a committee member at the September 23 meeting and they'll walk you through it.</p>
+  </div>
+
   <h3 class="card__title" style="margin:2.2rem 0 .5rem;">Free with your VEBA benefits</h3>
   <p class="small" style="margin:0 0 .9rem;max-width:66ch;">Every class below is virtual, led live, and already paid for by your CalVEBA coverage &mdash; no race fee, no drive, no parking. The schedule repeats week to week, so find the day that fits your life and stop negotiating with yourself about it. Open a day to see what runs.</p>
   <ul class="events">
@@ -791,6 +837,8 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
   <ul class="events">
     <li><details class="event"><summary><span class="event__date">SEP 10</span><span class="event__name">World Suicide Prevention Day</span></summary>
       <p class="event__more">Wear teal and purple. The committee will have ribbons and resource cards at each site office. See the Support period below for what to do if someone &mdash; including you &mdash; needs help today.</p></details></li>
+    <li><details class="event"><summary><span class="event__date">SEP 14</span><span class="event__name">Walktober registration opens</span></summary>
+      <p class="event__more">Sign-ups open for the free October Step &amp; Movement Challenge, which runs October 1&ndash;31. Details are up in the PE period above.</p></details></li>
     <li><details class="event"><summary><span class="event__date">SEP 23</span><span class="event__name">Wellness Committee Meeting</span></summary>
       <p class="event__more">Wednesday, 2:30&ndash;3:30 PM at TRACE Main, Lower Level Room 3. Come meet the crew, hear what the committee is about, share ideas, and see how you can get involved. <a href="../wellness-committee-rush/">Details and flyer</a>.</p></details></li>
     <li><details class="event"><summary><span class="event__date">SEP 23</span><span class="event__name">Wellness Meet &amp; Greet</span></summary>
@@ -894,6 +942,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <h3 class="card__title">Wellness Committee Meeting</h3>
       <p class="small"><strong>Wednesday, September 23, 2:30&ndash;3:30 PM</strong><br>TRACE Main, Lower Level Room 3.</p>
       <p class="small">We're recruiting. Come meet the crew, hear what the committee is about, share ideas, and see how you can get involved. No application, no interview, no commitment ceremony.</p>
+      <p class="small"><strong>We're also looking for a Student Wellness Ambassador.</strong> If a TRACE student comes to mind &mdash; someone other students actually listen to &mdash; bring the name to the meeting or send it over.</p>
       <p class="small"><a href="../wellness-committee-rush/">See the flyer and full details</a></p>
     </div>
     <div class="card stack-sm">
@@ -905,16 +954,31 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small"><a href="https://maps.google.com/?q=Blanco+Cocina+Cantina+7007+Friars+Road+901+San+Diego+CA+92108" target="_blank" rel="noopener noreferrer">Open in Maps</a></p>
     </div>
     <div class="card stack-sm">
-      <p class="eyebrow">Advocacy</p>
-      <h3 class="card__title">IDEA Full Funding</h3>
-      <p class="small">Congress has never funded IDEA at the promised 40%. That gap lands on staffing levels, caseloads, and every one of us. Signing takes a minute.</p>
-      <p class="small"><a href="https://docs.google.com/forms/d/e/1FAIpQLSd6NU6fyGkJCy0bRkAdiBtOjUezMfHyDXO_z_yiUBFthOdU9A/viewform" target="_blank" rel="noopener noreferrer">Sign the petition</a></p>
+      <p class="eyebrow">Mark your October &middot; part 1</p>
+      <h3 class="card__title">VEBA Wellness Summit</h3>
+      <p class="small"><strong>Thursday, October 22, 2026</strong><br>VEBA Resource Center, Kearny Mesa<br>5520 Ruffin Road, San Diego, CA 92123.</p>
+      <p class="small">A day of wellness sessions at the VEBA VRC, covered by the benefits you already have. Times and the registration link are still coming from VEBA &mdash; we'll pass them along the moment they land.</p>
+      <p class="small"><a href="https://calveba.org/classes-events/" target="_blank" rel="noopener noreferrer">CalVEBA classes &amp; events</a></p>
+    </div>
+    <div class="card stack-sm">
+      <p class="eyebrow">Mark your October &middot; part 2</p>
+      <h3 class="card__title">Big Smiles Dental Clinic returns</h3>
+      <p class="small"><strong>Friday, October 23, 2026</strong><br>TRACE Main.</p>
+      <p class="small">The mobile dental clinic is coming back to campus. Registration details and the sign-up link are coming soon from Nurse Stukes &mdash; if you've been putting off a cleaning, this is the year it comes to you.</p>
+    </div>
+    <div class="card stack-sm">
+      <p class="eyebrow">Show us</p>
+      <h3 class="card__title">Wellness in action</h3>
+      <p class="small">If you catch a moment of wellness happening &mdash; a class stretching between lessons, a staff walk, a garden bed, a shared lunch &mdash; grab a photo or a short video and send it to the committee.</p>
+      <p class="small">This isn't busywork. Those snapshots are exactly what goes into next year's Healthiest School submission, and they are far easier to gather as they happen than to reconstruct in the spring.</p>
+      <p class="small"><a href="mailto:bminer@sandi.net?subject=Wellness%20in%20Action%20%E2%80%94%20snapshot">Send a snapshot</a></p>
     </div>
     <div class="card stack-sm">
       <p class="eyebrow">Tell us</p>
-      <h3 class="card__title">What do you want in October?</h3>
-      <p class="small">This letter is only useful if it's the one you'd actually open. Recipes, challenges, a section we're missing &mdash; send it over.</p>
-      <p class="small"><a href="mailto:bminer@sandi.net?subject=Rise%20%26%20Shine%20%E2%80%94%20October%20ideas">Share your thoughts</a> <span class="xsmall">Benjamin Miner &middot; bminer@sandi.net</span></p>
+      <h3 class="card__title">Your song, and your October</h3>
+      <p class="small"><strong>The Wellness Champion Playlist.</strong> Send us the song that brings you joy, gets you moving, or just makes you smile &mdash; your go-to morning song, your workout anthem, the one that resets you on the drive home. We're building the list out of whatever you send.</p>
+      <p class="small">And while you're writing: this letter is only useful if it's the one you'd actually open. Recipes, challenges, a section we're missing for October &mdash; send that too.</p>
+      <p class="small"><a href="mailto:bminer@sandi.net?subject=Rise%20%26%20Shine%20%E2%80%94%20playlist%20%26%20October%20ideas">Send a song or an idea</a> <span class="xsmall">Benjamin Miner &middot; bminer@sandi.net</span></p>
     </div>
   </div>
 </section>

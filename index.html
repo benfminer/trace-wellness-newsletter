@@ -160,6 +160,36 @@ img{max-width:100%;display:block;}
 .hero__cue span{display:inline-block;animation:bob 2.4s ease-in-out infinite;}
 @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
 
+/* ---- hero award seal ---- */
+.hero__award{
+  position:absolute;z-index:1;
+  top:clamp(1.6rem,4.5vh,2.8rem);right:clamp(1.1rem,5vw,3rem);
+  display:flex;align-items:center;gap:.9rem;
+  text-decoration:none;color:#FFF6EA;max-width:min(360px,64vw);
+  opacity:0;animation:fadeUp 1s .85s cubic-bezier(.16,.8,.3,1) both;
+}
+.hero__award img{
+  width:clamp(58px,7vw,80px);height:auto;flex:0 0 auto;
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,.5));
+  transition:transform .2s cubic-bezier(.16,.8,.3,1);
+}
+.hero__award:hover img{transform:translateY(-3px) scale(1.03);}
+.hero__award b{display:block;font-size:.95rem;line-height:1.25;letter-spacing:-.012em;}
+.hero__award i{
+  display:block;font-style:normal;margin-top:.3rem;
+  font-family:"IBM Plex Mono",monospace;font-size:.65rem;
+  letter-spacing:.14em;text-transform:uppercase;color:#FFD9A8;
+}
+.hero__award:hover b{text-decoration:underline;text-underline-offset:3px;}
+@media (max-width:640px){
+  .hero__award{gap:0;}
+  .hero__award .hero__award-txt{display:none;}
+}
+@media (prefers-reduced-motion: reduce){
+  .hero__award{opacity:1 !important;animation:none !important;}
+  .hero__award:hover img{transform:none;}
+}
+
 /* =================== SECTIONS =================== */
 .band{padding:clamp(5rem,11vh,7.5rem) 0;border-top:1px solid var(--line);position:relative;}
 .band:first-of-type{border-top:none;}
@@ -277,6 +307,26 @@ img{max-width:100%;display:block;}
 .foot__brand{font-family:Fraunces,serif;font-size:1.7rem;line-height:1.2;margin:.6rem 0 .8rem;}
 .foot p.note{font-size:.9rem;color:#98A8C4;max-width:46ch;}
 
+/* =================== CALENDAR =================== */
+.cal{
+  list-style:none;margin:0;padding:0;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--surface);box-shadow:var(--shadow);overflow:hidden;
+}
+.cal li{display:grid;gap:.2rem 1.4rem;padding:1.05rem 1.3rem;border-top:1px solid var(--line);}
+.cal li:first-child{border-top:none;}
+@media (min-width:700px){
+  .cal li{grid-template-columns:8.5rem 1fr;align-items:baseline;}
+  .cal__when{grid-row:span 2;}
+}
+.cal__when{
+  font-family:"IBM Plex Mono",monospace;font-size:.76rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--tide-ink);
+}
+.cal__what{font-weight:600;font-size:1.02rem;letter-spacing:-.01em;}
+.cal__note{color:var(--text-muted);font-size:.92rem;max-width:62ch;}
+.cal__foot{color:var(--text-muted);font-size:.9rem;margin-top:1.1rem;max-width:60ch;}
+
 /* =================== MOTION =================== */
 .reveal{
   opacity:0;transform:translateY(28px);
@@ -295,6 +345,13 @@ img{max-width:100%;display:block;}
 <header class="hero">
   <div class="hero__photo" id="heroPhoto"></div>
   <div class="hero__scrim"></div>
+  <a class="hero__award" href="trace-wellness-september/#award">
+    <img src="assets/awards/ahs-ribbon.svg" alt="America's Healthiest Schools award ribbon" width="243" height="228">
+    <span class="hero__award-txt">
+      <b>One of America's Healthiest Schools</b>
+      <i>2026 Honoree &middot; Four areas</i>
+    </span>
+  </a>
   <div class="wrap hero__inner">
     <p class="eyebrow">TRACE Schools &middot; Staff Wellness Committee</p>
     <h1 class="masthead">
@@ -347,6 +404,53 @@ img{max-width:100%;display:block;}
       </div>
     </div>
   </div>
+</section>
+
+<!-- ============ WHAT'S COMING UP ============ -->
+<section class="band wrap" id="calendar">
+  <div class="band__head reveal">
+    <p class="eyebrow">Save the dates</p>
+    <h2>What's coming up</h2>
+    <p class="band__sub">The next few weeks on the TRACE wellness calendar, with a link wherever there's one to give.</p>
+  </div>
+  <ul class="cal reveal">
+    <li>
+      <span class="cal__when">Sep 10</span>
+      <span class="cal__what">World Suicide Prevention Day</span>
+      <span class="cal__note">Wear teal and purple. Ribbons and resource cards at each site office. <a href="trace-wellness-september/#support">Where to get real help</a></span>
+    </li>
+    <li>
+      <span class="cal__when">Sep 14</span>
+      <span class="cal__what">Walktober registration opens</span>
+      <span class="cal__note">Sign-ups open for the free October Step &amp; Movement Challenge. <a href="trace-wellness-september/#move">What it involves</a></span>
+    </li>
+    <li>
+      <span class="cal__when">Sep 23 &middot; 2:30p</span>
+      <span class="cal__what">Wellness Committee Meeting</span>
+      <span class="cal__note">TRACE Main, Lower Level Room 3. The committee is recruiting &mdash; no application, no interview. <a href="wellness-committee-rush/">Flyer and details</a></span>
+    </li>
+    <li>
+      <span class="cal__when">Sep 23 &middot; 4:00p</span>
+      <span class="cal__what">Wellness Meet &amp; Greet</span>
+      <span class="cal__note">Blanco Cocina + Cantina, Fashion Valley. No agenda, just good food and good company. <a href="wellness-committee-rush/">Details and the parking hack</a></span>
+    </li>
+    <li>
+      <span class="cal__when">Oct 1&ndash;31</span>
+      <span class="cal__what">Walktober challenge runs</span>
+      <span class="cal__note">A month of movement, free to enter, no fitness level assumed. Steps count and so does everything else.</span>
+    </li>
+    <li>
+      <span class="cal__when">Oct 22</span>
+      <span class="cal__what">VEBA Wellness Summit</span>
+      <span class="cal__note">VEBA Resource Center, Kearny Mesa. Covered by your benefits; times and registration still to come. <a href="https://calveba.org/classes-events/" target="_blank" rel="noopener noreferrer">CalVEBA calendar</a></span>
+    </li>
+    <li>
+      <span class="cal__when">Oct 23</span>
+      <span class="cal__what">Big Smiles Dental Clinic at TRACE Main</span>
+      <span class="cal__note">The mobile dental clinic returns to campus. Registration link coming soon from Nurse Stukes.</span>
+    </li>
+  </ul>
+  <p class="cal__foot reveal">Free virtual classes run every day of the week through your CalVEBA benefits &mdash; yoga, strength, sound baths, mindfulness. <a href="trace-wellness-september/#move">See the weekly schedule</a>.</p>
 </section>
 
 <!-- ============ WHAT MAKES IT DIFFERENT ============ -->

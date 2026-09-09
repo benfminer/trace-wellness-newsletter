@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wellness Committee Rush 2026 &middot; TRACE Schools</title>
+<meta name="description" content="Wellness Committee Rush 2026 — the September meeting and meet &amp; greet for TRACE Schools staff. No application, no interview, just show up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* ============================================================
+   TRACE Schools — Wellness Committee Rush 2026
+   Companion page to the September 2026 Rise & Shine letter.
+   Same tokens and type as the issue, trimmed to one page.
+   ============================================================ */
+
+:root{
+  --ground:#FCFAF7;
+  --ground-2:#F4EFE8;
+  --surface:#FFFFFF;
+  --surface-2:#F7F3ED;
+  --line:#E3DCD1;
+  --line-strong:#CFC5B6;
+  --text:#14203A;
+  --text-muted:#5D6B84;
+  --tide:#0F7E77;
+  --tide-soft:#DCEFEC;
+  --tide-ink:#0A5C57;
+  --sun:#F2A413;
+  --coral:#EE5D4C;
+  --night:#14203A;
+  --shadow:0 1px 2px rgba(20,32,58,.05), 0 10px 30px -18px rgba(20,32,58,.35);
+  --shadow-lift:0 2px 4px rgba(20,32,58,.06), 0 22px 48px -22px rgba(20,32,58,.45);
+  --focus:#0F7E77;
+  --on-tide:#FFFFFF;
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B1322;
+    --ground-2:#111C30;
+    --surface:#14203A;
+    --surface-2:#1B2A48;
+    --line:#26355A;
+    --line-strong:#3A4C78;
+    --text:#E9EEF7;
+    --text-muted:#98A8C4;
+    --tide:#3FBFB2;
+    --tide-soft:#123A38;
+    --tide-ink:#8CE0D5;
+    --sun:#F6B93B;
+    --coral:#FF7A67;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
+    --focus:#3FBFB2;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0B1322;
+  --ground-2:#111C30;
+  --surface:#14203A;
+  --surface-2:#1B2A48;
+  --line:#26355A;
+  --line-strong:#3A4C78;
+  --text:#E9EEF7;
+  --text-muted:#98A8C4;
+  --tide:#3FBFB2;
+  --tide-soft:#123A38;
+  --tide-ink:#8CE0D5;
+  --sun:#F6B93B;
+  --coral:#FF7A67;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
+  --focus:#3FBFB2;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--text);
+  font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:1.02rem;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block;}
+a{color:var(--tide-ink);text-underline-offset:.18em;}
+a:hover{color:var(--tide);}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px;}
+
+.wrap{width:min(1080px,calc(100% - 2.6rem));margin-inline:auto;}
+.stack-sm > * + *{margin-top:.55rem;}
+
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.7rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--tide-ink);
+  margin:0;
+}
+.small{font-size:.94rem;margin:0;color:var(--text-muted);}
+.xsmall{font-size:.82rem;margin:0;color:var(--text-muted);}
+
+/* ---- top bar ---- */
+.topbar{
+  border-bottom:1px solid var(--line);
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:blur(8px);
+  position:sticky;top:0;z-index:5;
+}
+.topbar__row{
+  display:flex;align-items:center;gap:1rem;
+  min-height:56px;flex-wrap:wrap;
+}
+.topbar__row .back{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;color:var(--text-muted);
+}
+.topbar__row .back:hover{color:var(--tide);}
+.theme-btn{
+  margin-left:auto;
+  display:inline-grid;place-items:center;
+  width:34px;height:34px;
+  border:1px solid var(--line-strong);border-radius:999px;
+  background:var(--surface);color:var(--text);cursor:pointer;
+}
+.theme-btn:hover{background:var(--surface-2);}
+
+/* ---- hero ---- */
+.hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(168deg, var(--ground-2) 0%, var(--ground) 62%);
+  border-bottom:1px solid var(--line);
+  padding:3.4rem 0 3rem;
+}
+.hero__sun{
+  position:absolute;right:-90px;top:-110px;
+  width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--sun) 34%, transparent), transparent 68%);
+  pointer-events:none;
+}
+.hero__inner{position:relative;}
+.masthead{
+  font-family:Fraunces,Georgia,serif;
+  font-weight:700;
+  font-size:clamp(2.6rem,8vw,5.2rem);
+  line-height:.94;
+  letter-spacing:-.02em;
+  margin:.5rem 0 0;
+}
+.masthead em{font-style:italic;font-weight:400;color:var(--tide);display:block;}
+.hero__lede{
+  max-width:56ch;margin:1.1rem 0 0;
+  font-size:clamp(1.02rem,2.1vw,1.16rem);
+  color:var(--text-muted);
+}
+.hero__meta{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1rem;}
+.chip{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--line-strong);border-radius:999px;
+  padding:.3rem .7rem;color:var(--text-muted);
+}
+.chip--sun{background:var(--sun);border-color:transparent;color:#221706;}
+
+/* ---- layout ---- */
+main{padding:3rem 0 1rem;}
+.section + .section{margin-top:3.2rem;}
+h2{
+  font-family:Fraunces,Georgia,serif;
+  font-weight:600;
+  font-size:clamp(1.6rem,4vw,2.3rem);
+  line-height:1.12;
+  letter-spacing:-.01em;
+  margin:.3rem 0 1rem;
+}
+h3{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.24rem;line-height:1.2;margin:0;}
+
+.grid-2{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));}
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:1.35rem 1.4rem;
+  box-shadow:var(--shadow);
+}
+.card--part{position:relative;}
+.card--part::before{
+  content:"";position:absolute;left:0;top:1.1rem;bottom:1.1rem;width:3px;
+  border-radius:3px;background:var(--tide);
+}
+.card--part{padding-left:1.7rem;}
+.card--part.is-two::before{background:var(--sun);}
+
+/* detail rows inside the two event cards */
+.detail{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:.55rem .7rem;
+  margin:.9rem 0 0;
+  align-items:start;
+}
+.detail dt{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-muted);
+  padding-top:.28rem;
+}
+.detail dd{margin:0;font-weight:600;}
+.detail dd .sub{display:block;font-weight:400;font-size:.92rem;color:var(--text-muted);}
+
+.checks{list-style:none;margin:.9rem 0 0;padding:0;display:grid;gap:.4rem;}
+.checks li{padding-left:1.5rem;position:relative;}
+.checks li::before{
+  content:"✓";position:absolute;left:0;top:-.02em;
+  color:var(--tide);font-weight:700;
+}
+
+.callout{
+  background:var(--tide-soft);
+  border:1px solid color-mix(in srgb, var(--tide) 28%, transparent);
+  border-radius:var(--radius);
+  padding:1.2rem 1.35rem;
+}
+.callout h3{color:var(--tide-ink);}
+.callout p{color:var(--text);}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;
+  border:1px solid transparent;border-radius:999px;
+  padding:.62rem 1.1rem;cursor:pointer;
+  background:var(--tide);color:var(--on-tide);
+}
+.btn:hover{filter:brightness(1.07);color:var(--on-tide);}
+.btn--ghost{background:transparent;color:var(--text);border-color:var(--line-strong);}
+.btn--ghost:hover{background:var(--surface-2);filter:none;color:var(--text);}
+.btn-row{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.2rem;}
+
+/* ---- flyer ---- */
+.flyer{
+  margin:0;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow-lift);
+  background:var(--surface);
+  max-width:760px;
+}
+.flyer img{width:100%;}
+.flyer figcaption{
+  padding:.75rem 1rem;
+  border-top:1px solid var(--line);
+  font-size:.82rem;color:var(--text-muted);
+  background:var(--surface-2);
+}
+
+/* ---- footer ---- */
+.foot{
+  margin-top:3.6rem;
+  background:var(--night);
+  color:#E9EEF7;
+  padding:2.6rem 0 2.2rem;
+}
+.foot .eyebrow{color:#8CE0D5;}
+.foot a{color:#8CE0D5;}
+
+@media print{
+  .topbar,.btn-row,.hero__sun{display:none !important;}
+  body{background:#fff;color:#000;}
+  .card,.callout,.flyer{box-shadow:none;break-inside:avoid;}
+  .foot{background:#fff;color:#000;}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="Page">
+  <div class="wrap topbar__row">
+    <a class="back" href="../trace-wellness-september/">&larr;&nbsp;Rise &amp; Shine, September</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2"></circle>
+        <path d="M12 2.4v2M12 19.6v2M2.4 12h2M19.6 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"></path>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero__sun" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+    <p class="eyebrow">TRACE Schools &middot; Staff Wellness Committee</p>
+    <h1 class="masthead">Rush<em>Wellness</em></h1>
+    <div class="hero__meta">
+      <span class="chip chip--sun">Now recruiting</span>
+      <span class="chip">Wednesday, September 23, 2026</span>
+    </div>
+    <p class="hero__lede">No hazing. No GPA requirement. No awkward initiation. Just good people, good vibes, and wellness. September is Self-Care Awareness Month, and the committee is looking for new members &mdash; come to the meeting, come to the taco place after, or come to both.</p>
+    <div class="btn-row">
+      <a class="btn" href="#part-1">See the details</a>
+      <a class="btn btn--ghost" href="wellness-committee-rush-2026.pdf" target="_blank" rel="noopener">Download the flyer (PDF)</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ WHAT IT IS ============ -->
+<section class="section wrap" id="what">
+  <p class="eyebrow">What you'd be joining</p>
+  <h2>Wellness shouldn't feel like another assignment</h2>
+  <div class="grid-2">
+    <div class="card stack-sm">
+      <p class="small" style="color:var(--text);font-size:1.02rem;">The Wellness Committee is all about finding simple ways to support our mental, emotional, and physical well-being &mdash; without adding another stressful thing to your plate. Same people, brighter days.</p>
+      <p class="small">Healthy mind. Happy heart. Strong body. Connected community. That's the whole platform.</p>
+    </div>
+    <div class="callout stack-sm">
+      <h3>Self-care is not selfish &mdash; it's necessary.</h3>
+      <p class="small">September is Self-Care Awareness Month, which makes it a reasonable month to do one thing for yourself. This is a low-effort candidate.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE TWO PARTS ============ -->
+<section class="section wrap" id="part-1">
+  <p class="eyebrow">September 23 &middot; two parts</p>
+  <h2>Join us at the meeting, or swing by after your workday</h2>
+  <div class="grid-2">
+
+    <div class="card card--part stack-sm">
+      <p class="eyebrow">Part 1</p>
+      <h3>Wellness Committee Meeting</h3>
+      <p class="small">Come meet the crew, hear what the Wellness Committee is all about, share ideas, and see how you can get involved.</p>
+      <dl class="detail">
+        <dt>When</dt>
+        <dd>Wednesday, September 23<span class="sub">2:30 &ndash; 3:30 PM</span></dd>
+        <dt>Where</dt>
+        <dd>TRACE Main<span class="sub">Lower Level, Room 3</span></dd>
+      </dl>
+    </div>
+
+    <div class="card card--part is-two stack-sm">
+      <p class="eyebrow">Part 2</p>
+      <h3>Wellness Meet &amp; Greet</h3>
+      <p class="small">After the meeting, we're taking wellness off campus. Good food, good company, no agenda.</p>
+      <dl class="detail">
+        <dt>When</dt>
+        <dd>Around 4:00 PM<span class="sub">Same day, right after the meeting</span></dd>
+        <dt>Where</dt>
+        <dd>Blanco Cocina + Cantina<span class="sub">Fashion Valley &middot; 7007 Friars Road, #901, San Diego, CA 92108</span></dd>
+      </dl>
+      <p class="small" style="margin-top:.9rem;"><a href="https://maps.google.com/?q=Blanco+Cocina+Cantina+7007+Friars+Road+901+San+Diego+CA+92108" target="_blank" rel="noopener">Open in Maps</a></p>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:1.1rem;">
+    <div class="callout stack-sm">
+      <p class="eyebrow">Parking hack</p>
+      <h3>Don't circle Fashion Valley</h3>
+      <p class="small">Park on the top level of the parking structure near Riverwalk and Avenida del Rio Drive. There's a bridge that takes you straight to Blanco &mdash; because self-care also means not wandering around Fashion Valley looking for the restaurant.</p>
+    </div>
+    <div class="card stack-sm">
+      <p class="eyebrow">How to join</p>
+      <h3>Just show up</h3>
+      <ul class="checks">
+        <li>No application.</li>
+        <li>No interview.</li>
+        <li>No commitment ceremony.</li>
+      </ul>
+      <p class="small" style="margin-top:.9rem;">Either event counts. Both is better. Neither is fine too &mdash; there's always October.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE FLYER ============ -->
+<section class="section wrap" id="flyer">
+  <p class="eyebrow">The flyer</p>
+  <h2>Print it, post it, forward it</h2>
+  <p class="small" style="max-width:60ch;margin-bottom:1.2rem;">Same information as above, in the version that fits on a staff room wall. Tap the image for the full-size PDF.</p>
+  <figure class="flyer">
+    <a href="wellness-committee-rush-2026.pdf" target="_blank" rel="noopener">
+      <img src="flyer.jpg" alt="Wellness Committee Rush 2026 flyer. Now recruiting new members. September is Self-Care Awareness Month. Part 1: Wellness Committee Meeting, Wednesday September 23, 2:30 to 3:30 PM, TRACE Main, Lower Level Room 3. Part 2: Wellness Meet and Greet, around 4:00 PM at Blanco Cocina + Cantina, Fashion Valley, 7007 Friars Road #901, San Diego CA 92108. No application, no interview, no commitment ceremony — just show up." width="1275" height="1650">
+    </a>
+    <figcaption>Wellness Committee Rush 2026 &mdash; letter size, print-ready.</figcaption>
+  </figure>
+  <div class="btn-row">
+    <a class="btn" href="wellness-committee-rush-2026.pdf" target="_blank" rel="noopener">Download the PDF</a>
+    <a class="btn btn--ghost" href="../trace-wellness-september/">Back to the September letter</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap stack-sm">
+    <p class="eyebrow">TRACE Schools</p>
+    <p style="font-family:Fraunces,serif;font-size:1.5rem;line-height:1.15;margin:.2rem 0 0;">Rush Wellness. Choose yourself.<br>Join the committee.</p>
+    <p class="xsmall" style="color:#98A8C4;max-width:52ch;margin-top:1rem;">Wellness &middot; Connection &middot; Positive energy &middot; A stronger tomorrow. Healthy people, happier schools.</p>
+    <p class="xsmall" style="color:#98A8C4;margin-top:.8rem;">Part of the <a href="../">Rise &amp; Shine</a> staff wellness letter series.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var NS = "trace-wellness-sep26:";
+  function get(k){ try { var v = localStorage.getItem(NS+k); return v === null ? null : JSON.parse(v); } catch(e){ return null; } }
+  function set(k,v){ try { localStorage.setItem(NS+k, JSON.stringify(v)); } catch(e){} }
+
+  /* share the September issue's theme choice so the two pages match */
+  var saved = get("theme");
+  if (saved) document.documentElement.setAttribute("data-theme", saved);
+
+  var btn = document.getElementById("themeBtn");
+  btn.addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    if (!cur) cur = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    var next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    set("theme", next);
+  });
+})();
+</script>
+
+</body>
+</html>

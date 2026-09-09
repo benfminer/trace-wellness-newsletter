@@ -200,9 +200,18 @@ img{max-width:100%;display:block;}
   letter-spacing:.1em;text-transform:uppercase;color:var(--tide-ink);
   background:var(--tide-soft);padding:.18rem .45rem;border-radius:5px;margin-top:.1rem;
 }
-.issue__cta{margin-top:1.8rem;}
+.issue__cta{margin-top:1.8rem;display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;}
 .issue__cta .btn{background:var(--tide);color:var(--on-tide);box-shadow:0 12px 26px -12px rgba(15,126,119,.5);}
 .issue__cta .btn:hover{box-shadow:0 18px 32px -14px rgba(15,126,119,.6);}
+.issue__cta .btn--ghost{
+  background:transparent;color:var(--text);
+  border:1px solid var(--line-strong);box-shadow:none;
+}
+.issue__cta .btn--ghost:hover{background:var(--surface-2);box-shadow:none;transform:none;}
+.issue__note{
+  margin:1rem 0 0;font-size:.92rem;color:var(--text-muted);max-width:48ch;
+}
+.issue__note b{color:var(--tide-ink);font-weight:600;}
 
 .issue__art{
   position:relative;border-radius:calc(var(--radius) - 2px);overflow:hidden;
@@ -324,7 +333,12 @@ img{max-width:100%;display:block;}
           Open the issue
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
+        <a class="btn btn--ghost" href="wellness-committee-rush/">
+          Wellness Committee Rush
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </p>
+      <p class="issue__note">The committee is recruiting. <b>Wednesday, September 23</b> &mdash; meeting at 2:30 PM, then a meet &amp; greet off campus at 4:00. No application, no interview. Just show up.</p>
     </div>
     <div class="issue__art" aria-hidden="true">
       <div class="issue__art-type">

@@ -253,6 +253,16 @@ h3.card__title{font-size:1.3rem;letter-spacing:-.01em;}
    equal height from grid stretch on .weeks. */
 .week{border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem;background:var(--surface-2);display:flex;flex-direction:column;}
 .week h4{font-size:1.05rem;margin-bottom:.15rem;}
+.week__eg{
+  list-style:none;margin:.6rem 0 0;padding:0;
+  display:grid;gap:.3rem;font-size:.88rem;color:var(--text-muted);
+}
+.week__eg li{padding-left:.85rem;position:relative;}
+.week__eg li::before{
+  content:"";position:absolute;left:0;top:.62em;
+  width:4px;height:4px;border-radius:50%;background:var(--tide);
+}
+.week__eg + .week__eg-note{margin-top:.6rem;font-size:.85rem;color:var(--text-muted);font-style:italic;}
 .week .eyebrow{margin-bottom:.5rem;display:block;}
 .days{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;padding-top:.9rem;list-style:none;padding-left:0;}
 .day{
@@ -977,11 +987,29 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
   /* ---------------- 21-day reset ---------------- */
   var WEEKS = [
     { tag:"Week 1 · Sept 7–13", title:"Protect the edges",
-      note:"One thing that happens before school and one that happens after. A real breakfast, a walk to the car the long way — something that isn't for anyone else." },
+      note:"The edges are the first thirty minutes of your day and the last thirty — the parts that get eaten first when the year picks up speed. This week, claim one thing on each end and treat it as fixed. Two small pockets that belong to you and not to the building.",
+      eg:["Eat an actual breakfast sitting down, not in the car.",
+          "Leave the house five minutes early so the drive isn't a sprint.",
+          "Don't open email until you're on campus.",
+          "Take the long way to your car at the end of the day.",
+          "Change out of work clothes before you do anything else at home."],
+      close:"Tap a day when both edges held. Most weeks it won't be all seven, and that's the point — you're building a floor, not a streak." },
     { tag:"Week 2 · Sept 14–20", title:"Move on purpose",
-      note:"Twenty minutes of deliberate movement. A lunch lap counts. Parking further away counts. Pacing during a phone call counts." },
+      note:"Twenty minutes of deliberate movement a day. Deliberate is the operative word: it counts when you chose it, not when the day happened to make you walk a lot.",
+      eg:["A lunch lap around the building or the field.",
+          "Park at the far end of the lot on purpose.",
+          "Pace during a phone call instead of sitting through it.",
+          "Take the stairs the whole week, even the third floor.",
+          "One VEBA class — they run at 6 a.m., 4 p.m., and 8 p.m."],
+      close:"Broken into chunks is fine. Four five-minute walks is still twenty minutes." },
     { tag:"Week 3 · Sept 21–27", title:"Connect and unplug",
-      note:"One real conversation with a colleague that isn't about work, and one tech-free hour before bed." }
+      note:"Two halves. One real conversation a day with a colleague that isn't about work, students, or logistics — and one hour before bed with the screens off.",
+      eg:["Ask someone about their weekend and stay for the answer.",
+          "Eat lunch with a person instead of at your desk.",
+          "Say the thing out loud when a colleague does something well.",
+          "Charge your phone in another room overnight.",
+          "Swap the last scroll of the day for ten pages of anything."],
+      close:"The conversation is the harder half. Ninety seconds counts." }
   ];
   var done = store.get("reset", []);
   if (!Array.isArray(done)) done = [];
@@ -1001,9 +1029,12 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       var idx = wi * 7 + d;
       days += '<li><button class="day" type="button" data-day="' + idx + '" aria-pressed="false" aria-label="Week ' + (wi+1) + ', day ' + d + '">' + idx + '</button></li>';
     }
+    var eg = w.eg.map(function(item){ return '<li>' + item + '</li>'; }).join("");
     box.innerHTML = '<span class="eyebrow">' + w.tag + '</span>' +
                     '<h4>' + w.title + '</h4>' +
                     '<p class="small">' + w.note + '</p>' +
+                    '<ul class="week__eg">' + eg + '</ul>' +
+                    '<p class="week__eg-note">' + w.close + '</p>' +
                     '<ul class="days">' + days + '</ul>';
     weeksEl.appendChild(box);
   });

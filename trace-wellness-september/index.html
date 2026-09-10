@@ -7,7 +7,7 @@
 <meta name="description" content="The TRACE Schools staff wellness letter for September 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
 <style>
 /* ============================================================
    TRACE Schools — Rise & Shine, September 2026
@@ -29,7 +29,9 @@
   --tide-soft:#DCEFEC;
   --tide-ink:#0A5C57;
   --sun:#F2A413;
+  --sun-ink:#8A5A05;
   --coral:#EE5D4C;
+  --coral-ink:#A8321F;
   --night:#14203A;
   --shadow:0 1px 2px rgba(20,32,58,.05), 0 10px 30px -18px rgba(20,32,58,.35);
   --shadow-lift:0 2px 4px rgba(20,32,58,.06), 0 22px 48px -22px rgba(20,32,58,.45);
@@ -52,7 +54,9 @@
     --tide-soft:#123A38;
     --tide-ink:#8CE0D5;
     --sun:#F6B93B;
+    --sun-ink:#F6C96B;
     --coral:#FF7A67;
+    --coral-ink:#FF9E8F;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
     --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
     --focus:#3FBFB2;
@@ -73,7 +77,9 @@
   --tide-soft:#123A38;
   --tide-ink:#8CE0D5;
   --sun:#F6B93B;
+  --sun-ink:#F6C96B;
   --coral:#FF7A67;
+  --coral-ink:#FF9E8F;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
   --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
   --focus:#3FBFB2;
@@ -393,6 +399,47 @@ input[type="number"],input[type="text"]{
 }
 .recipe__photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;}
 
+
+/* =================== PLAYLIST TEASER =================== */
+/* A slice of the chalkboard from /playlist/, sized for the card. Dark in both
+   themes on purpose — it's a board, not a surface that follows the palette. */
+.teaser{
+  padding:.4rem;border-radius:11px;
+  background:linear-gradient(158deg,#A9784A 0%,#7A5330 36%,#8E6238 60%,#5F3F23 100%);
+  box-shadow:var(--shadow);
+}
+.teaser[hidden]{display:none;}
+.teaser__board{
+  border-radius:5px;padding:.75rem .9rem .85rem;
+  background:
+    radial-gradient(ellipse 40% 34% at 26% 24%, rgba(255,255,255,.05), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 45%, #38493F 0%, #2B3931 65%, #223029 100%);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.45), inset 0 5px 16px rgba(0,0,0,.4);
+  text-align:center;
+}
+.teaser__board .eyebrow{color:rgba(244,241,230,.6);}
+.teaser__songs{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:.15rem .9rem;margin-top:.35rem;
+}
+.teaser__songs b{
+  font-family:"Caveat","Bradley Hand",cursive;font-weight:700;line-height:1.1;
+  color:#F4F1E6;
+  text-shadow:0 0 1px rgba(255,255,255,.5), 0 0 6px rgba(255,255,255,.14), 1px 1px 0 rgba(0,0,0,.2);
+  display:inline-block;
+}
+.teaser__songs b:nth-child(1){transform:rotate(-2.4deg);}
+.teaser__songs b:nth-child(2){transform:rotate(1.8deg);color:#FFF3C4;}
+.teaser__songs b:nth-child(3){transform:rotate(-1.1deg);color:#CFE7F2;}
+.teaser__actions{display:flex;flex-wrap:wrap;gap:.55rem;margin:0;}
+/* The ideas card carries no photo, so left at half width it reads as an odd
+   gap at the end of the grid. Full width makes it a deliberate closer. */
+@media (min-width:760px){ .card--wide{grid-column:1 / -1;} }
+@media print{
+  .teaser{background:none;padding:0;box-shadow:none;}
+  .teaser__board{background:#FFF;box-shadow:none;border:1px solid #999;}
+  .teaser__songs b{color:#000;text-shadow:none;}
+}
 .card__photo{
   margin:-1.5rem -1.5rem .6rem;border-radius:var(--radius) var(--radius) 0 0;
   overflow:hidden;background:var(--surface-2);border-bottom:1px solid var(--line);
@@ -988,10 +1035,29 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
     <div class="card stack-sm">
       <figure class="card__photo"><img src="../assets/events/playlist.jpg" alt="A tonearm resting on a spinning teal vinyl record" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">Tell us</p>
-      <h3 class="card__title">Your song, and your October</h3>
-      <p class="small"><strong>The Wellness Champion Playlist.</strong> Send us the song that brings you joy, gets you moving, or just makes you smile &mdash; your go-to morning song, your workout anthem, the one that resets you on the drive home. We're building the list out of whatever you send.</p>
-      <p class="small">And while you're writing: this letter is only useful if it's the one you'd actually open. Recipes, challenges, a section we're missing for October &mdash; send that too.</p>
-      <p class="small"><a href="mailto:bminer@sandi.net?subject=Rise%20%26%20Shine%20%E2%80%94%20playlist%20%26%20October%20ideas">Send a song or an idea</a> <span class="xsmall">Benjamin Miner &middot; bminer@sandi.net</span></p>
+      <h3 class="card__title">The Wellness Champion Playlist</h3>
+      <p class="small">Send us the song that brings you joy, gets you moving, or just makes you smile &mdash; your go-to morning song, your workout anthem, the one that resets you on the drive home.</p>
+      <p class="small">Every song goes up on the board. The more of us who name the same one, the bigger it gets written.</p>
+      <div class="teaser" id="playlistTeaser" hidden>
+        <div class="teaser__board">
+          <p class="eyebrow">Loudest on the board</p>
+          <p class="teaser__songs" id="teaserSongs"></p>
+        </div>
+      </div>
+      <p class="teaser__actions">
+        <a class="btn btn--sun" id="teaserForm" href="../playlist/">Add your song</a>
+        <a class="btn btn--ghost" href="../playlist/">See the whole board</a>
+      </p>
+    </div>
+    <div class="card stack-sm card--wide">
+      <p class="eyebrow">Ask us</p>
+      <h3 class="card__title">What should October look like?</h3>
+      <p class="small">This letter is only useful if it's the one you'd actually open. So tell us what belongs in the next one &mdash; a recipe worth stealing, a challenge you'd join, a section we're missing entirely, a person on staff worth putting in front of everybody.</p>
+      <p class="small">Nothing is too small to send. Half of what's on this page started as somebody's one-line suggestion.</p>
+      <p class="teaser__actions">
+        <a class="btn" id="ideasForm" href="mailto:bminer@sandi.net?subject=Rise%20%26%20Shine%20%E2%80%94%20an%20idea%20for%20October">Send an idea</a>
+      </p>
+      <p class="xsmall">Benjamin Miner &middot; bminer@sandi.net</p>
     </div>
   </div>
 </section>
@@ -1491,6 +1557,60 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       else if (mq.addListener) mq.addListener(onChange);
     }
   })();
+})();
+</script>
+<script src="../playlist/songs.js"></script>
+<script src="../playlist/playlist-data.js"></script>
+<script>
+/* Wellness Champion Playlist teaser — the three most-sent songs, pulled
+   from the same source the /playlist/ cloud reads. Stays hidden unless
+   there is something real to show, so a quiet month leaves no empty box. */
+(function(){
+  "use strict";
+
+  /* Paste the "Ideas for next month" form link here once it exists. Empty
+     leaves the button as the email link, so it never points nowhere. */
+  var IDEAS_FORM_URL = "";
+
+  var ideasBtn = document.getElementById("ideasForm");
+  if (ideasBtn && IDEAS_FORM_URL) {
+    ideasBtn.href = IDEAS_FORM_URL;
+    ideasBtn.target = "_blank";
+    ideasBtn.rel = "noopener noreferrer";
+    ideasBtn.textContent = "Share an idea";
+  }
+
+  var P = window.TRACEPlaylist;
+  if (!P) return;
+
+  var formBtn = document.getElementById("teaserForm");
+  var url = P.formUrl();
+  if (formBtn && url) {
+    formBtn.href = url;
+    formBtn.target = "_blank";
+    formBtn.rel = "noopener noreferrer";
+  }
+
+  var box = document.getElementById("playlistTeaser");
+  var line = document.getElementById("teaserSongs");
+  if (!box || !line) return;
+
+  P.load(function(res){
+    var top = res.groups.slice(0, 3).filter(function(g){ return g.count > 0; });
+    if (!top.length) return;
+    var max = top[0].count;
+    line.textContent = "";
+    top.forEach(function(g){
+      var b = document.createElement("b");
+      var t = max === 1 ? 1 : (g.count - 1) / (max - 1);
+      b.style.fontSize = (1.35 + t * 1.05).toFixed(2) + "rem";
+      b.textContent = g.song;   /* textContent, never innerHTML */
+      b.title = g.song + (g.artist ? " · " + g.artist : "") +
+                " · sent by " + g.count + (g.count === 1 ? " person" : " people");
+      line.appendChild(b);
+    });
+    box.hidden = false;
+  }, function(){ /* leave the teaser hidden */ });
 })();
 </script>
 </body>

@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Wellness Champion Playlist</title>
+<meta name="description" content="Songs sent in by TRACE Schools staff. The more people send a song, the bigger it gets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+<!-- Four hands for the chalkboard. Every song is drawn in one of them,
+     picked by a stable hash of the title so it never changes between visits. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Gloria+Hallelujah&family=Patrick+Hand&family=Shadows+Into+Light&display=swap">
+<style>
+/* ============================================================
+   TRACE Schools — The Wellness Champion Playlist
+   Single-file static page. Reads live responses from a published
+   Google Sheet (see CONFIG at the bottom of this file), falls back
+   to songs.json in this folder if that fetch fails.
+   ============================================================ */
+
+/* ---- tokens: light (bare :root defines the full palette) ---- */
+:root{
+  --ground:#FCFAF7;
+  --ground-2:#F4EFE8;
+  --surface:#FFFFFF;
+  --surface-2:#F7F3ED;
+  --line:#E3DCD1;
+  --line-strong:#CFC5B6;
+  --text:#14203A;
+  --text-muted:#5D6B84;
+  --tide:#0F7E77;
+  --tide-soft:#DCEFEC;
+  --tide-ink:#0A5C57;
+  --sun:#F2A413;
+  --sun-ink:#8A5A05;
+  --coral:#EE5D4C;
+  --coral-ink:#A8321F;
+  --night:#14203A;
+  --shadow:0 1px 2px rgba(20,32,58,.05), 0 10px 30px -18px rgba(20,32,58,.35);
+  --shadow-lift:0 2px 4px rgba(20,32,58,.06), 0 22px 48px -22px rgba(20,32,58,.45);
+  --focus:#0F7E77;
+  --on-tide:#FFFFFF;
+  --radius:14px;
+}
+/* ---- tokens: dark via system preference (only when no explicit light) ---- */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B1322;
+    --ground-2:#111C30;
+    --surface:#14203A;
+    --surface-2:#1B2A48;
+    --line:#26355A;
+    --line-strong:#3A4C78;
+    --text:#E9EEF7;
+    --text-muted:#98A8C4;
+    --tide:#3FBFB2;
+    --tide-soft:#123A38;
+    --tide-ink:#8CE0D5;
+    --sun:#F6B93B;
+    --sun-ink:#F6C96B;
+    --coral:#FF7A67;
+    --coral-ink:#FF9E8F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
+    --focus:#3FBFB2;
+    --on-tide:#04211E;
+  }
+}
+/* ---- tokens: dark via explicit toggle ---- */
+:root[data-theme="dark"]{
+  --ground:#0B1322;
+  --ground-2:#111C30;
+  --surface:#14203A;
+  --surface-2:#1B2A48;
+  --line:#26355A;
+  --line-strong:#3A4C78;
+  --text:#E9EEF7;
+  --text-muted:#98A8C4;
+  --tide:#3FBFB2;
+  --tide-soft:#123A38;
+  --tide-ink:#8CE0D5;
+  --sun:#F6B93B;
+  --sun-ink:#F6C96B;
+  --coral:#FF7A67;
+  --coral-ink:#FF9E8F;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
+  --focus:#3FBFB2;
+  --on-tide:#04211E;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--text);
+  font-family:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:600;line-height:1.1;text-wrap:balance;margin:0;}
+p{margin:0;}
+a{color:var(--tide-ink);text-decoration-thickness:1px;text-underline-offset:3px;}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px;}
+button{font:inherit;color:inherit;}
+img{max-width:100%;}
+
+.wrap{width:min(1080px,100% - 2.5rem);margin-inline:auto;}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-muted);font-weight:500;
+}
+.tnum{font-variant-numeric:tabular-nums;}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+.small{font-size:.9rem;color:var(--text-muted);}
+.xsmall{font-size:.8rem;color:var(--text-muted);}
+.stack{display:grid;gap:1rem;align-content:start;}
+.stack-sm{display:grid;gap:.5rem;align-content:start;}
+.grid{display:grid;gap:1.1rem;}
+@media (min-width:760px){.grid-2{grid-template-columns:1fr 1fr;}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  background:var(--tide);color:var(--on-tide);border:1px solid transparent;border-radius:9px;
+  padding:.62rem 1.15rem;font-weight:600;font-size:.94rem;cursor:pointer;text-decoration:none;
+  transition:filter .18s,transform .1s;
+}
+.btn:hover{filter:brightness(1.08);}
+.btn:active{transform:translateY(1px);}
+.btn--ghost{background:transparent;color:var(--text);border-color:var(--line-strong);}
+.btn--ghost:hover{background:var(--surface-2);filter:none;}
+.btn--sun{background:var(--sun);color:#221706;}
+
+/* =================== HERO =================== */
+.hero{
+  position:relative;overflow:hidden;isolation:isolate;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:5rem 0 3rem;
+  background:linear-gradient(180deg,#0A1226 0%,#1B2A4E 44%,#5B3F63 72%,#B85C4E 92%,#E08A3C 100%);
+  color:#FFF6EA;
+}
+.hero__glow{
+  position:absolute;inset:auto 0 -30% 0;height:70%;z-index:-2;
+  background:radial-gradient(ellipse 90% 100% at 50% 100%, rgba(242,164,19,.5), rgba(242,164,19,0) 70%);
+}
+.hero__inner{position:relative;display:grid;gap:1.1rem;}
+.hero .eyebrow{color:#FFD9A8;}
+.masthead{
+  font-size:clamp(2.6rem,9vw,6rem);
+  font-weight:700;letter-spacing:-.045em;line-height:.9;
+  font-variation-settings:"SOFT" 40,"WONK" 1;
+  margin:0;
+}
+.masthead em{font-style:normal;display:block;color:#FFD9A8;}
+.hero__lede{max-width:52ch;color:#FFEBD4;font-size:clamp(1.02rem,1.6vw,1.18rem);}
+.hero__actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:.6rem;}
+.hero a.btn--ghost{color:#FFF6EA;border-color:rgba(255,246,234,.45);}
+.hero a.btn--ghost:hover{background:rgba(255,246,234,.12);}
+
+/* =================== TOP BAR =================== */
+.bell{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:saturate(1.4) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.bell__row{display:flex;align-items:center;gap:1rem;padding:.55rem 0;}
+.bell__list{
+  display:flex;gap:.35rem;overflow-x:auto;scrollbar-width:none;
+  margin:0;padding:0;list-style:none;flex:1 1 auto;
+}
+.bell__list::-webkit-scrollbar{display:none;}
+.bell__list a{
+  display:block;white-space:nowrap;text-decoration:none;color:var(--text-muted);
+  font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
+  padding:.4rem .7rem;border-radius:999px;transition:background .18s,color .18s;
+}
+.bell__list a:hover{color:var(--text);background:var(--surface-2);}
+.theme-btn{
+  flex:0 0 auto;background:var(--surface);border:1px solid var(--line);border-radius:999px;
+  width:38px;height:38px;display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow);
+}
+.theme-btn:hover{border-color:var(--line-strong);}
+
+/* =================== SECTIONS =================== */
+.period{position:relative;padding:clamp(3.5rem,8vh,6rem) 0;border-top:1px solid var(--line);}
+.period:first-of-type{border-top:none;}
+.period__head{display:grid;gap:.9rem;margin-bottom:clamp(2rem,5vw,3rem);max-width:56ch;}
+.period h2{font-size:clamp(1.9rem,5vw,3.2rem);letter-spacing:-.035em;font-variation-settings:"SOFT" 30;}
+.period__sub{color:var(--text-muted);font-size:1.02rem;max-width:50ch;}
+
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:1.5rem;
+}
+
+/* =================== CHALKBOARD =================== */
+/* The board is dark in both themes — it's a chalkboard, not a surface that
+   follows the page palette. Everything inside is positioned by JS (see
+   layoutScatter) except on narrow screens, where scatter reads as cramped
+   and it falls back to a jittered wrap. */
+.board{
+  padding:.6rem;
+  border-radius:16px;
+  background:
+    linear-gradient(158deg, #A9784A 0%, #7A5330 34%, #8E6238 58%, #5F3F23 100%);
+  box-shadow:var(--shadow-lift);
+}
+.cloud{
+  position:relative;
+  border-radius:7px;
+  padding:clamp(1.1rem,3.5vw,2rem);
+  min-height:260px;
+  overflow:hidden;
+  color:#F4F1E6;
+  /* Slate, plus a few smudges where a hand wiped it and chalk dust settled. */
+  background:
+    radial-gradient(ellipse 38% 30% at 22% 26%, rgba(255,255,255,.055), transparent 70%),
+    radial-gradient(ellipse 30% 26% at 74% 62%, rgba(255,255,255,.045), transparent 72%),
+    radial-gradient(ellipse 46% 22% at 52% 96%, rgba(255,255,255,.035), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 40%, #38493F 0%, #2B3931 62%, #223029 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.45),
+    inset 0 8px 26px rgba(0,0,0,.42),
+    inset 0 -8px 26px rgba(0,0,0,.42);
+}
+/* Chalk dust caught in the surface — a faint grain over the whole board. */
+.cloud::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  opacity:.5;
+  background-image:
+    radial-gradient(rgba(255,255,255,.10) .5px, transparent .5px),
+    radial-gradient(rgba(255,255,255,.07) .5px, transparent .5px);
+  background-size:7px 7px, 11px 11px;
+  background-position:0 0, 3px 5px;
+}
+/* The rail, with two nubs of chalk. */
+.cloud::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:9px;pointer-events:none;
+  background:
+    linear-gradient(90deg, transparent 12%, #F2EFE4 12%, #EDE9DC 19%, transparent 19%),
+    linear-gradient(90deg, transparent 26%, #FBF1C9 26%, #F4E8B6 30%, transparent 30%),
+    linear-gradient(180deg, #6B4A2B, #3F2C19);
+  box-shadow:0 -2px 8px rgba(0,0,0,.35);
+}
+
+.cloud__item{
+  position:absolute;top:0;left:0;
+  appearance:none;background:none;border:0;margin:0;padding:.08em .18em;cursor:pointer;
+  white-space:nowrap;line-height:1;
+  color:#F4F1E6;
+  transform:rotate(var(--rot,0deg));
+  transform-origin:50% 50%;
+  /* Chalk: a soft bloom plus a hair of offset, so the stroke looks dusty
+     rather than printed. */
+  text-shadow:
+    0 0 1px rgba(255,255,255,.55),
+    0 0 6px rgba(255,255,255,.16),
+    1px 1px 0 rgba(0,0,0,.22);
+  opacity:0;
+  animation:chalkIn .45s ease-out both;
+  animation-delay:calc(var(--i,0) * 30ms);
+  transition:filter .18s, text-shadow .18s;
+  z-index:1;
+}
+@keyframes chalkIn{from{opacity:0;}to{opacity:.94;}}
+.cloud__item:hover,.cloud__item:focus-visible{
+  text-shadow:
+    0 0 1px rgba(255,255,255,.85),
+    0 0 12px rgba(255,255,255,.4),
+    1px 1px 0 rgba(0,0,0,.22);
+  filter:brightness(1.12);
+  z-index:3;
+}
+/* Selected: circled in chalk, the way you'd ring a word on a real board. */
+.cloud__item[aria-pressed="true"]{z-index:4;}
+.cloud__item[aria-pressed="true"]::after{
+  content:"";position:absolute;inset:-18% -9%;
+  border:2px solid rgba(255,255,255,.62);
+  border-radius:50%;
+  transform:rotate(-2.5deg) scaleX(1.03);
+  box-shadow:0 0 7px rgba(255,255,255,.22);
+  opacity:.9;
+  pointer-events:none;
+}
+/* filter, not opacity: .cloud__item fades in via an animation with
+   fill-mode both, and an animation's value beats a plain opacity
+   declaration — so an opacity dim here would silently do nothing. */
+.cloud.is-dimmed .cloud__item:not([aria-pressed="true"]){filter:opacity(.3);}
+
+/* Narrow screens: scatter gets cramped, so wrap instead — but keep the
+   rotation, so it still reads as handwriting rather than a tidy list. */
+.cloud--wrap{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;align-content:center;
+  gap:.85rem 1rem;
+  padding-bottom:1.6rem;
+}
+.cloud--wrap .cloud__item{position:relative;}
+
+.cloud__empty{
+  position:relative;z-index:1;
+  display:grid;place-content:center;min-height:200px;
+  margin:0 auto;max-width:34ch;text-align:center;
+  color:rgba(244,241,230,.78);
+  font-family:"Caveat","Bradley Hand",cursive;font-size:1.5rem;line-height:1.35;
+}
+
+/* A chalkboard prints as a solid black rectangle. Don't. */
+@media print{
+  .board{background:none;padding:0;box-shadow:none;}
+  .cloud{background:#FFF;color:#000;box-shadow:none;border:1px solid #999;}
+  .cloud::before,.cloud::after{display:none;}
+  .cloud__item{color:#000;text-shadow:none;opacity:1;animation:none;}
+}
+
+/* =================== DETAIL PANEL =================== */
+.detail{
+  margin-top:1.1rem;
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--surface-2);padding:1.35rem;
+  display:grid;gap:1rem;
+}
+.detail[hidden]{display:none;}
+.detail__head{display:flex;flex-wrap:wrap;gap:.75rem;align-items:baseline;justify-content:space-between;}
+.detail__title{font-size:1.45rem;letter-spacing:-.015em;}
+.detail__artist{color:var(--text-muted);font-size:1rem;}
+.detail__close{
+  background:none;border:1px solid var(--line-strong);border-radius:999px;
+  width:32px;height:32px;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;
+}
+.detail__close:hover{background:var(--surface);}
+.notes{display:grid;gap:.85rem;margin:0;padding:0;list-style:none;}
+.note{
+  border-left:3px solid var(--tide);padding-left:.85rem;
+}
+.note p{font-size:.95rem;}
+.note .who{
+  font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-muted);
+}
+
+/* =================== LIST =================== */
+.tally{
+  width:100%;border-collapse:collapse;font-size:.95rem;
+}
+.tally caption{text-align:left;color:var(--text-muted);font-size:.85rem;padding-bottom:.6rem;}
+.tally th,.tally td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--line);vertical-align:top;}
+.tally th{
+  font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--text-muted);font-weight:500;
+}
+.tally td.count{font-variant-numeric:tabular-nums;color:var(--tide-ink);font-weight:600;width:4rem;}
+.tally tr:last-child td{border-bottom:none;}
+.table-scroll{overflow-x:auto;}
+
+.status{
+  display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;align-items:center;
+  margin-bottom:1.1rem;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:var(--tide-soft);color:var(--tide-ink);
+  border-radius:999px;padding:.25rem .7rem;
+  font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+}
+.pill--warn{background:#FDECE9;color:#A8321F;}
+:root[data-theme="dark"] .pill--warn{background:#3A1710;color:#FF9E8F;}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .pill--warn{background:#3A1710;color:#FF9E8F;}
+}
+
+/* =================== FOOTER =================== */
+.foot{background:var(--night);color:#E9EEF7;padding:3.5rem 0 2.5rem;margin-top:1rem;}
+.foot a{color:#FFD9A8;}
+.foot .eyebrow{color:#98A8C4;}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <i class="hero__glow" aria-hidden="true"></i>
+  <div class="wrap hero__inner">
+    <span class="eyebrow">TRACE Schools &middot; Staff Wellness</span>
+    <h1 class="masthead">The Wellness<em>Champion Playlist</em></h1>
+    <p class="hero__lede">The song that gets you moving, resets you on the drive home, or just makes you smile. Send yours &mdash; the more of us who name the same song, the bigger it grows.</p>
+    <div class="hero__actions">
+      <a class="btn btn--sun" id="addSongTop" href="#" target="_blank" rel="noopener noreferrer">Add your song</a>
+      <a class="btn btn--ghost" href="../">Back to Rise &amp; Shine</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TOP BAR ============ -->
+<nav class="bell" aria-label="Page navigation">
+  <div class="wrap bell__row">
+    <ul class="bell__list">
+      <li><a href="#cloud">The board</a></li>
+      <li><a href="#tally">Every song</a></li>
+      <li><a href="../trace-wellness-september/">September issue</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2"></circle>
+        <path d="M12 2.4v2M12 19.6v2M2.4 12h2M19.6 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"></path>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ CLOUD ============ -->
+<section class="period" id="cloud">
+  <div class="wrap">
+    <div class="period__head">
+      <span class="eyebrow">What staff are playing</span>
+      <h2>Everybody's song, all at once</h2>
+      <p class="period__sub">Every song on the board was sent in by someone on staff. Size is how many people named it. Tap one to see who sent it and why.</p>
+    </div>
+
+    <div class="status" id="status" role="status" aria-live="polite">
+      <span class="pill" id="statusPill">Loading the playlist&hellip;</span>
+    </div>
+
+    <div class="board">
+      <div class="cloud" id="cloudBox">
+        <p class="cloud__empty" id="cloudEmpty">Loading the playlist&hellip;</p>
+      </div>
+    </div>
+
+    <section class="detail" id="detail" hidden aria-live="polite">
+      <div class="detail__head">
+        <div class="stack-sm">
+          <h3 class="detail__title" id="detailTitle">&nbsp;</h3>
+          <p class="detail__artist" id="detailArtist">&nbsp;</p>
+        </div>
+        <button class="detail__close" id="detailClose" type="button" aria-label="Close song details">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+            <path d="M5 5l14 14M19 5L5 19"></path>
+          </svg>
+        </button>
+      </div>
+      <ul class="notes" id="detailNotes"></ul>
+    </section>
+  </div>
+</section>
+
+<!-- ============ TALLY ============ -->
+<section class="period" id="tally">
+  <div class="wrap">
+    <div class="period__head">
+      <span class="eyebrow">The full list</span>
+      <h2>Every song, in order</h2>
+      <p class="period__sub">Same data, sorted by how many people sent it. Handy if you're building the actual playlist.</p>
+    </div>
+    <div class="card">
+      <div class="table-scroll">
+        <table class="tally" id="tallyTable">
+          <caption id="tallyCaption">Loading&hellip;</caption>
+          <thead>
+            <tr><th scope="col">Times sent</th><th scope="col">Song</th><th scope="col">Artist</th></tr>
+          </thead>
+          <tbody id="tallyBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="period">
+  <div class="wrap">
+    <div class="card stack">
+      <span class="eyebrow">Your turn</span>
+      <h3 style="font-family:Fraunces,serif;font-size:1.6rem;letter-spacing:-.02em;">Add a song to the board</h3>
+      <p class="small" style="max-width:52ch;">Takes about thirty seconds. Song, artist, your name, and one line about what it does for you. Repeats are welcome &mdash; that's what makes a song grow on the board.</p>
+      <p><a class="btn" id="addSongBottom" href="#" target="_blank" rel="noopener noreferrer">Open the song form</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap grid grid-2">
+    <div class="stack-sm">
+      <p class="eyebrow">TRACE Schools</p>
+      <p style="font-family:Fraunces,serif;font-size:1.6rem;line-height:1.15;">Bright minds. Healthy Suns.<br>Fully supported.</p>
+      <p class="small" style="color:#98A8C4;max-width:42ch;">Submissions come in through a Google Form and appear here automatically. Nothing on this page is tracked or stored on your device beyond your light/dark preference.</p>
+    </div>
+    <div class="stack-sm">
+      <p class="eyebrow">Wellness Committee</p>
+      <p class="xsmall" style="color:#C6D2E6;margin-top:.5rem;line-height:1.6;">Wayne Amo &middot; Jamil Person &middot; Jill Bumler &middot; Ellen Henry &middot; Donte Locke &middot; Jacquelyn Romero</p>
+      <p class="xsmall" style="color:#98A8C4;margin-top:.5rem;">Want a song taken down, or spotted a typo? Email <a href="mailto:bminer@sandi.net?subject=Wellness%20Champion%20Playlist">bminer@sandi.net</a>.</p>
+    </div>
+  </div>
+</footer>
+
+
+<script src="songs.js"></script>
+<script src="playlist-data.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var NS = "trace-wellness:";
+  var store = {
+    get: function(k, d){ try { var v = localStorage.getItem(NS+k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+    set: function(k, v){ try { localStorage.setItem(NS+k, JSON.stringify(v)); } catch(e){} }
+  };
+  var P = window.TRACEPlaylist;
+
+  /* ---------------- theme toggle ---------------- */
+  var themeBtn = document.getElementById("themeBtn");
+  var saved = store.get("theme", null);
+  if (saved) document.documentElement.setAttribute("data-theme", saved);
+  themeBtn.addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    if (!cur) cur = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    var next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    store.set("theme", next);
+  });
+
+  /* ---------------- form links ----------------
+     Until the Google Form exists, the buttons quietly become the
+     email link that's already in the September issue, so the page
+     never ships a button that goes nowhere. */
+  var formUrl = P.formUrl();
+  ["addSongTop","addSongBottom"].forEach(function(id){
+    var el = document.getElementById(id);
+    if (formUrl) {
+      el.href = formUrl;
+    } else {
+      el.href = "mailto:bminer@sandi.net?subject=Wellness%20Champion%20Playlist%20%E2%80%94%20my%20song";
+      el.removeAttribute("target");
+      el.removeAttribute("rel");
+      el.textContent = "Email your song";
+    }
+  });
+
+  /* ---------------- rendering ---------------- */
+  var cloudBox    = document.getElementById("cloudBox");
+  var detail      = document.getElementById("detail");
+  var detailTitle = document.getElementById("detailTitle");
+  var detailArtist= document.getElementById("detailArtist");
+  var detailNotes = document.getElementById("detailNotes");
+  var statusPill  = document.getElementById("statusPill");
+  var tallyBody   = document.getElementById("tallyBody");
+  var tallyCap    = document.getElementById("tallyCaption");
+  /* Four hands, picked to look like four different people: a fast slanted
+     scrawl, a neat print, a light script, a round bubbly one. The per-font
+     scale evens out wildly different x-heights — without it the sizes stop
+     meaning "how many people sent this". */
+  var HANDS = [
+    { font: '"Caveat", "Bradley Hand", cursive',              scale: 1.34, weight: 700 },
+    { font: '"Patrick Hand", "Bradley Hand", cursive',        scale: 1.08, weight: 400 },
+    { font: '"Shadows Into Light", "Bradley Hand", cursive',  scale: 1.18, weight: 400 },
+    { font: '"Gloria Hallelujah", "Bradley Hand", cursive',   scale: 0.88, weight: 400 }
+  ];
+  /* White chalk mostly, with the occasional coloured stick from the tray. */
+  var CHALK = ["#F4F1E6","#F4F1E6","#F4F1E6","#FFF3C4","#FFD9CE","#CFE7F2","#D9EFD1"];
+
+  var items = [];          /* { btn, group, basePx } — kept for re-layout on resize */
+
+  function setStatus(text, warn){
+    statusPill.textContent = text;
+    statusPill.className = warn ? "pill pill--warn" : "pill";
+  }
+
+  function emptyCloud(message){
+    cloudBox.textContent = "";
+    items = [];
+    var p = document.createElement("p");
+    p.className = "cloud__empty";
+    p.textContent = message;
+    cloudBox.appendChild(p);
+  }
+
+  function renderCloud(groups){
+    cloudBox.textContent = "";
+    items = [];
+    if (!groups.length) {
+      emptyCloud("Nothing on the board yet. Be the first — the form takes thirty seconds.");
+      return;
+    }
+    var max = groups[0].count;
+    var min = groups[groups.length - 1].count;
+
+    groups.forEach(function(g, i){
+      var h    = P.hash(g.song);
+      var hand = HANDS[h % HANDS.length];
+      var t    = max === min ? 1 : (g.count - min) / (max - min);
+      var px   = (19 + t * 44) * hand.scale;
+
+      /* Deterministic jitter: same song, same tilt, every visit. Hand-written
+         means uneven, not random-on-every-refresh. */
+      var rot  = (((h >>> 7) % 2001) / 1000 - 1) * 7.5;
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "cloud__item";
+      btn.style.fontFamily = hand.font;
+      btn.style.fontWeight = hand.weight;
+      btn.style.fontSize   = px.toFixed(1) + "px";
+      btn.style.color      = CHALK[(h >>> 3) % CHALK.length];
+      btn.style.setProperty("--rot", rot.toFixed(2) + "deg");
+      btn.style.setProperty("--i", i);
+      btn.setAttribute("aria-pressed", "false");
+      btn.textContent = g.song;   /* textContent, never innerHTML — this is stranger-typed text */
+
+      var label = g.song + (g.artist ? " by " + g.artist : "") +
+                  ", sent by " + g.count + (g.count === 1 ? " person" : " people");
+      btn.setAttribute("aria-label", label);
+      btn.title = label;
+      btn.addEventListener("click", function(){ select(g, btn); });
+
+      cloudBox.appendChild(btn);
+      items.push({ btn: btn, group: g, basePx: px, rot: rot });
+    });
+
+    /* Measuring before the handwriting fonts arrive would lay the board out
+       against Times and leave everything overlapping. */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(layout);
+      setTimeout(layout, 2500);   /* belt and braces if the fonts never load */
+    } else {
+      setTimeout(layout, 300);
+    }
+    layout();
+  }
+
+  /* ---------------- board layout ----------------
+     Songs are placed along an outward spiral, biggest first, each one dropped
+     at the first spot where it doesn't touch anything already on the board.
+     That's what gives the scattered, filled-in look — a plain wrap always
+     betrays itself with straight baselines. */
+  function overlaps(a, b, pad){
+    return !(a.x + a.w + pad < b.x || b.x + b.w + pad < a.x ||
+             a.y + a.h + pad < b.y || b.y + b.h + pad < a.y);
+  }
+
+  function layoutScatter(avail){
+    var placed = [], boxes = [];
+    var RAD = Math.PI / 180;
+
+    for (var n = 0; n < items.length; n++) {
+      var it = items[n];
+      var w  = it.btn.offsetWidth;
+      var h  = it.btn.offsetHeight;
+      if (!w || !h) return null;                 /* not measurable yet */
+
+      /* offsetWidth ignores the rotation, so grow the box to the rotated one. */
+      var a  = Math.abs(it.rot * RAD);
+      var bw = w * Math.cos(a) + h * Math.sin(a);
+      var bh = w * Math.sin(a) + h * Math.cos(a);
+
+      var box = null;
+      for (var t = 0; t < 900; t += 0.14) {
+        var r = 3.1 * t;
+        var cx = r * Math.cos(t) * 1.75;          /* wider than tall — boards are */
+        var cy = r * Math.sin(t) * 0.92;
+        var cand = { x: cx - bw / 2, y: cy - bh / 2, w: bw, h: bh };
+        var hit = false;
+        for (var k = 0; k < boxes.length; k++) {
+          if (overlaps(cand, boxes[k], 9)) { hit = true; break; }
+        }
+        if (!hit) { box = cand; break; }
+      }
+      if (!box) box = { x: -bw / 2, y: -bh / 2, w: bw, h: bh };
+      boxes.push(box);
+      placed.push({ it: it, box: box, w: w, h: h });
+    }
+
+    var minX =  Infinity, minY =  Infinity, maxX = -Infinity, maxY = -Infinity;
+    boxes.forEach(function(b){
+      minX = Math.min(minX, b.x); minY = Math.min(minY, b.y);
+      maxX = Math.max(maxX, b.x + b.w); maxY = Math.max(maxY, b.y + b.h);
+    });
+    return { placed: placed, width: maxX - minX, height: maxY - minY, minX: minX, minY: minY };
+  }
+
+  function layout(){
+    if (!items.length) return;
+
+    var style = window.getComputedStyle(cloudBox);
+    var padX  = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+    var avail = cloudBox.clientWidth - padX;
+    if (avail <= 0) return;
+
+    /* Narrow screens: a spiral in a phone-width column is mostly collisions,
+       so wrap the words instead and let the tilt carry the handwritten feel. */
+    if (avail < 520) {
+      cloudBox.classList.add("cloud--wrap");
+      cloudBox.style.height = "";
+      items.forEach(function(it){
+        it.btn.style.left = ""; it.btn.style.top = "";
+        it.btn.style.fontSize = (it.basePx * 0.78).toFixed(1) + "px";
+      });
+      return;
+    }
+    cloudBox.classList.remove("cloud--wrap");
+
+    /* Lay out, and if the result is wider than the board, shrink the type and
+       try again rather than letting words run off the edge. */
+    var shrink = 1, res = null;
+    for (var pass = 0; pass < 4; pass++) {
+      items.forEach(function(it){
+        it.btn.style.fontSize = (it.basePx * shrink).toFixed(1) + "px";
+      });
+      res = layoutScatter(avail);
+      if (!res) return;
+      if (res.width <= avail) break;
+      shrink *= Math.max(0.62, (avail / res.width) * 0.97);
+    }
+
+    /* Absolutely positioned children measure from the padding edge, not the
+       content edge, so the board's padding has to be added back by hand —
+       otherwise the words sit flush against the top frame. */
+    var padTop  = parseFloat(style.paddingTop);
+    var padLeft = parseFloat(style.paddingLeft);
+    var offX = padLeft + (avail - res.width) / 2 - res.minX;
+    var offY = padTop - res.minY;
+    res.placed.forEach(function(p){
+      /* box is the rotated bounding box; the element itself is unrotated and
+         spins about its own centre, so back out to the element's top-left. */
+      p.it.btn.style.left = (offX + p.box.x + (p.box.w - p.w) / 2).toFixed(1) + "px";
+      p.it.btn.style.top  = (offY + p.box.y + (p.box.h - p.h) / 2).toFixed(1) + "px";
+    });
+
+    var padY = padTop + parseFloat(style.paddingBottom);
+    cloudBox.style.height = Math.max(260, res.height + padY + 10) + "px";
+  }
+
+  var resizeTimer = null;
+  window.addEventListener("resize", function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(layout, 160);
+  });
+
+  function select(g, btn){
+    Array.prototype.forEach.call(cloudBox.children, function(el){
+      if (el.setAttribute) el.setAttribute("aria-pressed", el === btn ? "true" : "false");
+    });
+    cloudBox.classList.add("is-dimmed");
+    detailTitle.textContent = g.song;
+    detailArtist.textContent = (g.artist ? g.artist + " · " : "") +
+      "sent by " + g.count + (g.count === 1 ? " person" : " people");
+    detailNotes.textContent = "";
+
+    var withWhy = g.notes.filter(function(n){ return n.why; });
+    if (!withWhy.length) {
+      var li = document.createElement("li");
+      li.className = "note";
+      var p = document.createElement("p");
+      p.className = "small";
+      p.textContent = "No note came with this one — just the song.";
+      li.appendChild(p);
+      detailNotes.appendChild(li);
+    } else {
+      withWhy.forEach(function(n){
+        var li = document.createElement("li");
+        li.className = "note";
+        var quote = document.createElement("p");
+        quote.textContent = "“" + n.why + "”";
+        li.appendChild(quote);
+        if (n.who) {
+          var who = document.createElement("p");
+          who.className = "who";
+          who.textContent = n.who;
+          li.appendChild(who);
+        }
+        detailNotes.appendChild(li);
+      });
+    }
+    detail.hidden = false;
+  }
+
+  document.getElementById("detailClose").addEventListener("click", function(){
+    detail.hidden = true;
+    cloudBox.classList.remove("is-dimmed");
+    Array.prototype.forEach.call(cloudBox.children, function(el){
+      if (el.setAttribute) el.setAttribute("aria-pressed", "false");
+    });
+  });
+
+  function renderTally(groups, total){
+    tallyBody.textContent = "";
+    tallyCap.textContent = groups.length
+      ? total + (total === 1 ? " submission" : " submissions") + " · " +
+        groups.length + (groups.length === 1 ? " distinct song" : " distinct songs")
+      : "Nothing here yet.";
+    groups.forEach(function(g){
+      var tr = document.createElement("tr");
+      var c = document.createElement("td"); c.className = "count tnum"; c.textContent = g.count;
+      var s = document.createElement("td"); s.textContent = g.song;
+      var a = document.createElement("td"); a.className = "small"; a.textContent = g.artist || "—";
+      tr.appendChild(c); tr.appendChild(s); tr.appendChild(a);
+      tallyBody.appendChild(tr);
+    });
+  }
+
+  /* ---------------- load ---------------- */
+  P.load(function(res){
+    renderCloud(res.groups);
+    renderTally(res.groups, res.total);
+    if (!res.total) {
+      setStatus("No songs yet");
+    } else {
+      setStatus(res.total + (res.total === 1 ? " song in" : " songs in") +
+                (res.source === "fallback" ? " · sample data" : ""),
+                res.source === "fallback");
+    }
+  }, function(){
+    emptyCloud("Couldn't load the playlist just now. Try refreshing in a minute.");
+    setStatus("Playlist unavailable", true);
+    tallyCap.textContent = "Couldn't load the list.";
+  });
+})();
+</script>
+</body>
+</html>

@@ -552,6 +552,21 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
   font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#FFD9A8;
 }
 
+/* =================== HANDOUTS =================== */
+.handouts{display:grid;gap:1.1rem;grid-template-columns:1fr;}
+@media (min-width:760px){.handouts{grid-template-columns:1fr 1fr;align-items:start;}}
+.handout{
+  margin:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+}
+.handout a{display:block;line-height:0;}
+.handout img{display:block;width:100%;height:auto;}
+.handout figcaption{
+  padding:.75rem .95rem;font-size:.86rem;line-height:1.45;
+  color:var(--text-muted);border-top:1px solid var(--line);
+}
+.handout--tall{max-width:23rem;margin-inline:auto;}
+
 /* =================== PRINT A RECIPE =================== */
 .print-only{display:none;}
 
@@ -938,6 +953,31 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small" style="margin-top:.6rem;"><strong>Make it a lunch:</strong> divide into containers straight off the pan while it's still hot. Four minutes of work on Sunday is four fewer decisions on Wednesday.</p>
     </div>
   </div>
+
+  <!-- ---- passed-along handouts ---- -->
+  <div class="no-print" style="margin-top:2.6rem;">
+    <p class="eyebrow">Passed along</p>
+    <h3 class="card__title" style="margin:.3rem 0 .4rem;">Two things worth knowing about lunch</h3>
+    <p class="small" style="max-width:54ch;margin:0 0 1.2rem;">The recipe above handles <em>what</em>. These handle <em>when</em> and <em>why you feel like that at 1:45</em>. Tap either one to open it full size &mdash; each prints on a single sheet if you want one for the lounge wall.</p>
+    <div class="handouts">
+      <figure class="handout">
+        <a href="../assets/handouts/after-lunch-crash.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="../assets/handouts/after-lunch-crash.jpg" width="1179" height="1171" loading="lazy" decoding="async"
+               alt="Handout: The after-lunch crash isn't all in your head. Five reasons &mdash; your body shifts into digestion mode; meal size matters, since large meals leave you more sluggish than smaller balanced ones; refined carbohydrates can cause a quick rise and fall in blood sugar; your internal clock already dips in early afternoon; and what you ate matters, since protein, fiber, healthy fats and slower-digesting carbohydrates give steadier energy. The after-lunch reset: take a ten-minute walk, drink some water, get daylight, keep lunch balanced.">
+        </a>
+        <figcaption>Why 1:45 hits the way it does &mdash; and a four-part reset that takes about ten minutes.</figcaption>
+      </figure>
+      <figure class="handout">
+        <a href="../assets/handouts/five-habits.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="../assets/handouts/five-habits.jpg" width="1179" height="1447" loading="lazy" decoding="async"
+               alt="Handout: 5 habits for good health. One, space out your meals &mdash; aim for four to five hours between them. Two, eat without distractions: slow down, chew, and let your body focus on digestion. Three, eat when you're actually hungry, because digestion is better prepared to break down food. Four, take a ten-minute walk after meals, since movement helps get things moving. Five, don't overdo water with meals &mdash; a few sips are fine, save most for about forty-five minutes later.">
+        </a>
+        <figcaption>Five small habits, mostly about pace. The ten-minute walk is the one that shows up on both of these.</figcaption>
+      </figure>
+    </div>
+    <p class="xsmall" style="margin-top:.9rem;color:var(--text-muted);">Shared for general interest, not medical advice. Bodies differ &mdash; if something here conflicts with what your doctor told you, your doctor wins.</p>
+  </div>
+
   <p class="print-only print-foot">Printed from the staff wellness letter. Amounts reflect the serving count set on the page.</p>
 </section>
 
@@ -980,6 +1020,24 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
         </ul>
       </div>
     </div>
+  </div>
+
+  <!-- ---- healthy conflict handout ---- -->
+  <div class="grid grid-2" style="margin-top:1.7rem;align-items:start;">
+    <div class="card stack-sm">
+      <p class="eyebrow">Passed along</p>
+      <h3 class="card__title">Disagreeing without wrecking anything</h3>
+      <p class="small">Boundaries are half of it. The other half is what happens when two people who both care about the same kids want opposite things &mdash; in a team meeting, in an IEP, in the hallway after a hard class.</p>
+      <p class="small">This one is worth reading twice: the point of a disagreement is understanding, not winning. Taking a break when emotions run high isn't avoidance, and repair after the fact isn't weakness. If a conversation this week is going to be a hard one, look at the list first.</p>
+      <p class="small">Printable, if it belongs on a wall in your workroom.</p>
+    </div>
+    <figure class="handout handout--tall">
+      <a href="../assets/handouts/healthy-conflict.jpg" target="_blank" rel="noopener noreferrer">
+        <img src="../assets/handouts/healthy-conflict.jpg" width="739" height="1739" loading="lazy" decoding="async"
+             alt="Handout: Healthy conflict &mdash; disagreement with respect, where the goal is understanding and connection. We can disagree without disrespect. We take breaks when emotions are high. We listen and try to understand each other. We take responsibility for our words and actions. We work through it together. We repair, apologize, and grow stronger. There is safety, accountability, and a desire to find solutions together.">
+      </a>
+      <figcaption>Healthy conflict, in seven lines. Tap to open it full size.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -1055,7 +1113,7 @@ input[type="range"]{accent-color:var(--tide);flex:1 1 180px;min-width:150px;}
       <p class="small">This letter is only useful if it's the one you'd actually open. So tell us what belongs in the next one &mdash; a recipe worth stealing, a challenge you'd join, a section we're missing entirely, a person on staff worth putting in front of everybody.</p>
       <p class="small">Nothing is too small to send. Half of what's on this page started as somebody's one-line suggestion.</p>
       <p class="teaser__actions">
-        <a class="btn" id="ideasForm" href="mailto:bminer@sandi.net?subject=Rise%20%26%20Shine%20%E2%80%94%20an%20idea%20for%20October">Send an idea</a>
+        <a class="btn" id="ideasForm" href="mailto:jperson@sandi.net?subject=Rise%20%26%20Shine%20%E2%80%94%20an%20idea%20for%20October">Send an idea</a>
       </p>
       <p class="xsmall">Benjamin Miner &middot; bminer@sandi.net</p>
     </div>

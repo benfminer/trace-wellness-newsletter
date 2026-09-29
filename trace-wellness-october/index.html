@@ -398,13 +398,19 @@ input[type="range"]{accent-color:var(--tide);}
 
 /* =================== HANDOUTS =================== */
 .handouts{display:grid;gap:1.1rem;grid-template-columns:1fr;}
-@media (min-width:760px){.handouts{grid-template-columns:1fr 1fr;align-items:start;}}
+@media (min-width:760px){.handouts{grid-template-columns:1fr 1fr;}}
+/* The two handouts are different shapes -- one is square, the other is a third
+   taller -- so at equal column widths one card ran well past the other. They sit
+   in a shared 9:10 box instead and scale to fit inside it. object-fit is contain,
+   never cover: these are infographics, and cropping one cuts off what it says.
+   The leftover strip is the card surface, so it reads as a mount, not a gap. */
 .handout{
   margin:0;background:var(--surface);border:1px solid var(--line);
   border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+  display:grid;grid-template-rows:auto 1fr;
 }
-.handout a{display:block;line-height:0;}
-.handout img{display:block;width:100%;height:auto;}
+.handout a{display:block;line-height:0;aspect-ratio:9/10;background:var(--surface-2);}
+.handout img{display:block;width:100%;height:100%;object-fit:contain;}
 .handout figcaption{
   padding:.75rem .95rem;font-size:.86rem;line-height:1.45;
   color:var(--text-muted);border-top:1px solid var(--line);
@@ -1037,7 +1043,7 @@ input[type="range"]{accent-color:var(--tide);}
       <p class="eyebrow">Tell us</p>
       <h3 class="card__title">What do you want in November?</h3>
       <p class="small">This letter is only useful if it is the one you would actually open. Recipes, challenges, a section we are missing &mdash; send it over.</p>
-      <p class="small"><a href="#" target="_blank" rel="noopener noreferrer">Share your thoughts</a> <span class="xsmall">(link to be added)</span></p>
+      <p class="small"><a href="mailto:jperson@sandi.net?subject=Ideas%20for%20the%20November%20issue">Share your thoughts</a></p>
     </div>
     <div class="card stack-sm">
       <p class="eyebrow">Next issue</p>

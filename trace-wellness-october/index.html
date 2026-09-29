@@ -215,7 +215,7 @@ img{max-width:100%;}
 @media (min-width:760px){
   .grid-2{grid-template-columns:1fr 1fr;}
   .grid-5-4{grid-template-columns:5fr 4fr;}
-  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-3{grid-template-columns:repeat(3,1fr);align-items:start;}
 }
 /* align-content:start matters here. A card in a two-column row stretches to match
    its taller sibling, and grid's default stretch pours that spare height into the
@@ -443,10 +443,34 @@ input[type="range"]{accent-color:var(--tide);}
   text-shadow:0 0 1px rgba(255,255,255,.5), 0 0 6px rgba(255,255,255,.14), 1px 1px 0 rgba(0,0,0,.2);
   display:inline-block;
 }
-.teaser__songs b:nth-child(1){transform:rotate(-2.4deg);}
-.teaser__songs b:nth-child(2){transform:rotate(1.8deg);color:#FFF3C4;}
-.teaser__songs b:nth-child(3){transform:rotate(-1.1deg);color:#CFE7F2;}
+.teaser__songs b:nth-child(3n+1){transform:rotate(-2.4deg);}
+.teaser__songs b:nth-child(3n+2){transform:rotate(1.8deg);color:#FFF3C4;}
+.teaser__songs b:nth-child(3n+3){transform:rotate(-1.1deg);color:#CFE7F2;}
 .teaser__actions{display:flex;flex-wrap:wrap;gap:.55rem;margin:0;}
+
+/* ---- the chalkboard (NO. 08) ---- */
+/* As a section rather than a card inset, the board is the centrepiece: it gets
+   real height and the handwriting scales up to match. */
+#chalkboard .teaser{padding:.55rem;border-radius:15px;}
+#chalkboard .teaser__board{
+  padding:1.7rem 1.4rem 1.9rem;border-radius:7px;
+  min-height:18rem;display:grid;align-content:center;
+}
+#chalkboard .teaser__songs{gap:.3rem 1.2rem;margin-top:.7rem;}
+/* The board hides itself when there is nothing on it. In a card that just left a
+   smaller card; in a section it would leave a hole, so something stands in. */
+.board__empty{
+  margin:0;padding:3.2rem 1.5rem;text-align:center;
+  color:var(--text-muted);font-size:.95rem;
+  border:1px dashed var(--line);border-radius:var(--radius);
+}
+.board__empty[hidden]{display:none;}
+
+/* ---- bulletin cards ---- */
+/* Without align-items:start above, a two-line card stretches to match the tall
+   dental one beside it -- that is where the acre of white space came from. */
+#bulletin .grid-3 .card{padding:1.3rem;}
+#bulletin .grid-3 h3.card__title{font-size:1.15rem;}
 @media (min-width:760px){ .card--wide{grid-column:1 / -1;} }
 @media print{
   .teaser{background:none;padding:0;box-shadow:none;}
@@ -662,6 +686,7 @@ input[type="range"]{accent-color:var(--tide);}
       <li><a href="#move">Walktober</a></li>
       <li><a href="#lunch">Lunch</a></li>
       <li><a href="#benefits">Benefits Desk</a></li>
+      <li><a href="#chalkboard">Chalkboard</a></li>
       <li><a href="#bulletin">Bulletin</a></li>
     </ul>
     <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark">
@@ -945,10 +970,42 @@ input[type="range"]{accent-color:var(--tide);}
 </section>
 
 <!-- ============ BULLETIN ============ -->
-<section class="period wrap" id="bulletin">
+<!-- ============ CHALKBOARD ============ -->
+<section class="period wrap" id="chalkboard">
   <div class="period__ghost" aria-hidden="true">08</div>
   <div class="period__head">
-    <p class="period__num"><b>NO. 08</b> <span class="eyebrow">Staff meeting</span></p>
+    <p class="period__num"><b>NO. 08</b> <span class="eyebrow">Add yours</span></p>
+    <h2>The Wellness Champion Playlist</h2>
+    <p class="period__sub">Send us the song that brings you joy, gets you moving, or just makes you smile &mdash; your go-to morning song, your workout anthem, the one that resets you on the drive home.</p>
+  </div>
+  <div class="grid grid-5-4">
+    <div class="stack">
+      <div class="teaser" id="playlistTeaser" hidden>
+        <div class="teaser__board">
+          <p class="eyebrow">Loudest on the board</p>
+          <p class="teaser__songs" id="teaserSongs"></p>
+        </div>
+      </div>
+      <p class="board__empty" id="boardEmpty">The board is still blank. Whatever you send first goes up in the middle of it.</p>
+    </div>
+    <div class="card stack-sm">
+      <figure class="card__photo"><img src="../assets/events/playlist.jpg" alt="A tonearm resting on a spinning teal vinyl record" width="1200" height="675" loading="lazy" decoding="async"></figure>
+      <p class="eyebrow">How it works</p>
+      <p class="small">Every song goes up on the board. The more of us who name the same one, the bigger it gets written &mdash; so the board ends up looking like whatever the staff room actually sounds like.</p>
+      <p class="small">No account, no sign-in, and you can send more than one.</p>
+      <p class="teaser__actions" style="margin-top:.35rem;">
+        <a class="btn btn--sun" id="teaserForm" href="../playlist/">Add your song</a>
+        <a class="btn btn--ghost" href="../playlist/">See the whole board</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BULLETIN ============ -->
+<section class="period wrap" id="bulletin">
+  <div class="period__ghost" aria-hidden="true">09</div>
+  <div class="period__head">
+    <p class="period__num"><b>NO. 09</b> <span class="eyebrow">Staff meeting</span></p>
     <h2>District bulletin</h2>
   </div>
   <!-- EDIT ME: confirm every date, time, and registration link before publishing -->
@@ -971,29 +1028,6 @@ input[type="range"]{accent-color:var(--tide);}
       <p class="small"><strong>Register students by Friday, October 16.</strong> Sign up online at <a href="https://www.myschooldentist.com" target="_blank" rel="noopener noreferrer">myschooldentist.com</a>, or use paper forms from Annie.</p>
       <p class="small">Once you have registered, send her your list of registered students so she knows who to expect.</p>
       <p class="small"><a href="mailto:astukes@sandi.net?subject=Big%20Smiles%20Dental%20Clinic">Annie Stukes RN</a> &middot; 619 894 5304</p>
-    </div>
-    <div class="card stack-sm">
-      <figure class="card__photo"><img src="../assets/events/playlist.jpg" alt="A tonearm resting on a spinning teal vinyl record" width="1200" height="675" loading="lazy" decoding="async"></figure>
-      <p class="eyebrow">Add yours</p>
-      <h3 class="card__title">The Wellness Champion Playlist</h3>
-      <p class="small">Send us the song that brings you joy, gets you moving, or just makes you smile &mdash; your go-to morning song, your workout anthem, the one that resets you on the drive home.</p>
-      <p class="small">Every song goes up on the board. The more of us who name the same one, the bigger it gets written.</p>
-      <div class="teaser" id="playlistTeaser" hidden>
-        <div class="teaser__board">
-          <p class="eyebrow">Loudest on the board</p>
-          <p class="teaser__songs" id="teaserSongs"></p>
-        </div>
-      </div>
-      <p class="teaser__actions">
-        <a class="btn btn--sun" id="teaserForm" href="../playlist/">Add your song</a>
-        <a class="btn btn--ghost" href="../playlist/">See the whole board</a>
-      </p>
-    </div>
-    <div class="card stack-sm">
-      <p class="eyebrow">Advocacy</p>
-      <h3 class="card__title">IDEA Full Funding</h3>
-      <p class="small">Congress has never funded IDEA at the promised 40%. That gap lands on staffing levels, caseloads, and every one of us. Signing takes a minute.</p>
-      <p class="small"><a href="#" target="_blank" rel="noopener noreferrer">Sign the petition</a> <span class="xsmall">(link to be added)</span></p>
     </div>
     <div class="card stack-sm">
       <p class="eyebrow">Tell us</p>
@@ -1482,9 +1516,9 @@ input[type="range"]{accent-color:var(--tide);}
 <script src="../playlist/songs.js"></script>
 <script src="../playlist/playlist-data.js"></script>
 <script>
-/* Wellness Champion Playlist teaser - the three most-sent songs, pulled
-   from the same source the /playlist/ cloud reads. Stays hidden unless
-   there is something real to show, so a quiet month leaves no empty box. */
+/* Wellness Champion Playlist board - the most-sent songs, pulled from the
+   same source the /playlist/ cloud reads. The board stays hidden until there
+   is something real to show; .board__empty stands in until then. */
 (function(){
   "use strict";
   var P = window.TRACEPlaylist;
@@ -1503,21 +1537,23 @@ input[type="range"]{accent-color:var(--tide);}
   if (!box || !line) return;
 
   P.load(function(res){
-    var top = res.groups.slice(0, 3).filter(function(g){ return g.count > 0; });
+    var top = res.groups.slice(0, 7).filter(function(g){ return g.count > 0; });
     if (!top.length) return;
     var max = top[0].count;
     line.textContent = "";
     top.forEach(function(g){
       var b = document.createElement("b");
       var t = max === 1 ? 1 : (g.count - 1) / (max - 1);
-      b.style.fontSize = (1.35 + t * 1.05).toFixed(2) + "rem";
+      b.style.fontSize = (1.4 + t * 1.6).toFixed(2) + "rem";
       b.textContent = g.song;   /* textContent, never innerHTML */
       b.title = g.song + (g.artist ? " \u00b7 " + g.artist : "") +
                 " \u00b7 sent by " + g.count + (g.count === 1 ? " person" : " people");
       line.appendChild(b);
     });
     box.hidden = false;
-  }, function(){ /* leave the teaser hidden */ });
+    var empty = document.getElementById("boardEmpty");
+    if (empty) empty.hidden = true;
+  }, function(){ /* leave the board hidden and the stand-in showing */ });
 })();
 </script>
 </body>

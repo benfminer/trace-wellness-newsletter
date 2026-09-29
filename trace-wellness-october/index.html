@@ -216,7 +216,6 @@ img{max-width:100%;}
   .grid-2{grid-template-columns:1fr 1fr;}
   .grid-5-4{grid-template-columns:5fr 4fr;}
   .grid-3{grid-template-columns:repeat(3,1fr);align-items:start;}
-  .grid-4-5{grid-template-columns:4fr 5fr;align-items:start;}
 }
 /* align-content:start matters here. A card in a two-column row stretches to match
    its taller sibling, and grid's default stretch pours that spare height into the
@@ -468,13 +467,12 @@ input[type="range"]{accent-color:var(--tide);}
 .board__empty[hidden]{display:none;}
 
 /* ---- bulletin cards ---- */
-/* Three equal columns put a 650px dental card next to two 200px ones, so either
-   the short cards stretched (boxes full of nothing) or the row left a void beside
-   the tall one. Two columns instead: the dental card takes the left, the two short
-   ones stack up the right and between them roughly match its height. */
+/* Three equal columns only work while the cards are a similar height, so the
+   dental card is kept to the facts -- date, room, deadline, who to call. The
+   full write-up lives on the Oct 23 line in the events list above. align-items
+   keeps a short card from stretching to match a taller neighbour. */
 #bulletin .card{padding:1.3rem;}
 #bulletin h3.card__title{font-size:1.15rem;}
-#bulletin .card__photo img{aspect-ratio:3/2;}
 @media (min-width:760px){ .card--wide{grid-column:1 / -1;} }
 @media print{
   .teaser{background:none;padding:0;box-shadow:none;}
@@ -1015,36 +1013,32 @@ input[type="range"]{accent-color:var(--tide);}
   <!-- EDIT ME: confirm every date, time, and registration link before publishing -->
   <ul class="events" style="margin-bottom:1.6rem;">
     <li><details class="event"><summary><span class="event__date">Oct 10</span><span class="event__name">World Mental Health Day</span></summary><p class="event__more">Saturday. A good day to do the thing you would tell a student to do. VEBA counseling and health coaching are included in your benefits &mdash; using them is not a last resort.</p></details></li>
-    <li><details class="event"><summary><span class="event__date">Oct 16</span><span class="event__name">Big Smiles registration deadline</span></summary><p class="event__more">Last day to register students for the October 23 dental clinic. Details in the card below.</p></details></li>
+    <li><details class="event"><summary><span class="event__date">Oct 16</span><span class="event__name">Big Smiles registration deadline</span></summary><p class="event__more">Last day to register students for the October 23 dental clinic. Sign up at myschooldentist.com or use Annie Stukes' paper forms, then send her your list so she knows who to expect.</p></details></li>
     <li><details class="event"><summary><span class="event__date">Oct 21</span><span class="event__name">Unity Day &mdash; wear orange</span></summary><p class="event__more">PACER's national bullying prevention day. Sites are organizing their own version; check with your site rep. Staff photos welcome for the November letter.</p></details></li>
     <li><details class="event"><summary><span class="event__date">Oct 23</span><span class="event__name">Big Smiles Dental Clinic</span></summary><p class="event__more">Friday, TRACE Main, Room 11. Mobile cleanings and preventive care for students, on campus.</p></details></li>
     <li><details class="event"><summary><span class="event__date">Oct 31</span><span class="event__name">Halloween falls on a Saturday</span></summary><p class="event__more">Which means Friday the 30th is the costume day and you have the actual holiday to yourself. Plan accordingly.</p></details></li>
     <li><details class="event"><summary><span class="event__date">Oct TBD</span><span class="event__name">Open enrollment window</span></summary><p class="event__more">Dates and the benefits portal link land in your district email. Put the deadline in your phone the day it arrives &mdash; it is the one deadline this month with a twelve-month consequence.</p></details></li>
     <li><details class="event"><summary><span class="event__date">Oct TBD</span><span class="event__name">Komen San Diego More Than Pink Walk</span></summary><p class="event__more">Balboa Park. The committee is putting together a TRACE team &mdash; walkers, strollers, and dogs all count. Registration link to come.</p></details></li>
   </ul>
-  <div class="grid grid-4-5">
+  <div class="grid grid-3">
     <div class="card stack-sm">
-      <figure class="card__photo"><img src="../assets/events/dental-clinic.jpg" alt="A boy in a dental chair grinning and giving a thumbs up" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">This month</p>
       <h3 class="card__title">Big Smiles Dental Clinic returns</h3>
       <p class="small"><strong>Friday, October 23, 2026</strong><br>TRACE Main, Room 11.</p>
-      <p class="small">The mobile dental clinic is coming back to campus, and this one is for your students &mdash; cleanings and preventive care without anybody losing half a day to an appointment across town.</p>
-      <p class="small"><strong>Register students by Friday, October 16.</strong> Sign up online at <a href="https://www.myschooldentist.com" target="_blank" rel="noopener noreferrer">myschooldentist.com</a>, or use paper forms from Annie.</p>
-      <p class="small">Once you have registered, send her your list of registered students so she knows who to expect.</p>
+      <p class="small">Mobile cleanings and preventive care for students, on campus.</p>
+      <p class="small"><strong>Register students by Friday, October 16</strong> at <a href="https://www.myschooldentist.com" target="_blank" rel="noopener noreferrer">myschooldentist.com</a>, or on Annie's paper forms.</p>
       <p class="small"><a href="mailto:astukes@sandi.net?subject=Big%20Smiles%20Dental%20Clinic">Annie Stukes RN</a> &middot; 619 894 5304</p>
     </div>
-    <div class="stack">
-      <div class="card stack-sm">
-        <p class="eyebrow">Tell us</p>
-        <h3 class="card__title">What do you want in November?</h3>
-        <p class="small">This letter is only useful if it is the one you would actually open. Recipes, challenges, a section we are missing &mdash; send it over.</p>
-        <p class="small"><a href="#" target="_blank" rel="noopener noreferrer">Share your thoughts</a> <span class="xsmall">(link to be added)</span></p>
-      </div>
-      <div class="card stack-sm">
-        <p class="eyebrow">Next issue</p>
-        <h3 class="card__title">November: Enough</h3>
-        <p class="small">Gratitude without the obligation, the first dark drive home after the time change, and a potluck dish that is not a casserole. Plus one book, one month, and no meeting &mdash; the reading room opens in November.</p>
-      </div>
+    <div class="card stack-sm">
+      <p class="eyebrow">Tell us</p>
+      <h3 class="card__title">What do you want in November?</h3>
+      <p class="small">This letter is only useful if it is the one you would actually open. Recipes, challenges, a section we are missing &mdash; send it over.</p>
+      <p class="small"><a href="#" target="_blank" rel="noopener noreferrer">Share your thoughts</a> <span class="xsmall">(link to be added)</span></p>
+    </div>
+    <div class="card stack-sm">
+      <p class="eyebrow">Next issue</p>
+      <h3 class="card__title">November: Enough</h3>
+      <p class="small">Gratitude without the obligation, the first dark drive home after the time change, and a potluck dish that is not a casserole. Plus one book, one month, and no meeting &mdash; the reading room opens in November.</p>
     </div>
   </div>
 </section>

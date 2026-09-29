@@ -216,6 +216,7 @@ img{max-width:100%;}
   .grid-2{grid-template-columns:1fr 1fr;}
   .grid-5-4{grid-template-columns:5fr 4fr;}
   .grid-3{grid-template-columns:repeat(3,1fr);align-items:start;}
+  .grid-4-5{grid-template-columns:4fr 5fr;align-items:start;}
 }
 /* align-content:start matters here. A card in a two-column row stretches to match
    its taller sibling, and grid's default stretch pours that spare height into the
@@ -467,10 +468,13 @@ input[type="range"]{accent-color:var(--tide);}
 .board__empty[hidden]{display:none;}
 
 /* ---- bulletin cards ---- */
-/* Without align-items:start above, a two-line card stretches to match the tall
-   dental one beside it -- that is where the acre of white space came from. */
-#bulletin .grid-3 .card{padding:1.3rem;}
-#bulletin .grid-3 h3.card__title{font-size:1.15rem;}
+/* Three equal columns put a 650px dental card next to two 200px ones, so either
+   the short cards stretched (boxes full of nothing) or the row left a void beside
+   the tall one. Two columns instead: the dental card takes the left, the two short
+   ones stack up the right and between them roughly match its height. */
+#bulletin .card{padding:1.3rem;}
+#bulletin h3.card__title{font-size:1.15rem;}
+#bulletin .card__photo img{aspect-ratio:3/2;}
 @media (min-width:760px){ .card--wide{grid-column:1 / -1;} }
 @media print{
   .teaser{background:none;padding:0;box-shadow:none;}
@@ -1018,7 +1022,7 @@ input[type="range"]{accent-color:var(--tide);}
     <li><details class="event"><summary><span class="event__date">Oct TBD</span><span class="event__name">Open enrollment window</span></summary><p class="event__more">Dates and the benefits portal link land in your district email. Put the deadline in your phone the day it arrives &mdash; it is the one deadline this month with a twelve-month consequence.</p></details></li>
     <li><details class="event"><summary><span class="event__date">Oct TBD</span><span class="event__name">Komen San Diego More Than Pink Walk</span></summary><p class="event__more">Balboa Park. The committee is putting together a TRACE team &mdash; walkers, strollers, and dogs all count. Registration link to come.</p></details></li>
   </ul>
-  <div class="grid grid-3">
+  <div class="grid grid-4-5">
     <div class="card stack-sm">
       <figure class="card__photo"><img src="../assets/events/dental-clinic.jpg" alt="A boy in a dental chair grinning and giving a thumbs up" width="1200" height="675" loading="lazy" decoding="async"></figure>
       <p class="eyebrow">This month</p>
@@ -1029,16 +1033,18 @@ input[type="range"]{accent-color:var(--tide);}
       <p class="small">Once you have registered, send her your list of registered students so she knows who to expect.</p>
       <p class="small"><a href="mailto:astukes@sandi.net?subject=Big%20Smiles%20Dental%20Clinic">Annie Stukes RN</a> &middot; 619 894 5304</p>
     </div>
-    <div class="card stack-sm">
-      <p class="eyebrow">Tell us</p>
-      <h3 class="card__title">What do you want in November?</h3>
-      <p class="small">This letter is only useful if it is the one you would actually open. Recipes, challenges, a section we are missing &mdash; send it over.</p>
-      <p class="small"><a href="#" target="_blank" rel="noopener noreferrer">Share your thoughts</a> <span class="xsmall">(link to be added)</span></p>
-    </div>
-    <div class="card stack-sm">
-      <p class="eyebrow">Next issue</p>
-      <h3 class="card__title">November: Enough</h3>
-      <p class="small">Gratitude without the obligation, the first dark drive home after the time change, and a potluck dish that is not a casserole. Plus one book, one month, and no meeting &mdash; the reading room opens in November.</p>
+    <div class="stack">
+      <div class="card stack-sm">
+        <p class="eyebrow">Tell us</p>
+        <h3 class="card__title">What do you want in November?</h3>
+        <p class="small">This letter is only useful if it is the one you would actually open. Recipes, challenges, a section we are missing &mdash; send it over.</p>
+        <p class="small"><a href="#" target="_blank" rel="noopener noreferrer">Share your thoughts</a> <span class="xsmall">(link to be added)</span></p>
+      </div>
+      <div class="card stack-sm">
+        <p class="eyebrow">Next issue</p>
+        <h3 class="card__title">November: Enough</h3>
+        <p class="small">Gratitude without the obligation, the first dark drive home after the time change, and a potluck dish that is not a casserole. Plus one book, one month, and no meeting &mdash; the reading room opens in November.</p>
+      </div>
     </div>
   </div>
 </section>

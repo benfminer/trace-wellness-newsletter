@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>The Wellness Champion Playlist</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <!--[if mso]>
+<style>.anton { font-family:Impact,Arial,sans-serif !important; }</style>
 <noscript><xml><o:OfficeDocumentSettings>
   <o:PixelsPerInch>96</o:PixelsPerInch>
   <o:AllowPNG/>
@@ -37,7 +39,7 @@
     .sm-pad    { padding-left:22px !important; padding-right:22px !important; }
     .sm-stack  { display:block !important; width:100% !important; }
     .sm-center { text-align:center !important; }
-    .sm-h1     { font-size:30px !important; line-height:36px !important; }
+    .sm-h1     { font-size:36px !important; line-height:42px !important; }
     .sm-big    { font-size:30px !important; }
     .sm-mid    { font-size:21px !important; }
     .sm-hide   { display:none !important; }
@@ -63,51 +65,33 @@
   <![endif]-->
   <table role="presentation" class="sm-full" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px; max-width:600px; background-color:#FCFAF7;">
 
-    <!-- ============ HERO IMAGE ============
-         Decoration only. The td carries a background colour so a blocked
-         image reads as an intentional band rather than a hole, and the alt
-         text is styled to stay legible against it. -->
+    <!-- ============ HEADLINE (gold, poster style) ============
+         Real text, not an image, so it reads even when Outlook blocks
+         pictures. Anton loads in Apple Mail and iOS; everything else falls
+         back to Impact, which ships on Windows and Mac. -->
     <tr>
-      <td bgcolor="#14203A" align="center" style="background-color:#14203A; padding:0; font-size:0; line-height:0;">
-        <img src="https://benfminer.github.io/trace-wellness-newsletter/assets/email/hero-street.jpg" width="600" height="250"
-             alt="A person walking a city street in a beanie and over-ear headphones, seen from behind."
-             style="display:block; width:100%; max-width:600px; height:auto; border:0; outline:none; text-decoration:none; -ms-interpolation-mode:bicubic; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; line-height:22px; color:#FCFAF7;">
-      </td>
-    </tr>
-
-    <!-- ============ MASTHEAD ============ -->
-    <tr>
-      <td class="sm-pad" style="background-color:#14203A; padding:26px 40px 24px 40px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-          <tr>
-            <td align="left" style="font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:11px; line-height:16px; letter-spacing:1.6px; text-transform:uppercase; color:#F2A413; font-weight:700;">
-              TRACE Schools &nbsp;&middot;&nbsp; Wellness Committee
-            </td>
-          </tr>
-          <tr>
-            <td align="left" style="padding-top:6px; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:11px; line-height:16px; letter-spacing:1.2px; text-transform:uppercase; color:#98A8C4;">
-              A new thing, and it needs you
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-    <!-- ============ TITLE ============ -->
-    <tr>
-      <td class="sm-pad" style="background-color:#14203A; padding:0 40px 34px 40px;">
-        <h1 class="sm-h1" style="margin:0; font-family:Fraunces,Georgia,'Times New Roman',serif; font-size:40px; line-height:44px; letter-spacing:-0.8px; color:#FCFAF7; font-weight:700;">
-          The Wellness<br>Champion Playlist
-        </h1>
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px;">
-          <tr>
-            <td width="54" height="3" style="width:54px; height:3px; background-color:#F2A413; font-size:0; line-height:0;">&nbsp;</td>
-          </tr>
-        </table>
-        <p style="margin:18px 0 0 0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:17px; line-height:27px; color:#C6D2E6;">
-          We&rsquo;re building one playlist, together &mdash; and it only works if it&rsquo;s actually yours.
+      <td class="sm-pad" bgcolor="#F2A413" style="background-color:#F2A413; padding:30px 40px 6px 40px;">
+        <p style="margin:0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:11px; line-height:16px; letter-spacing:2px; text-transform:uppercase; color:#14203A; font-weight:800;">
+          <span style="background-color:#14203A; color:#FCFAF7; padding:3px 7px;">TRACE Wellness</span>&nbsp; The Wellness Champion Playlist
         </p>
+        <h1 class="sm-h1 anton" style="margin:16px 0 0 0; font-family:Anton,Impact,'Arial Black',sans-serif; font-size:50px; line-height:56px; text-transform:uppercase; color:#14203A; font-weight:400; letter-spacing:0.3px;">
+          What song gets you through <span style="background-color:#6B2D5C; color:#FCFAF7; padding:0 6px; white-space:nowrap;">the hard part</span> of the day?
+        </h1>
       </td>
+    </tr>
+
+    <!-- ============ RECORD ============
+         Decoration only. If the image is blocked, the gold cell keeps the
+         band looking intentional. -->
+    <tr>
+      <td bgcolor="#F2A413" align="center" style="background-color:#F2A413; padding:0; font-size:0; line-height:0;">
+        <img src="https://benfminer.github.io/trace-wellness-newsletter/assets/email/hero-vinyl.jpg" width="600" height="300"
+             alt="A vinyl record with a label that reads: your song here."
+             style="display:block; width:100%; max-width:600px; height:auto; border:0; outline:none; text-decoration:none; -ms-interpolation-mode:bicubic; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; line-height:22px; color:#14203A;">
+      </td>
+    </tr>
+    <tr>
+      <td height="8" bgcolor="#14203A" style="height:8px; background-color:#14203A; font-size:0; line-height:0;">&nbsp;</td>
     </tr>
 
     <!-- ============ OPENING ============ -->
@@ -119,40 +103,9 @@
         <p style="margin:0 0 16px 0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:16px; line-height:27px; color:#14203A;">
           This is our version of that board, and it only works if a lot of different people write on it.
         </p>
-      </td>
-    </tr>
-
-    <!-- ============ THE BOARD (chalkboard) ============
-         The question as it would be chalked up, then the invitation
-         and the Apple Music playlist. Pure text, no images. -->
-    <tr>
-      <td class="sm-pad" style="padding:26px 40px 0 40px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#14203A;">
-          <tr>
-            <td align="center" style="padding:30px 26px 12px 26px; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:10px; line-height:15px; letter-spacing:1.6px; text-transform:uppercase; color:#98A8C4; font-weight:700;">
-              On the board
-            </td>
-          </tr>
-          <tr>
-            <td align="center" style="padding:6px 30px 8px 30px;">
-              <div class="sm-mid" style="font-family:Fraunces,Georgia,'Times New Roman',serif; font-size:27px; line-height:36px; color:#F6B93B; font-weight:600; letter-spacing:-0.3px;">
-                What song gets you through the hard part of the day?
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td align="center" style="padding:10px 30px 8px 30px; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; line-height:23px; color:#C6D2E6;">
-              The one for the drive in when you already know it&rsquo;s going to be a long day. The one that resets you in the four minutes between third period and lunch. Every answer goes up next to everyone else&rsquo;s.
-            </td>
-          </tr>
-          <tr>
-            <td align="center" style="padding:8px 30px 30px 30px; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; line-height:23px; color:#C6D2E6;">
-              We&rsquo;re also gathering every song into a shared <a href="https://music.apple.com/us/playlist/trace-champions-playlist/pl.u-LdbqEgjs2LjJEBV" style="color:#FCFAF7; font-weight:600; text-decoration:underline;">Apple Music playlist</a>, so you can press play on what your colleagues are listening to.
-              <br><br>
-              <a href="https://music.apple.com/us/playlist/trace-champions-playlist/pl.u-LdbqEgjs2LjJEBV" style="color:#F6B93B; font-weight:700; text-decoration:underline;">Listen on Apple Music &rarr;</a>
-            </td>
-          </tr>
-        </table>
+        <p style="margin:0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:16px; line-height:27px; color:#5D6B84;">
+          The one for the drive in when you already know it&rsquo;s going to be a long day. The one that resets you in the four minutes between third period and lunch. Every answer goes up next to everyone else&rsquo;s.
+        </p>
       </td>
     </tr>
 
@@ -163,16 +116,16 @@
         <!--[if mso]>
         <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
           href="https://docs.google.com/forms/d/e/1FAIpQLSegHqmLIjgRfPUf0JYbBCtSzVh3jkGeQ4-ibhem4dDvU77ihg/viewform"
-          style="height:52px; v-text-anchor:middle; width:250px;" arcsize="12%" stroke="f" fillcolor="#0F7E77">
+          style="height:58px; v-text-anchor:middle; width:290px;" arcsize="8%" strokecolor="#14203A" strokeweight="2pt" fillcolor="#0F7E77">
         <w:anchorlock/>
-        <center style="color:#FFFFFF; font-family:'Segoe UI',Arial,sans-serif; font-size:17px; font-weight:700;">
-          Add your song
+        <center style="color:#FFFFFF; font-family:Impact,Arial,sans-serif; font-size:22px; letter-spacing:1px;">
+          ADD YOUR SONG
         </center>
         </v:roundrect>
         <![endif]-->
         <!--[if !mso]><!-- -->
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSegHqmLIjgRfPUf0JYbBCtSzVh3jkGeQ4-ibhem4dDvU77ihg/viewform"
-           style="display:inline-block; background-color:#0F7E77; color:#FFFFFF; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:17px; font-weight:700; line-height:52px; text-align:center; text-decoration:none; width:250px; border-radius:6px; -webkit-text-size-adjust:none; mso-hide:all;">
+           style="display:inline-block; background-color:#0F7E77; color:#FFFFFF; font-family:Anton,Impact,'Arial Black',sans-serif; font-size:22px; letter-spacing:1px; text-transform:uppercase; line-height:54px; text-align:center; text-decoration:none; width:286px; border:2px solid #14203A; border-radius:5px; box-shadow:4px 4px 0 #14203A; -webkit-text-size-adjust:none; mso-hide:all;">
           Add your song
         </a>
         <!--<![endif]-->
@@ -181,7 +134,7 @@
     </tr>
     <tr>
       <td class="sm-pad" align="center" style="padding:14px 40px 0 40px; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:14px; line-height:22px; color:#5D6B84;">
-        Takes about thirty seconds. No account, no sign-in.
+        Takes about thirty seconds. No account, no sign&#8209;in.
       </td>
     </tr>
     <tr>
@@ -190,18 +143,35 @@
       </td>
     </tr>
 
-    <!-- ============ RULE ============ -->
+    <!-- ============ APPLE MUSIC (sticker) ============
+         Thick right and bottom borders fake the poster's offset shadow,
+         since Outlook ignores box-shadow. -->
     <tr>
-      <td class="sm-pad" style="padding:32px 40px 0 40px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-          <tr><td height="1" style="height:1px; background-color:#E3DCD1; font-size:0; line-height:0;">&nbsp;</td></tr>
+      <td class="sm-pad" style="padding:36px 40px 0 40px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#FCFAF7; border-top:3px solid #14203A; border-left:3px solid #14203A; border-right:8px solid #14203A; border-bottom:8px solid #14203A;">
+          <tr>
+            <td style="padding:20px 22px 22px 22px;">
+              <p style="margin:0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:10px; line-height:14px; letter-spacing:2px; text-transform:uppercase; font-weight:800;">
+                <span style="background-color:#6B2D5C; color:#FCFAF7; padding:2px 7px;">Then listen</span>
+              </p>
+              <p class="anton" style="margin:10px 0 0 0; font-family:Anton,Impact,'Arial Black',sans-serif; font-size:26px; line-height:30px; text-transform:uppercase; color:#14203A;">
+                Every song lands on Apple Music
+              </p>
+              <p style="margin:8px 0 0 0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px; color:#14203A;">
+                We&rsquo;re gathering every song into a shared playlist, so you can press play on what your colleagues are listening to.
+              </p>
+              <p style="margin:12px 0 0 0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:24px;">
+                <a href="https://music.apple.com/us/playlist/trace-champions-playlist/pl.u-LdbqEgjs2LjJEBV" style="color:#6B2D5C; text-decoration:underline; font-weight:700;">Listen to the TRACE Champions Playlist &rarr;</a>
+              </p>
+            </td>
+          </tr>
         </table>
       </td>
     </tr>
 
     <!-- ============ CLOSING NOTE ============ -->
     <tr>
-      <td class="sm-pad" style="padding:24px 40px 36px 40px;">
+      <td class="sm-pad" style="padding:30px 40px 36px 40px;">
         <p style="margin:0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:15px; line-height:25px; color:#5D6B84;">
           The board updates itself as submissions come in, so yours shows up on its own. Send more than one if you can&rsquo;t pick. Nobody has ever been able to pick.
         </p>
@@ -223,9 +193,6 @@
         </p>
         <p style="margin:14px 0 0 0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:19px; color:#6F80A0;">
           Submissions come in through a Google Form and appear on the board automatically. Wellness content is general information, not medical advice.
-        </p>
-        <p style="margin:8px 0 0 0; font-family:'Public Sans','Segoe UI',Helvetica,Arial,sans-serif; font-size:12px; line-height:19px; color:#6F80A0;">
-          Photograph by <a href="https://unsplash.com/@markrohan" style="color:#3FBFB2; text-decoration:underline;">Mark Rohan</a> on Unsplash.
         </p>
       </td>
     </tr>

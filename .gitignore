@@ -4,7 +4,8 @@ images/
 memory.md
 monthlies.md
 plan/
-trace-wellness-november/
+trace-wellness-november/*
+!trace-wellness-november/index.html
 trace-wellness-december/
 trace-wellness-january/
 trace-wellness-february/

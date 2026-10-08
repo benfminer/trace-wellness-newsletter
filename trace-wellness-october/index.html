@@ -524,6 +524,10 @@ input[type="range"]{accent-color:var(--tide);}
 .foot a{color:#F6C79A;}
 .foot .eyebrow{color:#98A8C4;}
 .roster{list-style:none;margin:.5rem 0 0;padding:0;display:grid;gap:.3rem;font-size:.94rem;}
+/* names three across in two rows; the closing note spans the full width */
+.roster{grid-template-columns:repeat(3,auto);justify-content:start;column-gap:2.2rem;}
+.roster li:last-child{grid-column:1/-1;margin-top:.5rem;}
+@media (max-width:560px){ .roster{grid-template-columns:repeat(2,auto);} }
 
 /* =================== MOTION & SPACE (auw-inspired pass) =================== */
 /* everything below degrades to "just visible" under reduced motion */

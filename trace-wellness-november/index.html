@@ -421,6 +421,36 @@ input[type="range"]{accent-color:var(--tide);}
 }
 .memorial__help{margin-top:1.1rem;position:relative;z-index:1;}
 .memorial .hotline a{color:inherit;}
+/* =================== EXTRA ROWS: legs, sunlight, nerves, vitamins =================== */
+/* a second row of two cards under Move and under Lunch; the pairs are written to
+   run about the same length so neither card ends on a block of empty space */
+.extras{margin-top:1.1rem;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;padding:.9rem 0;border-block:1px solid var(--line);}
+.stat b{display:block;font-family:Fraunces,serif;font-size:2.1rem;line-height:1;letter-spacing:-.02em;color:var(--sun);}
+.stat span{display:block;margin-top:.35rem;font-size:.78rem;line-height:1.35;color:var(--text-muted);}
+.moves{list-style:none;margin:0;padding:0;display:grid;gap:.75rem;counter-reset:move;}
+.moves li{display:grid;grid-template-columns:2rem 1fr;gap:.85rem;align-items:start;counter-increment:move;}
+.moves li::before{
+  content:counter(move);width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;
+  background:var(--tide-soft);color:var(--tide-ink);
+  font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.85rem;
+}
+.facts strong{display:block;color:var(--text);font-size:.97rem;line-height:1.35;}
+.moves div{font-size:.92rem;color:var(--text-muted);line-height:1.5;padding-top:.2rem;}
+.moves strong{color:var(--text);font-size:.97rem;}
+.facts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(12.5rem,1fr));gap:1rem 1.3rem;}
+.facts li{border-top:2px solid var(--sun);padding-top:.55rem;font-size:.9rem;line-height:1.45;color:var(--text-muted);}
+.facts--tide li{border-top-color:var(--tide);}
+.dose{display:grid;gap:.85rem;}
+.dose__group{border-left:3px solid var(--sun);padding-left:.9rem;}
+.dose__group--mid{border-left-color:var(--coral);}
+.dose__group--eve{border-left-color:var(--plum);}
+.dose__group--night{border-left-color:var(--tide);}
+.dose ul{list-style:none;margin:.4rem 0 0;padding:0;display:grid;gap:.35rem;}
+.dose li{display:grid;grid-template-columns:7.4rem 1fr;gap:.7rem;font-size:.9rem;line-height:1.45;color:var(--text-muted);}
+.dose li strong{color:var(--text);}
+@media (max-width:430px){ .dose li{grid-template-columns:1fr;gap:0;} }
+
 /* =================== FOOTER =================== */
 .foot{background:var(--night);color:#E9EEF7;padding:3.5rem 0 2.5rem;margin-top:1rem;}
 .foot a{color:#F6C79A;}
@@ -835,6 +865,45 @@ input[type="range"]{accent-color:var(--tide);}
       <p class="small" style="margin-top:.6rem;">The committee is putting a TRACE team into <strong>Father Joe's Villages Thanksgiving Day 5K</strong> on Thursday, November 26 &mdash; walkers, strollers, and dogs all count, and the entry supports meals and housing downtown. Registration link to come.</p>
     </div>
   </div>
+  <div class="grid grid-2 extras">
+    <div class="card stack">
+      <p class="eyebrow">Strength &middot; five moves</p>
+      <h3 class="card__title">Your legs predict how long you live</h3>
+      <p class="small">The miles keep you moving. These five keep the muscle that does the moving.</p>
+      <div class="stats">
+        <p class="stat"><b class="tnum">50%</b><span>lower risk of early death, strongest legs vs. weakest</span></p>
+        <p class="stat"><b class="tnum">23%</b><span>lower risk of dying per 10% gain in leg strength</span></p>
+        <p class="stat"><b class="tnum">34%</b><span>lower cardiovascular risk per 10% gain in leg strength</span></p>
+      </div>
+      <ol class="moves">
+        <li><div><strong>Squats.</strong> Build hip bone density for fewer fractures and longer independence.</div></li>
+        <li><div><strong>Romanian deadlifts.</strong> Top-tier hamstring work that protects every step and stair.</div></li>
+        <li><div><strong>Calf raises.</strong> Your second heart, pumping blood back up to your heart and brain.</div></li>
+        <li><div><strong>Lunges.</strong> Single-leg strength and balance, for lower odds of disability.</div></li>
+        <li><div><strong>Step-ups.</strong> Train for stairs, curbs, and buses. Exercise like this cuts falls by 24%.</div></li>
+      </ol>
+    </div>
+    <div class="card stack">
+      <p class="eyebrow">Light</p>
+      <h3 class="card__title">Eight reasons sunlight is a superfood</h3>
+      <p class="small">One more argument for taking the walk at lunch, while the sun is still up. Here is how fast it goes in San Diego this month.</p>
+      <div class="stats">
+        <p class="stat"><b class="tnum">4:56</b><span>sunset on Monday, November 2</span></p>
+        <p class="stat"><b class="tnum">4:42</b><span>sunset on Monday, November 30</span></p>
+        <p class="stat"><b class="tnum">10h</b><span>of daylight by month's end, down from almost 11</span></p>
+      </div>
+      <ul class="facts">
+        <li><strong>Boosts mood</strong>Raises feel-good hormones like dopamine and serotonin.</li>
+        <li><strong>Improves bone health</strong>Raises vitamin D, which helps bones absorb calcium.</li>
+        <li><strong>Lowers blood pressure</strong>Raises nitric oxide, which helps blood vessels relax and widen.</li>
+        <li><strong>Improves skin health</strong>Calms inflammation and helps with psoriasis and eczema.</li>
+        <li><strong>Increases energy</strong>Helps your mitochondria make energy more efficiently.</li>
+        <li><strong>Boosts the immune system</strong>Vitamin D helps immune cells find and fight off germs.</li>
+        <li><strong>Improves sleep</strong>Sets your circadian rhythm and melatonin production.</li>
+        <li><strong>Reduces inflammation</strong>Vitamin D works as an antioxidant against free radicals.</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <!-- ============ LUNCH ============ -->
@@ -872,6 +941,54 @@ input[type="range"]{accent-color:var(--tide);}
         <li><input type="checkbox" id="s6"><label for="s6">Pile on a platter. Lemon zest and juice over the top, then the herbs and pistachios. Taste for salt. Serve warm or at room temperature &mdash; it is genuinely good either way, which is why it travels.</label></li>
       </ul>
       <p class="small">Make ahead: roast in the morning, dress and finish just before you leave. Add the herbs and nuts at the table so they stay bright and crunchy. Swap pistachios for pepitas if there is a nut allergy in the building.</p>
+    </div>
+  </div>
+  <div class="grid grid-2 extras no-print">
+    <div class="card stack">
+      <p class="eyebrow">Feed your nerves</p>
+      <h3 class="card__title">Six foods worth adding to your plate</h3>
+      <p class="small">Real food for a calmer you. A few of them would sit nicely next to the carrots.</p>
+      <ul class="facts facts--tide">
+        <li><strong>Leafy greens</strong>Magnesium, folate, and B vitamins that support a healthy nervous system and stress resilience.</li>
+        <li><strong>Salmon</strong>Omega-3s (DHA and EPA) that support brain function, mood, and nerve health.</li>
+        <li><strong>Avocado</strong>Healthy fats, magnesium, and potassium for normal nerve function and a balanced mood.</li>
+        <li><strong>Berries</strong>Antioxidants and plant compounds that protect brain cells and support thinking.</li>
+        <li><strong>Oats</strong>Complex carbs, fiber, and B vitamins for steady energy and a calmer mood.</li>
+        <li><strong>Pumpkin seeds</strong>Magnesium, zinc, and healthy fats for nerve function, sleep, and stress resilience.</li>
+      </ul>
+      <p class="small">Pepitas are pumpkin seeds, the same nut-free swap the carrot recipe suggests for pistachios.</p>
+    </div>
+    <div class="card stack">
+      <p class="eyebrow">When to take what</p>
+      <h3 class="card__title">A day of vitamins, by the clock</h3>
+      <p class="small">If you already take supplements, here is where each one fits into your day.</p>
+      <div class="dose">
+        <div class="dose__group">
+          <p class="eyebrow">Morning, with breakfast</p>
+          <ul>
+            <li><strong>Vitamin D</strong><span>Bones, immune system, and mood</span></li>
+            <li><strong>Vitamin C</strong><span>Immunity, collagen, and healing</span></li>
+            <li><strong>Biotin</strong><span>Hair, skin, nails, and metabolism</span></li>
+            <li><strong>Vitamin E</strong><span>Antioxidant for heart and skin health</span></li>
+            <li><strong>B complex</strong><span>Energy, brain, and nerve function</span></li>
+          </ul>
+        </div>
+        <div class="dose__group dose__group--mid">
+          <p class="eyebrow">Mid-morning, an hour before lunch</p>
+          <ul><li><strong>Iron</strong><span>Prevents anemia, supports energy and oxygen flow</span></li></ul>
+        </div>
+        <div class="dose__group dose__group--eve">
+          <p class="eyebrow">Evening, with dinner</p>
+          <ul>
+            <li><strong>Zinc</strong><span>Immunity, wound healing, and cell repair</span></li>
+            <li><strong>Omega-3</strong><span>Heart, brain, and joint health</span></li>
+          </ul>
+        </div>
+        <div class="dose__group dose__group--night">
+          <p class="eyebrow">Night, 1&ndash;2 hours before bed</p>
+          <ul><li><strong>Magnesium</strong><span>Relaxes muscles, improves sleep, reduces stress</span></li></ul>
+        </div>
+      </div>
     </div>
   </div>
   <p class="print-only print-foot">Printed from the staff wellness letter. Amounts reflect the serving count set on the page.</p>

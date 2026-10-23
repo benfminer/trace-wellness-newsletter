@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Reading Room Board</title>
+<meta name="description" content="What TRACE staff thought of The God of the Woods, sorted by how far in they are.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* ============================================================
+   TRACE Schools — The Reading Room board
+   Single-file static page. Reads live posts from a published
+   Google Sheet (see CONFIG near the bottom of this file) and falls
+   back to the SAMPLE_POSTS list when the Sheet isn't connected.
+
+   Spoiler rule: every post is tagged with how far in its writer
+   was. A reader picks their own spot once (saved on this device),
+   and anything from further ahead is blurred until they tap it.
+   ============================================================ */
+
+/* ---- tokens: light (bare :root defines the full palette) ---- */
+:root{
+  --ground:#FCFAF7;
+  --ground-2:#F4EFE8;
+  --surface:#FFFFFF;
+  --surface-2:#F7F3ED;
+  --line:#E3DCD1;
+  --line-strong:#CFC5B6;
+  --text:#14203A;
+  --text-muted:#5D6B84;
+  --tide:#0F7E77;
+  --tide-soft:#DCEFEC;
+  --tide-ink:#0A5C57;
+  --sun:#F2A413;
+  --sun-ink:#8A5A05;
+  --pine:#2F5D46;
+  --pine-soft:#E2ECE5;
+  --night:#14203A;
+  --shadow:0 1px 2px rgba(20,32,58,.05), 0 10px 30px -18px rgba(20,32,58,.35);
+  --shadow-lift:0 2px 4px rgba(20,32,58,.06), 0 22px 48px -22px rgba(20,32,58,.45);
+  --focus:#0F7E77;
+  --on-tide:#FFFFFF;
+  --radius:14px;
+}
+/* ---- tokens: dark via system preference (only when no explicit light) ---- */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B1322;
+    --ground-2:#111C30;
+    --surface:#14203A;
+    --surface-2:#1B2A48;
+    --line:#26355A;
+    --line-strong:#3A4C78;
+    --text:#E9EEF7;
+    --text-muted:#98A8C4;
+    --tide:#3FBFB2;
+    --tide-soft:#123A38;
+    --tide-ink:#8CE0D5;
+    --sun:#F6B93B;
+    --sun-ink:#F6C96B;
+    --pine:#8CC7A5;
+    --pine-soft:#16302A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
+    --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
+    --focus:#3FBFB2;
+    --on-tide:#04211E;
+  }
+}
+/* ---- tokens: dark via explicit toggle ---- */
+:root[data-theme="dark"]{
+  --ground:#0B1322;
+  --ground-2:#111C30;
+  --surface:#14203A;
+  --surface-2:#1B2A48;
+  --line:#26355A;
+  --line-strong:#3A4C78;
+  --text:#E9EEF7;
+  --text-muted:#98A8C4;
+  --tide:#3FBFB2;
+  --tide-soft:#123A38;
+  --tide-ink:#8CE0D5;
+  --sun:#F6B93B;
+  --sun-ink:#F6C96B;
+  --pine:#8CC7A5;
+  --pine-soft:#16302A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -20px rgba(0,0,0,.9);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.5), 0 26px 54px -24px rgba(0,0,0,1);
+  --focus:#3FBFB2;
+  --on-tide:#04211E;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:4rem;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--text);
+  font-family:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:600;line-height:1.1;text-wrap:balance;margin:0;}
+p{margin:0;}
+a{color:var(--tide-ink);text-decoration-thickness:1px;text-underline-offset:3px;}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px;}
+button{font:inherit;color:inherit;}
+.wrap{width:min(1080px,100% - 2rem);margin-inline:auto;}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-muted);font-weight:500;
+}
+.small{font-size:.9rem;color:var(--text-muted);}
+.xsmall{font-size:.8rem;color:var(--text-muted);}
+.stack{display:grid;gap:1rem;align-content:start;}
+.stack-sm{display:grid;gap:.5rem;align-content:start;}
+.grid{display:grid;gap:1.1rem;}
+@media (min-width:760px){.grid-2{grid-template-columns:1fr 1fr;}}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  background:var(--tide);color:var(--on-tide);border:1px solid transparent;border-radius:9px;
+  padding:.62rem 1.15rem;font-weight:600;font-size:.94rem;cursor:pointer;text-decoration:none;
+  transition:filter .18s,transform .1s;
+}
+.btn:hover{filter:brightness(1.08);}
+.btn:active{transform:translateY(1px);}
+.btn--ghost{background:transparent;color:var(--text);border-color:var(--line-strong);}
+.btn--ghost:hover{background:var(--surface-2);filter:none;}
+.btn--sun{background:var(--sun);color:#221706;}
+.btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;filter:none;}
+
+/* =================== HERO =================== */
+/* Woods at first light: dark pines up top, a lake catching the sun below. */
+.hero{
+  position:relative;overflow:hidden;isolation:isolate;
+  padding:5rem 0 3.2rem;
+  background:linear-gradient(180deg,#09140F 0%,#132A20 38%,#28463A 64%,#6E6A4B 86%,#C98F45 100%);
+  color:#F4F1E6;
+}
+.hero__trees{
+  position:absolute;left:0;bottom:0;width:100%;height:46%;z-index:-1;opacity:.55;
+  pointer-events:none;
+}
+.hero__inner{position:relative;display:grid;gap:1.1rem;}
+.hero .eyebrow{color:#CFE3C9;}
+.masthead{
+  font-size:clamp(2.5rem,8.5vw,5.6rem);
+  font-weight:700;letter-spacing:-.045em;line-height:.92;
+  font-variation-settings:"SOFT" 40,"WONK" 1;
+}
+.masthead em{display:block;font-weight:400;font-style:italic;color:#F3D59B;letter-spacing:-.03em;}
+.hero__lede{max-width:52ch;color:#E7E9DA;font-size:clamp(1.02rem,1.6vw,1.18rem);}
+.hero__actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:.6rem;}
+.hero a.btn--ghost{color:#F4F1E6;border-color:rgba(244,241,230,.45);}
+.hero a.btn--ghost:hover{background:rgba(244,241,230,.12);}
+
+/* =================== TOP BAR =================== */
+.bell{
+  position:sticky;top:0;z-index:50;
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:saturate(1.4) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.bell__row{display:flex;align-items:center;gap:.8rem;padding:.55rem 0;}
+.bell__spot{
+  flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:.55rem;
+  text-decoration:none;color:var(--text);
+}
+.bell__spot .eyebrow{flex:0 0 auto;}
+.bell__spot strong{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1rem;
+}
+.bell__spot:hover strong{text-decoration:underline;text-underline-offset:3px;}
+.theme-btn{
+  flex:0 0 auto;background:var(--surface);border:1px solid var(--line);border-radius:999px;
+  width:38px;height:38px;display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow);
+}
+.theme-btn:hover{border-color:var(--line-strong);}
+
+/* =================== SECTIONS =================== */
+.period{position:relative;padding:clamp(3rem,7vh,5rem) 0;border-top:1px solid var(--line);}
+.period:first-of-type{border-top:none;}
+.period__head{display:grid;gap:.9rem;margin-bottom:clamp(1.6rem,4vw,2.4rem);max-width:58ch;}
+.period h2{font-size:clamp(1.9rem,5vw,3rem);letter-spacing:-.035em;font-variation-settings:"SOFT" 30;}
+.period__sub{color:var(--text-muted);font-size:1.02rem;max-width:52ch;}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:1.5rem;
+}
+
+/* =================== YOUR SPOT =================== */
+/* A ribbon bookmark run along a spine of eight stops. It's a radio group
+   underneath, so keyboard and screen reader users get it for free. */
+.spine{border:0;margin:0;padding:0;min-width:0;}
+.spine__track{
+  position:relative;
+  display:grid;grid-template-columns:repeat(8,1fr);gap:.3rem;
+  margin-top:1rem;
+}
+.spine__track::before{
+  content:"";position:absolute;left:6%;right:6%;top:21px;height:2px;
+  background:var(--line-strong);z-index:0;
+}
+.stop{position:relative;display:grid;justify-items:center;gap:.35rem;cursor:pointer;z-index:1;}
+.stop input{position:absolute;opacity:0;width:1px;height:1px;}
+.stop__dot{
+  width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--surface);border:2px solid var(--line-strong);
+  font-family:"IBM Plex Mono",monospace;font-size:.78rem;font-weight:600;color:var(--text-muted);
+  transition:background .18s,border-color .18s,color .18s,transform .12s;
+}
+.stop:hover .stop__dot{border-color:var(--pine);}
+.stop input:focus-visible + .stop__dot{outline:3px solid var(--focus);outline-offset:3px;}
+.stop.is-read .stop__dot{background:var(--pine-soft);border-color:var(--pine);color:var(--pine);}
+.stop.is-here .stop__dot{background:var(--pine);border-color:var(--pine);color:var(--surface);transform:scale(1.08);}
+.stop__name{
+  font-size:.74rem;line-height:1.2;text-align:center;color:var(--text-muted);
+  min-height:2.4em;
+}
+.stop.is-read .stop__name,.stop.is-here .stop__name{color:var(--text);}
+.stop.is-here .stop__name{font-weight:600;}
+@media (max-width:560px){
+  .stop__dot{width:34px;height:34px;font-size:.7rem;}
+  .spine__track::before{top:16px;}
+  .stop__name{display:none;}
+}
+.spot-readout{
+  margin-top:1.1rem;padding-top:1rem;border-top:1px dashed var(--line-strong);
+  display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline;justify-content:space-between;
+}
+.spot-readout strong{font-family:Fraunces,Georgia,serif;font-size:1.25rem;font-weight:600;}
+
+/* =================== STATUS =================== */
+.status{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;align-items:center;margin-bottom:1.4rem;}
+.pill{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:var(--tide-soft);color:var(--tide-ink);
+  border-radius:999px;padding:.25rem .7rem;
+  font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+}
+.pill--warn{background:#FDF0D8;color:#8A5A05;}
+:root[data-theme="dark"] .pill--warn{background:#33260C;color:#F6C96B;}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .pill--warn{background:#33260C;color:#F6C96B;}
+}
+
+/* =================== THE BOARD =================== */
+.parts{display:grid;gap:clamp(2rem,5vw,3rem);}
+.part{display:grid;gap:1rem;}
+.part__head{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1rem;
+  padding-bottom:.6rem;border-bottom:2px solid var(--line);
+}
+.part__num{
+  font-family:"IBM Plex Mono",monospace;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--pine);font-weight:600;
+}
+.part__title{font-size:clamp(1.4rem,3.4vw,1.9rem);letter-spacing:-.02em;}
+.part__count{margin-left:auto;}
+.part.is-ahead .part__head{border-bottom-style:dashed;}
+.part.is-ahead .part__num{color:var(--text-muted);}
+
+/* Talking points: committee-written, folded. Locked until you get there. */
+.points{
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-2);
+}
+.points summary{
+  cursor:pointer;list-style:none;padding:.8rem 1.1rem;
+  display:flex;align-items:center;gap:.6rem;font-weight:600;font-size:.95rem;
+}
+.points summary::-webkit-details-marker{display:none;}
+.points summary::before{
+  content:"";width:.5rem;height:.5rem;flex:0 0 auto;
+  border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:rotate(-45deg);transition:transform .18s;
+}
+.points[open] summary::before{transform:rotate(45deg);}
+.points ol{margin:0;padding:0 1.1rem 1rem 2.4rem;display:grid;gap:.45rem;font-size:.95rem;}
+.points--locked{
+  padding:.8rem 1.1rem;display:flex;align-items:center;gap:.6rem;
+  color:var(--text-muted);font-size:.9rem;border-style:dashed;
+}
+
+.posts{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));}
+.post{
+  position:relative;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:1.2rem 1.25rem 1.1rem 1.4rem;
+  display:grid;gap:.7rem;align-content:start;
+  overflow:hidden;
+}
+/* A pencil line down the margin, like a note in a library copy. */
+.post::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--pine);opacity:.8;
+}
+.post__text{font-family:Fraunces,Georgia,serif;font-size:1.06rem;line-height:1.5;}
+.post__meta{
+  display:flex;flex-wrap:wrap;gap:.3rem .8rem;
+  font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+.post--ahead::before{background:var(--line-strong);}
+.post--ahead .post__body{
+  filter:blur(7px);user-select:none;pointer-events:none;
+}
+.post__reveal{
+  position:absolute;inset:0;z-index:2;
+  display:grid;place-content:center;gap:.25rem;text-align:center;
+  background:color-mix(in srgb, var(--surface) 35%, transparent);
+  border:0;cursor:pointer;padding:1rem;
+}
+.post__reveal strong{font-size:.95rem;}
+.post__reveal span{font-size:.8rem;color:var(--text-muted);}
+.post__reveal:hover strong{text-decoration:underline;text-underline-offset:3px;}
+.empty{
+  color:var(--text-muted);font-size:.95rem;font-style:italic;
+  padding:1rem 1.1rem;border:1px dashed var(--line);border-radius:var(--radius);
+}
+
+/* =================== FOOTER =================== */
+.foot{background:var(--night);color:#E9EEF7;padding:3.5rem 0 2.5rem;}
+.foot a{color:#F3D59B;}
+.foot .eyebrow{color:#98A8C4;}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <svg class="hero__trees" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="#06100B" d="M0 300V190l30-60 22 50 26-90 30 80 20-40 28 70 34-110 30 95 24-45 26 60 32-120 34 110 22-50 30 70 26-85 30 75 28-55 24 60 36-130 34 120 26-60 28 70 30-95 28 85 24-40 30 55 34-115 30 105 26-55 28 65 30-90 32 80 24-45 28 60 34-120 30 110 24-50 26 70 30-85 30 75 26-60 36 65 0 140z"/>
+  </svg>
+  <div class="wrap hero__inner">
+    <span class="eyebrow">TRACE Schools &middot; The Reading Room</span>
+    <h1 class="masthead">What we thought of<em>The God of the Woods</em></h1>
+    <p class="hero__lede">Posts from staff reading Liz Moore's novel this November. Set how far in you are, and anything from further ahead stays blurred until you choose to look.</p>
+    <div class="hero__actions">
+      <a class="btn btn--sun js-form" href="#" target="_blank" rel="noopener noreferrer">Post a thought</a>
+      <a class="btn btn--ghost" href="../trace-wellness-november/#reading">Back to the November issue</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TOP BAR ============ -->
+<nav class="bell" aria-label="Page navigation">
+  <div class="wrap bell__row">
+    <a class="bell__spot" href="#spot">
+      <span class="eyebrow">Your spot</span>
+      <strong id="bellSpot">Not set</strong>
+    </a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2"></circle>
+        <path d="M12 2.4v2M12 19.6v2M2.4 12h2M19.6 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"></path>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ YOUR SPOT ============ -->
+<section class="period" id="spot">
+  <div class="wrap">
+    <div class="period__head">
+      <span class="eyebrow">Step one</span>
+      <h2>How far in are you?</h2>
+      <p class="period__sub">Pick the part you are reading now. The book is split into seven, and every copy marks them the same way, whether you have the hardcover, the ebook, or the audiobook. This is saved on this device only.</p>
+    </div>
+    <div class="card">
+      <fieldset class="spine">
+        <legend class="visually-hidden">Where you are in the book</legend>
+        <div class="spine__track" id="spine"></div>
+      </fieldset>
+      <div class="spot-readout">
+        <p><span class="eyebrow">You are in</span><br><strong id="spotName">Nothing picked yet</strong></p>
+        <p class="small" id="spotNote">Until you pick, everything past Part I stays blurred.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOARD ============ -->
+<section class="period" id="board">
+  <div class="wrap">
+    <div class="period__head">
+      <span class="eyebrow">The board</span>
+      <h2>Part by part</h2>
+      <p class="period__sub">Each post sits under the part its writer had reached. The committee left a few questions for each part, too, if you want something to chew on in the copy room.</p>
+    </div>
+    <div class="status" role="status" aria-live="polite">
+      <span class="pill" id="statusPill">Loading the board&hellip;</span>
+    </div>
+    <div class="parts" id="parts"></div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="period">
+  <div class="wrap">
+    <div class="card stack">
+      <span class="eyebrow">Your turn</span>
+      <h3 style="font-size:1.6rem;letter-spacing:-.02em;">Add a thought to the board</h3>
+      <p class="small" style="max-width:54ch;">Tell us how far in you are and what is on your mind. A line is plenty. Your name is optional, and your post goes up right away, so please keep it kind.</p>
+      <p><a class="btn js-form" href="#" target="_blank" rel="noopener noreferrer">Open the form</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap grid grid-2">
+    <div class="stack-sm">
+      <p class="eyebrow">TRACE Schools</p>
+      <p style="font-family:Fraunces,serif;font-size:1.6rem;line-height:1.15;">Bright minds. Healthy Suns.<br>Fully supported.</p>
+      <p class="small" style="color:#98A8C4;max-width:44ch;">Posts come in through a Google Form and appear here automatically. The blur keeps you from seeing spoilers by accident, but every post is public. Nothing is tracked; this device only remembers your spot in the book and your light/dark preference.</p>
+    </div>
+    <div class="stack-sm">
+      <p class="eyebrow">Wellness Committee</p>
+      <p class="xsmall" style="color:#C6D2E6;margin-top:.5rem;line-height:1.6;">Jillian Bumler &middot; Ellen Henry &middot; Heather Jahn &middot; Donte Locke &middot; Jamil Person &middot; Laurie Sobolewski</p>
+      <p class="xsmall" style="color:#98A8C4;margin-top:.5rem;">Want a post taken down, or spotted a spoiler in the wrong place? Email <a href="mailto:bminer@sandi.net?subject=Reading%20Room%20board">bminer@sandi.net</a>.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ------------------------------------------------------------
+     CONFIG — the only lines you should need to edit.
+
+     FORM_URL   Public link to the Google Form.
+     SHEET_CSV  The form's "Public" tab, published to the web as CSV
+                (same setup as playlist/SETUP.md). Ends in output=csv.
+
+     Leave SHEET_CSV empty and the board shows SAMPLE_POSTS below.
+     ------------------------------------------------------------ */
+  var CONFIG = {
+    FORM_URL:  "",
+    SHEET_CSV: ""
+  };
+
+  /* The seven parts, plus "finished". Names are printed on the contents
+     page of every edition, but "When Lost" and "Found" lean on the plot,
+     so a part's name only shows once your marker has reached it. */
+  var PARTS = [
+    { n:1, roman:"I",   name:"Barbara" },
+    { n:2, roman:"II",  name:"Bear" },
+    { n:3, roman:"III", name:"When Lost" },
+    { n:4, roman:"IV",  name:"Visitors" },
+    { n:5, roman:"V",   name:"Found" },
+    { n:6, roman:"VI",  name:"Survival" },
+    { n:7, roman:"VII", name:"Self-Reliance" },
+    { n:8, roman:"",    name:"Finished" }
+  ];
+
+  /* Questions for each part. They lean on themes, the part titles, and
+     what the opening tells you, never on events from later parts, since
+     a question in the wrong part is itself a spoiler. */
+  var POINTS = {
+    1: [
+      "The Van Laars own the camp, the land, and most of the jobs for miles. Watch who speaks up in these first chapters and who goes quiet. What does money buy this family besides comfort?",
+      "Barbara is gone before we really meet her, so we only know her through other people. Whose version of her do you trust, and what does each description tell you about the person giving it?",
+      "A child has gone missing from these woods before. How does a family, or a whole town, carry a loss like that for fourteen years, and what does it do to how they react the second time?"
+    ],
+    2: [
+      "The book keeps stepping back to 1961. Does knowing the past make the adults in 1975 more understandable, or harder to forgive? Are they repeating something, or working hard not to?",
+      "Grief in this family seems to be managed more than felt. Who is allowed to fall apart, and who has to hold it together? What decides that?",
+      "Think about who was trusted with children in 1961 and who was trusted to question them. What would go differently today, and what would go exactly the same?"
+    ],
+    3: [
+      "When something goes wrong, the people with the least power are often the first to be looked at. Who draws suspicion here, and is it because of evidence or because of who they are?",
+      "Several people notice a small thing and keep it to themselves. In a school, we know how much one quiet observation can matter. What makes someone decide not to say what they saw?",
+      "Pay attention to whose competence gets waved off. Where do you see someone being underestimated, and what does it cost everyone else?"
+    ],
+    4: [
+      "Outsiders see a place differently than the people who live inside it. What does this part let you see about the camp, or the family, that the insiders cannot or will not?",
+      "Who here is performing a version of themselves for an audience? What are they protecting by doing it?"
+    ],
+    5: [
+      "Finding something is not the same as understanding it. What do you know now that you did not before, and what still does not add up?",
+      "Go back to someone you judged early in the book. Does your first read hold up? What made you so sure the first time?"
+    ],
+    6: [
+      "Survival here is not only about the woods. Who is surviving a family, a marriage, a job, a reputation? What has each of them given up to do it?",
+      "Has someone done something you think is wrong but understand completely? Where is your line, and has this book moved it?"
+    ],
+    7: [
+      "The camp is named Emerson, and this part takes the title of his essay “Self-Reliance”: “Trust thyself.” Who in this book has had to learn to trust themselves, and who was failed by the people they were told to trust?",
+      "Self-reliance can be a strength or a scar. For these characters, was it something they chose, or something that was forced on them?"
+    ],
+    8: [
+      "Go back and reread the first chapter. What was the book showing you from the start that you did not know how to read yet?",
+      "Who carries the most responsibility for what happened, and is that the same person who faced the consequences?",
+      "We spend our days responsible for other people's kids. Did this book change how you think about that responsibility, or about the kids who seem fine?",
+      "If you could put one different adult into one character's life at the right moment, who would it be, and when?"
+    ]
+  };
+
+  /* Fake posts so the layout can be judged before the form exists.
+     Deliberately vague: no plot, only reactions to setting and pace. */
+  var SAMPLE_POSTS = [
+    { part:1, who:"Maria R.",  when:"2026-11-02", text:"Twenty pages in and I can already smell the lake. Camp in the seventies is weirdly specific and I love it." },
+    { part:1, who:"",          when:"2026-11-03", text:"Audiobook on the drive in. The narrator is doing a lot of heavy lifting and it works." },
+    { part:1, who:"Dee",       when:"2026-11-05", text:"Took me a minute to keep track of all the names. Worth pushing through the first few chapters." },
+    { part:2, who:"Tom K.",    when:"2026-11-06", text:"The jumps between years threw me at first, now I look forward to them." },
+    { part:2, who:"",          when:"2026-11-08", text:"I read this one at lunch and kept going past the bell. Do not recommend, do recommend." },
+    { part:3, who:"Alicia",    when:"2026-11-09", text:"Okay, I have a theory now and I am not telling anybody until I finish." },
+    { part:3, who:"Sam P.",    when:"2026-11-11", text:"This is the part where I stopped reading it slowly." },
+    { part:4, who:"",          when:"2026-11-12", text:"Short part, but it changed how I read everything before it." },
+    { part:5, who:"Maria R.",  when:"2026-11-15", text:"I had to put it down and walk around the block after this one." },
+    { part:6, who:"Jordan",    when:"2026-11-18", text:"Longest stretch of the book and I flew through it over the weekend." },
+    { part:7, who:"",          when:"2026-11-21", text:"I can feel the ending coming and I am rationing chapters." },
+    { part:8, who:"Tom K.",    when:"2026-11-24", text:"Finished on the first day of break. Still thinking about the last page." },
+    { part:8, who:"Dee",       when:"2026-11-27", text:"Somebody find me in the copy room on Monday, I need to talk about this." }
+  ];
+
+  /* ---------------- storage (wrapped: private windows can throw) ---------------- */
+  var NS = "trace-bookclub:";
+  var store = {
+    get: function(k, d){ try { var v = localStorage.getItem(NS+k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+    set: function(k, v){ try { localStorage.setItem(NS+k, JSON.stringify(v)); } catch(e){} }
+  };
+
+  /* ---------------- theme toggle ---------------- */
+  var themeBtn = document.getElementById("themeBtn");
+  var savedTheme = store.get("theme", null);
+  if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+  themeBtn.addEventListener("click", function(){
+    var cur = document.documentElement.getAttribute("data-theme");
+    if (!cur) cur = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    var next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    store.set("theme", next);
+  });
+
+  /* ---------------- form links ---------------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".js-form"), function(a){
+    if (CONFIG.FORM_URL) { a.href = CONFIG.FORM_URL; return; }
+    a.setAttribute("aria-disabled", "true");
+    a.removeAttribute("target");
+    a.title = "The form is not connected yet";
+    a.addEventListener("click", function(e){ e.preventDefault(); });
+  });
+
+  /* ---------------- helpers ---------------- */
+  function clean(s, max){
+    s = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
+    if (max && s.length > max) s = s.slice(0, max - 1).trim() + "…";
+    return s;
+  }
+  function redact(s){
+    return s.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, "…").trim();
+  }
+  function el(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  /* The form answer might read "Part 3", "Part III", or "I finished".
+     Anything we can't place goes to Finished: hiding a post behind the
+     ending is the safe mistake, showing it too early is not. */
+  var ROMAN = { i:1, ii:2, iii:3, iv:4, v:5, vi:6, vii:7 };
+  function partOf(answer){
+    var a = String(answer).toLowerCase();
+    if (/finish|done|end/.test(a)) return 8;
+    var d = a.match(/\b([1-7])\b/);
+    if (d) return +d[1];
+    var r = a.match(/\b(vii|vi|iv|v|iii|ii|i)\b/);
+    if (r) return ROMAN[r[1]];
+    return 8;
+  }
+
+  function label(p, known){
+    if (p.n === 8) return "Finished";
+    return known ? "Part " + p.roman + " · " + p.name : "Part " + p.roman;
+  }
+
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  /* "2026-11-05" on its own parses as UTC midnight, which is Nov 4 in
+     San Diego, so read bare dates as local. Sheet timestamps are fine. */
+  function toDate(s){
+    var m = String(s).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    return m ? new Date(+m[1], m[2] - 1, +m[3]) : new Date(s);
+  }
+  function shortDate(s){
+    var d = toDate(s);
+    if (isNaN(d)) return "";
+    return MONTHS[d.getMonth()] + " " + d.getDate();
+  }
+
+  /* ---------------- CSV ---------------- */
+  function parseCSV(text){
+    var rows = [], row = [], field = "", i = 0, inQuotes = false;
+    text = text.replace(/^﻿/, "");
+    while (i < text.length) {
+      var c = text.charAt(i);
+      if (inQuotes) {
+        if (c === '"') {
+          if (text.charAt(i+1) === '"') { field += '"'; i += 2; continue; }
+          inQuotes = false; i++; continue;
+        }
+        field += c; i++; continue;
+      }
+      if (c === '"') { inQuotes = true; i++; continue; }
+      if (c === ",")  { row.push(field); field = ""; i++; continue; }
+      if (c === "\r") { i++; continue; }
+      if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; i++; continue; }
+      field += c; i++;
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows;
+  }
+
+  /* Find columns by keyword, so rewording a form question doesn't break it. */
+  function rowsToPosts(rows){
+    if (!rows.length) return [];
+    var map = { when:-1, part:-1, text:-1, who:-1 };
+    rows[0].forEach(function(h, idx){
+      var k = String(h).toLowerCase();
+      if (map.when === -1 && /timestamp|date/.test(k))           { map.when = idx; return; }
+      if (map.part === -1 && /how far|part|where/.test(k))      { map.part = idx; return; }
+      if (map.who  === -1 && /name/.test(k))                    { map.who  = idx; return; }
+      if (map.text === -1 && /think|thought|say|mind/.test(k))  { map.text = idx; return; }
+    });
+    if (map.text === -1 || map.part === -1) return [];
+    var out = [];
+    for (var r = 1; r < rows.length; r++) {
+      var row = rows[r];
+      var text = redact(clean(row[map.text], 600));
+      if (!text) continue;
+      out.push({
+        part: partOf(row[map.part]),
+        who:  map.who  > -1 ? redact(clean(row[map.who], 50)) : "",
+        when: map.when > -1 ? row[map.when] : "",
+        text: text
+      });
+    }
+    return out;
+  }
+
+  function load(done){
+    function sample(note){ done(SAMPLE_POSTS.slice(), "sample", note); }
+    if (!CONFIG.SHEET_CSV) { sample(); return; }
+    fetch(CONFIG.SHEET_CSV, { cache:"no-store" })
+      .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+      .then(function(text){
+        /* An unpublished Sheet answers with a sign-in page, not an error. */
+        if (/^\s*</.test(text)) throw new Error("got HTML, not CSV");
+        done(rowsToPosts(parseCSV(text)), "sheet");
+      })
+      .catch(function(){ done([], "error"); });
+  }
+
+  /* ---------------- your spot ---------------- */
+  var spot = store.get("spot", 0);
+  if (!(spot >= 1 && spot <= 8)) spot = 0;
+  var revealed = {};     /* post ids tapped open this visit; not saved */
+  var posts = [];
+
+  var spine = document.getElementById("spine");
+  PARTS.forEach(function(p){
+    var lab = el("label", "stop");
+    var input = document.createElement("input");
+    input.type = "radio"; input.name = "spot"; input.value = p.n;
+    input.setAttribute("aria-label", p.n === 8 ? "Finished" : "Part " + p.n);
+    var dot = el("span", "stop__dot");
+    if (p.n === 8) {
+      dot.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>';
+    } else {
+      dot.textContent = p.roman;
+    }
+    var name = el("span", "stop__name");
+    name.setAttribute("aria-hidden", "true");
+    lab.appendChild(input); lab.appendChild(dot); lab.appendChild(name);
+    input.addEventListener("change", function(){
+      spot = p.n;
+      store.set("spot", spot);
+      revealed = {};
+      render();
+    });
+    spine.appendChild(lab);
+  });
+
+  function renderSpine(){
+    Array.prototype.forEach.call(spine.children, function(lab, i){
+      var p = PARTS[i];
+      var input = lab.querySelector("input");
+      input.checked = p.n === spot;
+      lab.classList.toggle("is-here", p.n === spot);
+      lab.classList.toggle("is-read", spot > 0 && p.n < spot);
+      lab.querySelector(".stop__name").textContent =
+        p.n === 8 ? "Finished" : (p.n <= spot ? p.name : "");
+    });
+    var here = PARTS[spot - 1];
+    var name = here ? label(here, true) : "Nothing picked yet";
+    document.getElementById("spotName").textContent = name;
+    document.getElementById("bellSpot").textContent = here ? name : "Not set";
+    document.getElementById("spotNote").textContent =
+      spot === 8 ? "Everything on the board is open to you." :
+      spot === 0 ? "Until you pick, everything past Part I stays blurred." :
+                   "Posts from further ahead stay blurred until you tap them.";
+  }
+
+  /* ---------------- the board ---------------- */
+  function renderBoard(){
+    var box = document.getElementById("parts");
+    box.innerHTML = "";
+    /* With no spot picked, treat the reader as just starting. */
+    var limit = spot || 1;
+
+    PARTS.forEach(function(p){
+      var ahead = p.n > limit;
+      var mine = posts.filter(function(x){ return x.part === p.n; })
+        .sort(function(a, b){ return (toDate(b.when) || 0) - (toDate(a.when) || 0); });
+
+      var sec = el("section", "part" + (ahead ? " is-ahead" : ""));
+      sec.setAttribute("aria-label", label(p, !ahead));
+      var head = el("div", "part__head");
+      if (p.n === 8) {
+        head.appendChild(el("h3", "part__title", "Finished the book"));
+      } else if (ahead) {
+        head.appendChild(el("h3", "part__title", "Part " + p.roman));
+      } else {
+        head.appendChild(el("span", "part__num", "Part " + p.roman));
+        head.appendChild(el("h3", "part__title", ahead ? "Not there yet" : p.name));
+      }
+      head.appendChild(el("span", "xsmall part__count",
+        mine.length === 0 ? "No posts yet" : mine.length + (mine.length === 1 ? " post" : " posts")));
+      sec.appendChild(head);
+
+      if (POINTS[p.n] && POINTS[p.n].length) {
+        if (ahead) {
+          sec.appendChild(el("p", "points points--locked",
+            "Questions for this part open when you get here."));
+        } else {
+          var det = el("details", "points");
+          det.appendChild(el("summary", null, "Something to talk about"));
+          var ol = el("ol");
+          POINTS[p.n].forEach(function(q){ ol.appendChild(el("li", null, q)); });
+          det.appendChild(ol);
+          sec.appendChild(det);
+        }
+      }
+
+      if (!mine.length) {
+        sec.appendChild(el("p", "empty", "Nobody has posted from here yet."));
+      } else {
+        var grid = el("div", "posts");
+        mine.forEach(function(x){
+          var hidden = ahead && !revealed[x.id];
+          var card = el("article", "post" + (hidden ? " post--ahead" : ""));
+          var body = el("div", "post__body stack-sm");
+          body.appendChild(el("p", "post__text", x.text));
+          var meta = el("p", "post__meta");
+          meta.appendChild(el("span", null, x.who || "Anonymous"));
+          var d = shortDate(x.when);
+          if (d) meta.appendChild(el("span", null, d));
+          body.appendChild(meta);
+          card.appendChild(body);
+          if (hidden) {
+            /* Blurred text is still readable to a screen reader, so hide it
+               from assistive tech too until the reader asks for it. */
+            body.setAttribute("aria-hidden", "true");
+            var btn = el("button", "post__reveal");
+            btn.type = "button";
+            btn.appendChild(el("strong", null, "Ahead of you"));
+            btn.appendChild(el("span", null, "Tap to read anyway"));
+            btn.addEventListener("click", function(){
+              revealed[x.id] = true;
+              renderBoard();
+            });
+            card.appendChild(btn);
+          }
+          grid.appendChild(card);
+        });
+        sec.appendChild(grid);
+      }
+      box.appendChild(sec);
+    });
+  }
+
+  function render(){ renderSpine(); renderBoard(); }
+
+  render();
+  load(function(list, source){
+    posts = list.map(function(x, i){ x.id = i; return x; });
+    var pill = document.getElementById("statusPill");
+    if (source === "sample") {
+      pill.textContent = "Sample posts, not real ones";
+      pill.classList.add("pill--warn");
+    } else if (source === "error") {
+      pill.textContent = "Could not reach the board right now";
+      pill.classList.add("pill--warn");
+    } else {
+      pill.textContent = posts.length + (posts.length === 1 ? " post so far" : " posts so far");
+    }
+    renderBoard();
+  });
+})();
+</script>
+</body>
+</html>

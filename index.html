@@ -285,6 +285,8 @@ img{max-width:100%;display:block;}
   background:var(--surface-2);color:var(--text-muted);font-weight:600;white-space:nowrap;
 }
 .month__title{font-family:Fraunces,serif;font-weight:600;font-size:1.18rem;letter-spacing:-.01em;}
+.month{position:relative;}
+.month__title a::after{content:"";position:absolute;inset:0;border-radius:12px;}
 .month__theme{font-size:.86rem;color:var(--text-muted);}
 
 /* =================== WHAT MAKES IT DIFFERENT =================== */
@@ -360,8 +362,8 @@ img{max-width:100%;display:block;}
     </h1>
     <p class="hero__lede">A monthly letter for the people running the building. Built to be used, not just read &mdash; interactive tools, real recipes, no accounts, nothing tracked.</p>
     <div class="hero__actions">
-      <a class="btn" href="trace-wellness-october/">
-        Read the October issue
+      <a class="btn" href="trace-wellness-november/">
+        Read the November issue
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a class="btn btn--ghost" href="#ahead">See what's ahead</a>
@@ -376,18 +378,19 @@ img{max-width:100%;display:block;}
 <section class="band wrap" id="issue">
   <div class="issue reveal">
     <div>
-      <span class="issue__badge">Now reading &middot; October 2026</span>
-      <h3>The Long Middle</h3>
-      <p class="desc">The first-day energy is gone and winter break is nowhere in sight. This is the stretch that decides how June feels &mdash; so this issue is not a pep talk. It is a shelf of things you open at the exact moment you need one.</p>
+      <span class="issue__badge">Now reading &middot; November 2026</span>
+      <h3>Enough</h3>
+      <p class="desc">The clocks went back and now you leave in the dark. November asks you to be grateful on a schedule. This issue asks something smaller and more honest: notice what is already enough.</p>
       <ul class="tick">
-        <li><b>No.2</b> Open when&hellip; &mdash; a shelf of envelopes, each one for a different kind of bad day.</li>
-        <li><b>No.3</b> An honest audit of where your energy is actually going.</li>
-        <li><b>No.5</b> Walktober &mdash; a month of movement, no fitness level assumed.</li>
-        <li><b>No.6</b> Delicata squash &amp; white bean stew, scaled to however many you are feeding.</li>
-        <li><b>No.7</b> Open enrollment, and why it is the most valuable hour of your year.</li>
+        <li><b>No.2</b> The gratitude quilt &mdash; thirty squares, one line a day, no streak and no penalty for a blank.</li>
+        <li><b>No.3</b> For the ones who clock out and clock in &mdash; a block just for caregivers.</li>
+        <li><b>No.4</b> Thirty miles before the pie, ending with a Thanksgiving morning 5K.</li>
+        <li><b>No.5</b> Maple-roasted carrots &mdash; a potluck dish that is not a casserole.</li>
+        <li><b>No.6</b> One book, one month, no meeting &mdash; the reading room opens.</li>
+        <li><b>No.7</b> Open enrollment closes November 6, and there is no late window.</li>
       </ul>
       <p class="issue__cta">
-        <a class="btn" href="trace-wellness-october/">
+        <a class="btn" href="trace-wellness-november/">
           Open the issue
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -400,12 +403,12 @@ img{max-width:100%;display:block;}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </p>
-      <p class="issue__note">Walktober starts <b>Thursday, October 1</b> and runs the whole month. Free to enter, any pace, and steps are not the only thing that counts. <a href="https://calveba.walktober.com/" target="_blank" rel="noopener noreferrer">Register for Walktober</a></p>
+      <p class="issue__note">Open enrollment closes <b>Friday, November 6</b>, and what you choose holds for all of 2027. In-person help is Wednesday, November 4, 3&ndash;6 pm on the Ed Center front lawn. <a href="trace-wellness-november/#benefits">Check your benefits</a></p>
     </div>
     <div class="issue__art" aria-hidden="true">
       <div class="issue__art-type">
         <b>Rise &amp; Shine</b>
-        <span>October &middot; The Long Middle</span>
+        <span>November &middot; Enough</span>
       </div>
     </div>
   </div>
@@ -420,29 +423,34 @@ img{max-width:100%;display:block;}
   </div>
   <ul class="cal reveal">
     <li>
-      <span class="cal__when">Oct 1&ndash;31</span>
-      <span class="cal__what">Walktober challenge runs</span>
-      <span class="cal__note">A month of movement, free to enter, no fitness level assumed. Steps count and so does everything else. <a href="https://calveba.walktober.com/" target="_blank" rel="noopener noreferrer">Register</a> &middot; <a href="trace-wellness-october/#move">Log your miles</a></span>
+      <span class="cal__when">Nov 4</span>
+      <span class="cal__what">Open enrollment help, in person</span>
+      <span class="cal__note">Wednesday, 3&ndash;6 pm, Ed Center front lawn, 4100 Normal St. Insurance carriers and the benefits team, two days before the window closes.</span>
     </li>
     <li>
-      <span class="cal__when">Oct 10</span>
-      <span class="cal__what">World Mental Health Day</span>
-      <span class="cal__note">A Saturday this year, which is its own kind of permission. <a href="trace-wellness-october/#worry">Where to get real help</a></span>
+      <span class="cal__when">Nov 6</span>
+      <span class="cal__what">Open enrollment closes</span>
+      <span class="cal__note">No late window, and what you choose holds for all of 2027. <a href="trace-wellness-november/#benefits">The benefits desk</a> &middot; <a href="https://www.sandiegounified.org/departments/benefits/2027_open_enrollment" target="_blank" rel="noopener noreferrer">District open enrollment page</a></span>
     </li>
     <li>
-      <span class="cal__when">Oct 21</span>
-      <span class="cal__what">Unity Day</span>
-      <span class="cal__note">Wear orange. National Bullying Prevention Month, and the one day students watch what adults do most closely.</span>
+      <span class="cal__when">Nov 11</span>
+      <span class="cal__what">Veterans Day &mdash; no school</span>
+      <span class="cal__note">A Wednesday, which cuts the week in half.</span>
     </li>
     <li>
-      <span class="cal__when">Oct 22</span>
-      <span class="cal__what">VEBA Wellness Summit</span>
-      <span class="cal__note">VEBA Resource Center, Kearny Mesa. Covered by your benefits; times and registration still to come. <a href="https://calveba.org/classes-events/" target="_blank" rel="noopener noreferrer">CalVEBA calendar</a></span>
+      <span class="cal__when">Nov 19</span>
+      <span class="cal__what">Great American Smokeout</span>
+      <span class="cal__note">Cessation support is covered by your plan, and Kick It California is free to anyone in the state: <a href="tel:+18003008086">1-800-300-8086</a>.</span>
     </li>
     <li>
-      <span class="cal__when">Oct 23</span>
-      <span class="cal__what">Big Smiles Dental Clinic at TRACE Main</span>
-      <span class="cal__note">The mobile dental clinic returns to campus. Registration link coming soon from Nurse Stukes.</span>
+      <span class="cal__when">Nov 23&ndash;27</span>
+      <span class="cal__what">Thanksgiving break</span>
+      <span class="cal__note">The full week. You are allowed to spend part of it doing nothing that improves you in any way.</span>
+    </li>
+    <li>
+      <span class="cal__when">Nov 26</span>
+      <span class="cal__what">Father Joe's Villages Thanksgiving Day 5K</span>
+      <span class="cal__note">7:15 am in Balboa Park. Walkers, strollers, and dogs all count. <a href="https://runsignup.com/Race/CA/SanDiego/FJV5K" target="_blank" rel="noopener noreferrer">Register</a> &middot; <a href="trace-wellness-november/#move">Thirty miles before the pie</a></span>
     </li>
   </ul>
   <p class="cal__foot reveal">Free virtual classes run every day of the week through your CalVEBA benefits &mdash; yoga, strength, sound baths, mindfulness. <a href="https://calveba.org/classes-events/" target="_blank" rel="noopener noreferrer">See the weekly schedule</a>.</p>
@@ -461,7 +469,7 @@ img{max-width:100%;display:block;}
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M12 14l6.16-3.42a2 2 0 0 0 0-3.5L13.34 3.5a2.67 2.67 0 0 0-2.68 0L5.84 7.08a2 2 0 0 0 0 3.5L12 14z"/><path d="M18 11.5v3.87a2 2 0 0 1-1.11 1.79l-4 2.2a2 2 0 0 1-1.78 0l-4-2.2A2 2 0 0 1 6 15.37V11.5"/></svg>
       </div>
       <h3>A different shape every month</h3>
-      <p>October is a shelf of envelopes you open when you need one. Other issues take their own structural concept &mdash; a quilt you fill in yourself, a night shift. No two feel the same.</p>
+      <p>November is a quilt you fill in yourself, one square a day. October was a shelf of envelopes you open when you need one. No two feel the same.</p>
     </div>
     <div class="feat reveal">
       <div class="feat__icon" aria-hidden="true">
@@ -482,21 +490,21 @@ img{max-width:100%;display:block;}
 
 <!-- ============ YEAR AHEAD ============ -->
 <section class="band wrap" id="ahead">
-  <div class="ghost" aria-hidden="true">10</div>
+  <div class="ghost" aria-hidden="true">11</div>
   <div class="band__head reveal">
     <p class="eyebrow">The year ahead</p>
     <h2>Eight issues, October through May</h2>
-    <p class="band__sub">Each one gets its own concept and centerpiece. October is live &mdash; the rest are in progress, one month at a time.</p>
+    <p class="band__sub">Each one gets its own concept and centerpiece. October and November are live &mdash; the rest are in progress, one month at a time.</p>
   </div>
   <ul class="months reveal">
     <li class="month">
       <p class="month__when">Oct 2026 <span class="month__status" style="background:var(--tide-soft);color:var(--tide-ink);">Live</span></p>
-      <p class="month__title">The Long Middle</p>
+      <p class="month__title"><a href="trace-wellness-october/">The Long Middle</a></p>
       <p class="month__theme">The honeymoon is over and break is nowhere in sight.</p>
     </li>
     <li class="month">
-      <p class="month__when">Nov 2026 <span class="month__status">Drafting</span></p>
-      <p class="month__title">Enough</p>
+      <p class="month__when">Nov 2026 <span class="month__status" style="background:var(--tide-soft);color:var(--tide-ink);">Live</span></p>
+      <p class="month__title"><a href="trace-wellness-november/">Enough</a></p>
       <p class="month__theme">Gratitude done well, not gratitude as an obligation.</p>
     </li>
     <li class="month">

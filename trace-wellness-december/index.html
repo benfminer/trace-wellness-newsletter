@@ -193,6 +193,7 @@ img{max-width:100%;}
 @media (min-width:760px){
   .grid-2{grid-template-columns:1fr 1fr;}
   .grid-5-4{grid-template-columns:5fr 4fr;}
+  .grid-4-5{grid-template-columns:4fr 5fr;}
   .grid-3{grid-template-columns:repeat(3,1fr);}
 }
 /* align-content:start matters here. A card in a two-column row stretches to match
@@ -251,7 +252,7 @@ h3.card__title{font-size:1.3rem;letter-spacing:-.01em;}
 /* =================== LIGHT-WALK CHECKLIST =================== */
 .days{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;}
 .dtile{
-  aspect-ratio:1;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);
+  width:100%;aspect-ratio:1;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);
   display:grid;place-items:center;cursor:pointer;padding:0;
   font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
   color:var(--text-muted);transition:background .18s,border-color .18s,color .18s;
@@ -610,9 +611,10 @@ input[type="range"]{accent-color:var(--tide);}
     <h2>Ten minutes of actual daylight</h2>
     <p class="period__sub">Not a step count, not a mile goal &mdash; this month the ask is smaller than that. Ten minutes outside, in real daylight, at some point in your day. It is one of the few things with real evidence behind it for the winter slump, and it costs nothing.</p>
   </div>
-  <div class="grid grid-5-4">
+  <div class="grid grid-4-5">
     <div class="card stack">
       <p class="eyebrow">This week</p>
+      <p class="xsmall" id="dayWeek" style="margin-top:-.6rem;"></p>
       <ul class="days" id="dayGrid"></ul>
       <p class="small" id="dayNote"></p>
       <p class="xsmall">Just for you &mdash; kept on this device, not reported anywhere.</p>
@@ -620,7 +622,7 @@ input[type="range"]{accent-color:var(--tide);}
     <div class="card stack-sm">
       <p class="eyebrow">Where the ten minutes fits</p>
       <ul class="stack-sm" style="padding-left:1.1rem;margin:.3rem 0 0;font-size:.94rem;">
-        <li><strong>Morning beats evening.</strong> Light before 10 a.m. does more for your circadian rhythm than the same light at 4 p.m. &mdash; a lot even, walk to your car the long way.</li>
+        <li><strong>Morning beats evening.</strong> Light before 10 a.m. does more for your circadian rhythm than the same light at 4 p.m. Even walking to your car the long way counts.</li>
         <li><strong>It does not have to be a walk.</strong> Eating lunch outside, on a bench, with your face actually toward the sky, counts.</li>
         <li><strong>Cloudy still counts.</strong> Outdoor light on an overcast December day is still many times brighter than the light inside your classroom.</li>
         <li><strong>Duty coverage works.</strong> If you already have recess or arrival duty outside, that is not extra &mdash; it is today's ten minutes, already spent.</li>
@@ -954,8 +956,18 @@ input[type="range"]{accent-color:var(--tide);}
   /* ---------------- daylight-walk checklist ---------------- */
   var DAY_LABELS = ["Mon","Tue","Wed","Thu","Fri"];
   var dayGrid = document.getElementById("dayGrid"), dayNote = document.getElementById("dayNote");
+  /* the tiles belong to one Mon-Fri week; a new Monday starts them blank */
+  var now = new Date();
+  var monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (now.getDay() + 6) % 7);
+  var weekKey = monday.getFullYear() + "-" + (monday.getMonth() + 1) + "-" + monday.getDate();
   var days = store.get("daylight", [false,false,false,false,false]);
-  if (!Array.isArray(days) || days.length !== 5) days = [false,false,false,false,false];
+  if (!Array.isArray(days) || days.length !== 5 || store.get("daylightWeek", null) !== weekKey){
+    days = [false,false,false,false,false];
+    store.set("daylight", days);
+    store.set("daylightWeek", weekKey);
+  }
+  document.getElementById("dayWeek").textContent = "Week of " +
+    monday.toLocaleDateString("en-US", { month: "long", day: "numeric" }) + ". Starts fresh every Monday.";
   var DAY_MSGS = [
     "Zero so far this week &mdash; even one day changes how the rest of it feels.",
     "One day in. That already counts for something.",
